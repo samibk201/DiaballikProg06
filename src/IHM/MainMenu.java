@@ -55,7 +55,7 @@ public class MainMenu extends JFrame {
 		panelNomJeu.add(labelTitre);
 
 		// Buttons
-		panelBoutonsMenu.setLayout(new BoxLayout(panelBoutonsMenu, BoxLayout.PAGE_AXIS));
+		panelBoutonsMenu.setLayout(new BoxLayout(panelBoutonsMenu, BoxLayout.Y_AXIS));
 
 		panelBoutonsMenu.add(Box.createRigidArea(new Dimension(240,200)));
 		panelBoutonsMenu.add(jvsJ);
