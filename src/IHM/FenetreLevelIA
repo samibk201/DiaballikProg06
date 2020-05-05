@@ -1,0 +1,79 @@
+package IHM;
+
+import javax.swing.*;	
+
+import org.w3c.dom.events.MouseEvent;
+
+import static java.lang.System.exit;
+
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+
+
+public class levelIA implements Runnable{
+
+	private int largeur = 1200;
+	private int hauteur = 1000;
+
+	JPanel container = new JPanel();
+	JPanel panelTitle = new JPanel();
+	JPanel panelButtons = new JPanel();
+	JPanel panelBack = new JPanel();
+	
+	JButton btnFacile = new JButton("Facile");
+	JButton btnMoy = new JButton("Moyen");
+	JButton btnDiff = new JButton("Difficile");
+	JButton btnBack = new JButton("Retour");
+
+	JFrame window = new JFrame();
+
+	public levelIA() {
+		
+		//Window settings
+		window.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		window.setSize(largeur, hauteur);
+		window.setResizable(false);
+		window.setLocationRelativeTo(null);
+		window.setUndecorated(true);
+
+		container.setLayout(new BorderLayout());
+
+		//Title
+		JLabel title = new JLabel("Choix du niveau de l'IA");
+		title.setFont( new Font("Tahoma", Font.BOLD, 36));
+		panelTitle.add(title);
+
+		//Buttons
+		panelButtons.setLayout(new BoxLayout(panelButtons, BoxLayout.Y_AXIS));		
+		panelButtons.add(Box.createRigidArea(new Dimension(120,250)));
+		panelButtons.add(btnFacile);		
+		panelButtons.add(Box.createRigidArea(new Dimension(0,40)));
+		panelButtons.add(btnMoy);		
+		panelButtons.add(Box.createRigidArea(new Dimension(0,40)));
+		panelButtons.add(btnDiff);
+		
+		panelBack.add(btnBack);
+		btnBack.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				window.dispose();				
+			}
+		});
+
+		
+		container.add(panelBack, BorderLayout.WEST);
+		container.add(panelTitle, BorderLayout.NORTH);
+		container.add(panelButtons, BorderLayout.CENTER);
+		
+		window.setContentPane(container);
+		window.setVisible(true);
+	}
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+
+	}
+}
