@@ -12,7 +12,7 @@ import java.awt.event.ActionListener;
 
 
 
-public class levelIA extends JFrame{
+public class FenetreLevelIA extends JFrame{
 
 	private int largeur = 1200;
 	private int hauteur = 1000;
@@ -29,7 +29,7 @@ public class levelIA extends JFrame{
 
 	JFrame window = new JFrame();
 
-	public levelIA() {
+	public FenetreLevelIA() {
 		
 		//Window settings
 		window.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
