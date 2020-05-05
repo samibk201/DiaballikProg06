@@ -67,6 +67,9 @@ public class MainMenu extends JFrame {
 		panelBoutonsMenu.add(tutoriel);
 		panelBoutonsMenu.add(Box.createRigidArea(new Dimension(0,40)));
 		panelBoutonsMenu.add(quit);
+		
+		//Clicks handler
+		jvsIA.addActionListener(new clickJvsIA());
 		quit.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -85,6 +88,15 @@ public class MainMenu extends JFrame {
 		
 		window.setContentPane(conteneurPrincipal);
 		window.setVisible(true);
+	}
+	
+	private class clickJvsIA implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			FenetreLevelIA NivIA = new FenetreLevelIA();
+	    }
+
 	}
 	
 	public static void main(String[] args) {
