@@ -12,7 +12,7 @@ import java.awt.event.ActionListener;
 
 
 
-public class levelIA implements Runnable{
+public class levelIA extends JFrame{
 
 	private int largeur = 1200;
 	private int hauteur = 1000;
@@ -69,11 +69,5 @@ public class levelIA implements Runnable{
 		
 		window.setContentPane(container);
 		window.setVisible(true);
-	}
-
-	@Override
-	public void run() {
-		// TODO Auto-generated method stub
-
 	}
 }
