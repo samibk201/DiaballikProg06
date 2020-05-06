@@ -107,7 +107,7 @@ public class FenetreGameSetIA extends JFrame {
         bgColor.add(white);
         bgColor.add(black);
 
-
+	
         panelSettings.setLayout(new BoxLayout(panelSettings, BoxLayout.Y_AXIS));
         //panelSettings.add(Box.createRigidArea(new Dimension(0, 100)));
         panelSettings.add(panelPlateau);
