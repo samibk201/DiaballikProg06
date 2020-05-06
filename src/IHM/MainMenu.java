@@ -22,13 +22,14 @@ import javax.swing.SwingUtilities;
 
 public class MainMenu extends JFrame {
 
-	private int largeur = 1200;
-	private int hauteur = 1000;
-	private String titre = "Diaballik";
-
 	JPanel conteneurPrincipal = new JPanel();
 	JPanel panelNomJeu = new JPanel();
 	JPanel panelBoutonsMenu = new JPanel();
+	JPanel panelJvsJ = new JPanel();
+	JPanel panelJvsIA = new JPanel();
+	JPanel panelEncours = new JPanel();
+	JPanel panelTuto = new JPanel();
+	JPanel panelQuit = new JPanel();
 
 	JButton jvsJ = new JButton("Joueur vs joueur");
 	JButton jvsIA = new JButton("Joueur vs IA");
@@ -39,9 +40,7 @@ public class MainMenu extends JFrame {
 	JFrame window = new JFrame();
 
 	public MainMenu() {
-
-		// TODO Auto-generated constructor stub
-		window.setTitle(titre);
+		
 		window.setSize(largeur, hauteur);
 		window.setResizable(false);
 		window.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -50,23 +49,31 @@ public class MainMenu extends JFrame {
 
 		conteneurPrincipal.setLayout(new BorderLayout());
 
-		JLabel labelTitre = new JLabel(titre);
+		JLabel labelTitre = new JLabel(titre);	
 		labelTitre.setFont(new Font("Tahoma", Font.BOLD, 56));;
 		panelNomJeu.add(labelTitre);
 
+
 		// Buttons
+		panelEncours.setLayout(new BoxLayout(panelEncours, BoxLayout.LINE_AXIS));
+		panelEncours.add(enCours);
+		panelJvsIA.setLayout(new BoxLayout(panelJvsIA, BoxLayout.LINE_AXIS));
+		panelJvsIA.add(jvsIA);
+		panelJvsJ.setLayout(new BoxLayout(panelJvsJ, BoxLayout.LINE_AXIS));
+		panelJvsJ.add(jvsJ);
+		panelTuto.setLayout(new BoxLayout(panelTuto, BoxLayout.LINE_AXIS));
+		panelTuto.add(tutoriel);
+		panelQuit.setLayout(new BoxLayout(panelQuit, BoxLayout.LINE_AXIS));
+		panelQuit.add(quit);
+
 		panelBoutonsMenu.setLayout(new BoxLayout(panelBoutonsMenu, BoxLayout.Y_AXIS));
 
-		panelBoutonsMenu.add(Box.createRigidArea(new Dimension(240,200)));
-		panelBoutonsMenu.add(jvsJ);
-		panelBoutonsMenu.add(Box.createRigidArea(new Dimension(0,40)));
-		panelBoutonsMenu.add(jvsIA);
-		panelBoutonsMenu.add(Box.createRigidArea(new Dimension(0,40)));
-		panelBoutonsMenu.add(enCours);
-		panelBoutonsMenu.add(Box.createRigidArea(new Dimension(0,40)));
-		panelBoutonsMenu.add(tutoriel);
-		panelBoutonsMenu.add(Box.createRigidArea(new Dimension(0,40)));
-		panelBoutonsMenu.add(quit);
+		panelBoutonsMenu.add(panelJvsJ);
+		panelBoutonsMenu.add(panelJvsIA);
+		panelBoutonsMenu.add(panelEncours);
+		panelBoutonsMenu.add(panelTuto);
+		panelBoutonsMenu.add(panelQuit);
+
 		
 		//Clicks handler
 		jvsIA.addActionListener(new clickJvsIA());
