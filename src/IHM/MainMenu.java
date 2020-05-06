@@ -94,7 +94,7 @@ public class MainMenu extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			FenetreLevelIA NivIA = new FenetreLevelIA();
+			FenetreGameSetIA setIA = new FenetreGameSetIA();
 	    }
 
 	}
