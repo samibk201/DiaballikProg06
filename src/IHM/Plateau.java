@@ -16,15 +16,20 @@ import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
+import Moteur.JeuPlateau;
+import Moteur.Joueur;
+
 public class Plateau extends JComponent {
 	private int nbColonnes;
 	private int nbLignes = nbColonnes = 7;
 	private int hauteur;
 	private int largeur = hauteur = 7;
 	private final int CASE_LARGEUR = 100;
-	private Image imgCaseSansPoint, imgCaseAvecPoint, imgPionJ1SurCase, imgPionJ2SurCase, imgPionJ1AvecBalle,
+	private Image imgPionJ1SurCase, imgPionJ2SurCase, imgPionJ1AvecBalle,
 			imgPionJ2AvecBalle;
-	private String[][] pions = { 
+	JeuPlateau jeuPlateau ;
+	Joueur j1, j2;
+	/*private String[][] pions = { 
 								{"B","B","B","L","B", "B", "B"},
 								{null, null, null, null, null, null, null},
 								{null, null, null, null, null, null, null},
@@ -32,7 +37,7 @@ public class Plateau extends JComponent {
 								{null, null, null, null, null, null, null},
 								{null, null, null, null, null, null, null},
 								{"N", "N", "N", "O", "N", "N", "N"},
-								};
+								};*/
 
 	public Plateau() {
 		/*
@@ -47,7 +52,14 @@ public class Plateau extends JComponent {
 		 * imgPionJ2AvecBalle = new
 		 * ImageIcon(getClass().getResource("/IHM/Images/vide.png"));
 		 */
-		imgCaseSansPoint = lisImage("vide.png");
+		j1 = new Joueur(1, "Cisse");
+		j2 = new Joueur(2, "Dan");
+		
+		
+		jeuPlateau = new JeuPlateau(j1, j2, 0);
+	
+		
+		jeuPlateau.init(7,7,0);
 	}
 
 	private Image lisImage(String nom) {
@@ -65,7 +77,7 @@ public class Plateau extends JComponent {
 		g2D.drawImage(i, x, y, l, h, this);
 	}
 	
-	//private void cha
+
 
 	public void paintComponent(Graphics g) {
 		Graphics2D g2D = (Graphics2D) g;
@@ -89,9 +101,6 @@ public class Plateau extends JComponent {
 					g2D.drawOval((j + 1) * CASE_LARGEUR, (i + 1) * CASE_LARGEUR, CASE_LARGEUR - 10, CASE_LARGEUR - 10);
 				}
 				pair++;
-
-				// g2D.fill(new Rectangle2D.Double((j+1) * CASE_LARGEUR,(i+1) * CASE_LARGEUR,
-				// CASE_LARGEUR, CASE_LARGEUR));
 			}
 		}
 
@@ -106,14 +115,18 @@ public class Plateau extends JComponent {
 		Image image = null;
 		for (int i = 0; i < this.hauteur; i++) {
 			for (int j = 0; j < this.largeur; j++) {
-				if(pions[i][j] != null) {
-					if(pions[i][j].charAt(0) == 'B') { // pion blanc
+				if(jeuPlateau.getCase(i, j).getEtat() == 2)  {
+					if(jeuPlateau.getCase(i, j).getJoueur().getNum() == 1) { // pion blanc
 						image = lisImage("pionBlanc.png");
-					}else if(pions[i][j].charAt(0) == 'L') { // pion blanc avec balle
-						image = lisImage("pionBlancBall.png");
-					}else if(pions[i][j].charAt(0) == 'N') { // pion noir
+					}else if(jeuPlateau.getCase(i, j).getJoueur().getNum() == 2) { // pion noir
 						image = lisImage("pionNoir.png");		
-					}else if(pions[i][j].charAt(0) == 'O') { // pion noir avec une balle
+					}
+					tracer(g2D, image, (j+1)*CASE_LARGEUR, (i+1)*CASE_LARGEUR, CASE_LARGEUR-10, CASE_LARGEUR-10);
+				}
+				else if(jeuPlateau.getCase(i, j).getEtat() == 1)  {
+					if(jeuPlateau.getCase(i, j).getJoueur().getNum() == 1) { // pion blanc
+						image = lisImage("pionBlancBall.png");
+					}else if(jeuPlateau.getCase(i, j).getJoueur().getNum() == 2) { // pion noir
 						image = lisImage("pionNoirBall.png");
 					}
 					tracer(g2D, image, (j+1)*CASE_LARGEUR, (i+1)*CASE_LARGEUR, CASE_LARGEUR-10, CASE_LARGEUR-10);
