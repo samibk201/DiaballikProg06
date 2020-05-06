@@ -21,6 +21,9 @@ public class FenetreLevelIA extends JFrame{
 	JPanel panelTitle = new JPanel();
 	JPanel panelButtons = new JPanel();
 	JPanel panelBack = new JPanel();
+	JPanel panelFacile = new JPanel();
+	JPanel panelMoy = new JPanel();
+	JPanel panelDiff = new JPanel();
 	
 	JButton btnFacile = new JButton("Facile");
 	JButton btnMoy = new JButton("Moyen");
@@ -31,7 +34,7 @@ public class FenetreLevelIA extends JFrame{
 
 	public FenetreLevelIA() {
 		
-		//Window settings
+		// Window settings
 		window.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		window.setSize(largeur, hauteur);
 		window.setResizable(false);
@@ -40,19 +43,26 @@ public class FenetreLevelIA extends JFrame{
 
 		container.setLayout(new BorderLayout());
 
-		//Title
+		
+		// Title
 		JLabel title = new JLabel("Choix du niveau de l'IA");
 		title.setFont( new Font("Tahoma", Font.BOLD, 36));
 		panelTitle.add(title);
 
-		//Buttons
+
+		// Buttons
+		panelFacile.setLayout(new BoxLayout(panelFacile, BoxLayout.LINE_AXIS));
+		panelFacile.add(btnFacile);
+		panelMoy.setLayout(new BoxLayout(panelMoy, BoxLayout.LINE_AXIS));
+		panelMoy.add(btnMoy);
+		panelDiff.setLayout(new BoxLayout(panelDiff, BoxLayout.LINE_AXIS));
+		panelDiff.add(btnDiff);
+
 		panelButtons.setLayout(new BoxLayout(panelButtons, BoxLayout.Y_AXIS));		
-		panelButtons.add(Box.createRigidArea(new Dimension(120,250)));
-		panelButtons.add(btnFacile);		
-		panelButtons.add(Box.createRigidArea(new Dimension(0,40)));
-		panelButtons.add(btnMoy);		
-		panelButtons.add(Box.createRigidArea(new Dimension(0,40)));
-		panelButtons.add(btnDiff);
+		panelButtons.add(panelFacile);		
+		panelButtons.add(panelMoy);		
+		panelButtons.add(panelDiff);
+		panelBack.add(btnBack);
 		
 		panelBack.add(btnBack);
 		btnBack.addActionListener(new ActionListener(){
