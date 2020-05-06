@@ -77,7 +77,9 @@ public class FenetreGameSetIA extends JFrame {
         JTextField nameField = new JTextField("Joueur1");
         nameField.setColumns(20);
 
+
         panelPlateau.setLayout(new FlowLayout(FlowLayout.CENTER));
+        panelPlateau.setSize(new Dimension(20, 20));
         panelPlateau.add(plateau);
         panelPlateau.add(standard);
         panelPlateau.add(melange);
@@ -86,10 +88,12 @@ public class FenetreGameSetIA extends JFrame {
         bg.add(melange);
 
         panelName.setLayout(new FlowLayout(FlowLayout.CENTER));
+        panelName.setSize(new Dimension(20, 20));
         panelName.add(name);
         panelName.add(nameField);
 
         panelAvatar.setLayout(new FlowLayout(FlowLayout.CENTER));
+        panelAvatar.setSize(new Dimension(20, 20));
         panelAvatar.add(avatar);
         panelAvatar.add(a1);
         panelAvatar.add(a2);
@@ -100,6 +104,7 @@ public class FenetreGameSetIA extends JFrame {
         bgAvatar.add(a3);
 
         panelColor.setLayout(new FlowLayout(FlowLayout.CENTER));
+        panelColor.setSize(new Dimension(20, 20));
         panelColor.add(color);
         panelColor.add(white);
         panelColor.add(black);
@@ -107,7 +112,7 @@ public class FenetreGameSetIA extends JFrame {
         bgColor.add(white);
         bgColor.add(black);
 
-	
+
         panelSettings.setLayout(new BoxLayout(panelSettings, BoxLayout.Y_AXIS));
         //panelSettings.add(Box.createRigidArea(new Dimension(0, 100)));
         panelSettings.add(panelPlateau);
