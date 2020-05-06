@@ -75,11 +75,9 @@ public class FenetreGameSetIA extends JFrame {
         JLabel color = new JLabel("Couleur des pions : ");
 
         JTextField nameField = new JTextField("Joueur1");
-        nameField.setColumns(20);
+        nameField.setColumns(10);
 
-
-        panelPlateau.setLayout(new FlowLayout(FlowLayout.CENTER));
-        panelPlateau.setSize(new Dimension(20, 20));
+        panelPlateau.setLayout(new BoxLayout(panelPlateau, BoxLayout.LINE_AXIS));
         panelPlateau.add(plateau);
         panelPlateau.add(standard);
         panelPlateau.add(melange);
@@ -87,13 +85,11 @@ public class FenetreGameSetIA extends JFrame {
         bg.add(standard);
         bg.add(melange);
 
-        panelName.setLayout(new FlowLayout(FlowLayout.CENTER));
-        panelName.setSize(new Dimension(20, 20));
+        panelName.setLayout(new BoxLayout(panelName, BoxLayout.LINE_AXIS));
         panelName.add(name);
         panelName.add(nameField);
 
-        panelAvatar.setLayout(new FlowLayout(FlowLayout.CENTER));
-        panelAvatar.setSize(new Dimension(20, 20));
+        panelAvatar.setLayout(new BoxLayout(panelAvatar, BoxLayout.LINE_AXIS));
         panelAvatar.add(avatar);
         panelAvatar.add(a1);
         panelAvatar.add(a2);
@@ -103,8 +99,7 @@ public class FenetreGameSetIA extends JFrame {
         bgAvatar.add(a2);
         bgAvatar.add(a3);
 
-        panelColor.setLayout(new FlowLayout(FlowLayout.CENTER));
-        panelColor.setSize(new Dimension(20, 20));
+        panelColor.setLayout(new BoxLayout(panelColor, BoxLayout.LINE_AXIS));
         panelColor.add(color);
         panelColor.add(white);
         panelColor.add(black);
@@ -114,13 +109,9 @@ public class FenetreGameSetIA extends JFrame {
 
 
         panelSettings.setLayout(new BoxLayout(panelSettings, BoxLayout.Y_AXIS));
-        //panelSettings.add(Box.createRigidArea(new Dimension(0, 100)));
         panelSettings.add(panelPlateau);
-        //panelSettings.add(Box.createRigidArea(new Dimension(0, 10)));
-        panelSettings.add(panelName);
-        //panelSettings.add(Box.createRigidArea(new Dimension(0, 10)));
+        //panelSettings.add(panelName);
         panelSettings.add(panelAvatar);
-        //panelSettings.add(Box.createRigidArea(new Dimension(0, 10)));
         panelSettings.add(panelColor);
 
         
