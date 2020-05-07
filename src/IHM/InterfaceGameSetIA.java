@@ -54,7 +54,7 @@ public class InterfaceGameSetIA extends JPanel{
         JTextField nameField = new JTextField("Joueur1");
         nameField.setColumns(10);
 
-        this.next = new Button("ressources/nextSR.png");
+        this.next = new Button("ressources/ButtonImage/nextSR.png");
         
         this.panelPlat = new JPanel();
         this.panelName = new JPanel();
