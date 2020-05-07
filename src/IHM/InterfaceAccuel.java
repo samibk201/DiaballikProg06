@@ -29,11 +29,11 @@ public class InterfaceAcceul extends JPanel{
 
         //this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        this.unJoueur = new Button("ressources/jVSjSR(1).png");
-        this.deuxJoueur = new Button("ressources/jVSiaSR.png");
-        this.enCours = new Button("ressources/encoursSR.png");
-        this.tutoriel = new Button("ressources/tutorielSR.png");
-        this.quit = new Button("ressources/btnquitSR.png");
+        this.unJoueur = new Button("ressources/ButtonImage/jVSjSR(1).png");
+        this.deuxJoueur = new Button("ressources/ButtonImage/jVSiaSR.png");
+        this.enCours = new Button("ressources/ButtonImage/encoursSR.png");
+        this.tutoriel = new Button("ressources/ButtonImage/tutorielSR.png");
+        this.quit = new Button("ressources/ButtonImage/btnquitSR.png");
         
         Dimension btnDimension = unJoueur.getSize();
 
