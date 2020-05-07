@@ -1,4 +1,4 @@
-package Vue;
+package IHM;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
