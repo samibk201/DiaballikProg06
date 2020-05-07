@@ -49,7 +49,7 @@ public class InterfaceJeu extends JLayeredPane {
         {  
             public void mouseClicked(MouseEvent e)  
             {  
-               setOnTop(levelIA);
+               setOnTop(jeu);
             }  
         });
 
