@@ -1,4 +1,4 @@
-package Vue;
+package IHM;
 
 import java.awt.Color;
 import java.awt.Dimension;
