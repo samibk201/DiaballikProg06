@@ -18,7 +18,6 @@ import javax.swing.JComponent;
 public class InterfaceJeu extends JLayeredPane {
 
     public InterfaceAcceul acceuil;
-    public InterfacePlateau jeu;
     public InterfaceLevel levelIA;
     InterfaceGameSetIA gameSetIA;
 
@@ -35,9 +34,6 @@ public class InterfaceJeu extends JLayeredPane {
 
         acceuil = new InterfaceAcceul();
         acceuil.init();
-
-        jeu = new InterfacePlateau();
-        jeu.init();
 
         gameSetIA = new InterfaceGameSetIA();
         gameSetIA.init();
@@ -69,9 +65,8 @@ public class InterfaceJeu extends JLayeredPane {
 
 
         this.add(acceuil, new Integer(0), 0);
-        this.add(jeu, new Integer(0), 1);
-        this.add(levelIA, new Integer(0), 2);
-        this.add(gameSetIA, new Integer(0), 3);
+        this.add(levelIA, new Integer(0), 1);
+        this.add(gameSetIA, new Integer(0), 2);
     }
 
     public void setOnTop(Component panel) {
