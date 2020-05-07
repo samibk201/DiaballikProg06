@@ -26,9 +26,9 @@ public class InterfaceLevel extends JPanel{
         this.setBackground(new Color(53, 79, 82));
         this.setBounds((screen.width-600)/2, (screen.height-600)/2, 600, 600);
 
-        this.easy = new Button("ressources/easySR.png");
-        this.mid = new Button("ressources/moySR.png");
-        this.diff = new Button("ressources/diffSR.png");
+        this.easy = new Button("ressources/ButtonImage/easySR.png");
+        this.mid = new Button("ressources/ButtonImage/moySR.png");
+        this.diff = new Button("ressources/ButtonImage/diffSR.png");
 
         this.add(easy);
         this.add(mid);
