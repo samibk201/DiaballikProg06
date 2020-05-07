@@ -34,13 +34,6 @@ public class InterfaceAcceul extends JPanel{
         this.enCours = new Button("ressources/ButtonImage/encoursSR.png");
         this.tutoriel = new Button("ressources/ButtonImage/tutorielSR.png");
         this.quit = new Button("ressources/ButtonImage/btnquitSR.png");
-        
-        Dimension btnDimension = unJoueur.getSize();
-
-        int btnX = (screen.width+btnDimension.width)/2;
-        int btnY = (int) (screen.height * 0.25);
-
-        unJoueur.setLocation(btnX, btnY);
 
         this.add(unJoueur);
         this.add(deuxJoueur);
