@@ -29,8 +29,8 @@ public class InterfaceGraphique implements Runnable {
         jeu.init();
 
         JPanel navigation = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        back = new Button("ressources/backSR.png");
-        volum = new Button("ressources/volume.png");
+        back = new Button("ressources/ButtonImage/backSR.png");
+        volum = new Button("ressources/ButtonImage/volume.png");
 
         navigation.add(back);
         navigation.add(volum);
