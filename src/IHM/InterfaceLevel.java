@@ -30,13 +30,6 @@ public class InterfaceLevel extends JPanel{
         this.mid = new Button("ressources/moySR.png");
         this.diff = new Button("ressources/diffSR.png");
 
-        Dimension btnDimension = easy.getSize();
-
-        int btnX = (screen.width+btnDimension.width)/2;
-        int btnY = (int) (screen.height * 0.25);
-
-        easy.setLocation(btnX, btnY);
-
         this.add(easy);
         this.add(mid);
         this.add(diff);
