@@ -1,82 +1,51 @@
-package IHM;
+package Vue;
 
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.BorderLayout;
-import java.awt.Toolkit;
 import java.awt.Component;
-import java.awt.event.*;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 
-import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
-import javax.swing.JComponent;
 
+public class InterfaceAcceul extends JPanel{
 
-public class InterfaceJeu extends JLayeredPane {
+    public Button unJoueur;
+    public Button deuxJoueur;
+    public Button enCours;
+    public Button tutoriel;
+    public Button quit;
 
-    public InterfaceAcceul acceuil;
-    public InterfacePlateau jeu;
-    public InterfaceLevel levelIA;
-    InterfaceGameSetIA gameSetIA;
-
-
-    InterfaceJeu() {
+    InterfaceAcceul() {
         super();
     }
 
     public void init() {
-        
+
         Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-        
+        // acceuil.setLayout(new BoxLayout(acceuil, BoxLayout.PAGE_AXIS));
         this.setBackground(new Color(53, 79, 82));
+        this.setBounds((screen.width-600)/2, (screen.height-600)/2, 600, 600);
 
-        acceuil = new InterfaceAcceul();
-        acceuil.init();
+        //this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        jeu = new InterfacePlateau();
-        jeu.init();
+        this.unJoueur = new Button("ressources/jVSjSR(1).png");
+        this.deuxJoueur = new Button("ressources/jVSiaSR.png");
+        this.enCours = new Button("ressources/encoursSR.png");
+        this.tutoriel = new Button("ressources/tutorielSR.png");
+        this.quit = new Button("ressources/btnquitSR.png");
+        
+        Dimension btnDimension = unJoueur.getSize();
 
-        gameSetIA = new InterfaceGameSetIA();
-        gameSetIA.init();
+        int btnX = (screen.width+btnDimension.width)/2;
+        int btnY = (int) (screen.height * 0.25);
 
-        levelIA = new InterfaceLevel();
-        levelIA.init();
+        unJoueur.setLocation(btnX, btnY);
 
-        acceuil.unJoueur.addMouseListener(new MouseAdapter()  
-        {  
-            public void mouseClicked(MouseEvent e)  
-            {  
-               setOnTop(levelIA);
-            }  
-        });
-
-        acceuil.deuxJoueur.addMouseListener(new MouseAdapter()  
-        {  
-            public void mouseClicked(MouseEvent e)  
-            {  
-               setOnTop(gameSetIA);
-            }  
-        });
-
-        gameSetIA.next.addMouseListener(new MouseAdapter(){
-            public void mouseClicked(MouseEvent e){
-                setOnTop(levelIA);
-            }
-        });
-
-
-        this.add(acceuil, new Integer(0), 0);
-        this.add(jeu, new Integer(0), 1);
-        this.add(levelIA, new Integer(0), 2);
-        this.add(gameSetIA, new Integer(0), 3);
+        this.add(unJoueur);
+        this.add(deuxJoueur);
+        this.add(enCours);
+        this.add(tutoriel);
+        this.add(quit);
     }
-
-    public void setOnTop(Component panel) {
-        this.moveToFront(panel);
-    }
-
-
 }
