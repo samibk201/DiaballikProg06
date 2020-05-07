@@ -1,4 +1,4 @@
-package Vue;
+package IHM;
 
 import java.awt.*;
 import java.awt.Color;
