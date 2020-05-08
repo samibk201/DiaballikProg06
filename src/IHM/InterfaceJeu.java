@@ -17,7 +17,7 @@ import javax.swing.JComponent;
 
 public class InterfaceJeu extends JLayeredPane {
 
-    public InterfaceAcceul acceuil;
+    public InterfaceAccueil acceuil;
     public InterfaceLevel levelIA;
     InterfaceGameSetIA gameSetIA;
 
@@ -32,7 +32,7 @@ public class InterfaceJeu extends JLayeredPane {
         
         this.setBackground(new Color(53, 79, 82));
 
-        acceuil = new InterfaceAcceul();
+        acceuil = new InterfaceAccueil();
         acceuil.init();
 
         gameSetIA = new InterfaceGameSetIA();

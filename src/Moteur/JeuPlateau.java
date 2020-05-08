@@ -19,7 +19,7 @@ public class JeuPlateau {
 	private int largeur;
 	private int hauteur;
 	Case[][] cases;
-
+	
 	public JeuPlateau(Joueur j1, Joueur j2, int disposition) {
 		this.largeur = 7;
 		this.hauteur = 7;
@@ -45,8 +45,22 @@ public class JeuPlateau {
 	private int getHauteur() {
 		return this.hauteur;
 	}
+	
+	
 
-	void init(int l, int h, int disposition) {
+	public boolean estOccupe(int l, int c) {
+		return getCase(l, c).getEtat() == OCCUPE;
+	}
+
+	public boolean estOccupeAvecBalle(int l, int c) {
+		return getCase(l, c).getEtat() == OC_BALLE;
+	}
+
+	public boolean estLibre(int l, int c) {
+		return getCase(l, c).getEtat() == LIBRE;
+	}
+
+	public void init(int l, int h, int disposition) {
 		// Au début seule la première et la dernière ligne sont occupées les autres sont
 		// vides
 		// on commence donct mettre à vide les cases libres
@@ -271,11 +285,11 @@ public class JeuPlateau {
 		int dX = 0, dY = 0;
 		switch (action) {
 		case 0:// Avancer
-			// on prend en considération le joueur
-			// 1-le joueur 1 est celui qui occupe le camps de la ligne 0 dans ce cas
-			// pour avancer on augmente x de 1
-			// 2 - le joueur 2 occupe le camps de la dernière ligne l - 1 dans ce cas
-			// pour avancer on diminue x de 1
+				// on prend en considération le joueur
+				// 1-le joueur 1 est celui qui occupe le camps de la ligne 0 dans ce cas
+				// pour avancer on augmente x de 1
+				// 2 - le joueur 2 occupe le camps de la dernière ligne l - 1 dans ce cas
+				// pour avancer on diminue x de 1
 
 			if (joueur.getNum() == 1) {
 				// là on augmente la ligne et la colonne

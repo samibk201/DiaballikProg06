@@ -8,7 +8,7 @@ import java.awt.Toolkit;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
-public class InterfaceAcceul extends JPanel{
+public class InterfaceAccueil extends JPanel{
 
     public Button unJoueur;
     public Button deuxJoueur;
@@ -16,7 +16,7 @@ public class InterfaceAcceul extends JPanel{
     public Button tutoriel;
     public Button quit;
 
-    InterfaceAcceul() {
+    InterfaceAccueil() {
         super();
     }
 

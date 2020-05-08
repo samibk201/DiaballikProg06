@@ -3,7 +3,7 @@ package IHM;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-import java.awt.color.Color;
+import java.awt.Color;
 
 import java.awt.Dimension;
 
