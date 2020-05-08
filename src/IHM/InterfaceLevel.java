@@ -24,11 +24,16 @@ public class InterfaceLevel extends JPanel{
         Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
         // acceuil.setLayout(new BoxLayout(acceuil, BoxLayout.PAGE_AXIS));
         this.setBackground(new Color(53, 79, 82));
-        this.setBounds((screen.width-600)/2, (screen.height-600)/2, 600, 600);
+        this.setBounds(0, 0, screen.width, screen.height);
+
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         this.easy = new Button("ressources/ButtonImage/easySR.png");
+        easy.setAlignmentX(Component.CENTER_ALIGNMENT);
         this.mid = new Button("ressources/ButtonImage/moySR.png");
+        mid.setAlignmentX(Component.CENTER_ALIGNMENT);
         this.diff = new Button("ressources/ButtonImage/diffSR.png");
+        diff.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         this.add(easy);
         this.add(mid);
