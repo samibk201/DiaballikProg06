@@ -66,9 +66,9 @@ public class InterfaceJeu extends JLayeredPane {
         });
 
 
-        this.add(acceuil, new Integer(0), 0);
-        this.add(levelIA, new Integer(0), 1);
-        this.add(gameSetIA, new Integer(0), 2);
+        this.add(acceuil);
+        this.add(levelIA);
+        this.add(gameSetIA);
     }
 
     /*public void setOnTop(Component panel) {
