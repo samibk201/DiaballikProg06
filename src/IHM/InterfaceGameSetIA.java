@@ -13,6 +13,9 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import java.awt.FlowLayout;
+import java.awt.Font;
+
 
 public class InterfaceGameSetIA extends JPanel{
 
