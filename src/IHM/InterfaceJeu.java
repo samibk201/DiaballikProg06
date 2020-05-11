@@ -19,7 +19,7 @@ public class InterfaceJeu extends JLayeredPane {
 
     public InterfaceAccueil acceuil;
     public InterfaceLevel levelIA;
-    InterfaceGameSetIA gameSetIA;
+    public InterfaceGameSetIA gameSetIA;
 
 
     InterfaceJeu() {
@@ -41,25 +41,27 @@ public class InterfaceJeu extends JLayeredPane {
         levelIA = new InterfaceLevel();
         levelIA.init();
 
-        acceuil.unJoueur.addMouseListener(new MouseAdapter()  
-        {  
-            public void mouseClicked(MouseEvent e)  
-            {  
-               setOnTop(levelIA);
+        acceuil.unJoueur.addMouseListener(new MouseAdapter() {  
+            public void mouseClicked(MouseEvent e){  
+                gameSetIA.setVisible(true);
+                acceuil.setVisible(false);
+                levelIA.setVisible(false);
             }  
         });
 
-        acceuil.deuxJoueur.addMouseListener(new MouseAdapter()  
-        {  
-            public void mouseClicked(MouseEvent e)  
-            {  
-               setOnTop(gameSetIA);
+        acceuil.deuxJoueur.addMouseListener(new MouseAdapter(){  
+            public void mouseClicked(MouseEvent e){  
+               gameSetIA.setVisible(true);
+               acceuil.setVisible(false);
+               levelIA.setVisible(false);
             }  
         });
 
         gameSetIA.next.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent e){
-                setOnTop(levelIA);
+                levelIA.setVisible(true);
+                acceuil.setVisible(false);
+                gameSetIA.setVisible(false);
             }
         });
 
@@ -69,9 +71,9 @@ public class InterfaceJeu extends JLayeredPane {
         this.add(gameSetIA, new Integer(0), 2);
     }
 
-    public void setOnTop(Component panel) {
+    /*public void setOnTop(Component panel) {
         this.moveToFront(panel);
-    }
+    }*/
 
 
 }
