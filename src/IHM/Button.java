@@ -3,10 +3,10 @@ package IHM;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-import java.awt.Color;
 
 import java.awt.Dimension;
 
+@SuppressWarnings("serial")
 public class Button extends JLabel {
 
     Button(String imagePath, String text, int largeur, int hauteur) {

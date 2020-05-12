@@ -30,7 +30,7 @@ public class FenetrePartie extends JComponent implements Runnable {
 	
 	
 	PlateauGraphique plateauGraphique;
-	ImagePion imgPion = null;
+	//ImagePion imgPion = null;
 	private JToggleButton IA1;
 	private JToggleButton IA2;
 	private JToggleButton son;

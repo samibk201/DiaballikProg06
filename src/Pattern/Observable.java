@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 
 /*
- * public class Observable { List<Observateur> observateurs;
+ * public interface Observable { List<Observateur> observateurs;
  * 
  * public Observable() { observateurs = new ArrayList<>(); }
  * 

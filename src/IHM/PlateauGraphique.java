@@ -5,23 +5,20 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.geom.Rectangle2D;
-import java.awt.geom.Rectangle2D.Double;
 import java.awt.geom.RoundRectangle2D;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JComponent;
-import javax.swing.JPanel;
 
 import Moteur.JeuPlateau;
 import Moteur.Joueur;
 import Moteur.Partie;
 import Pattern.Observable;
-import Pattern.Observateur;
+import Pattern.Observateur;;
 
+@SuppressWarnings("serial")
 public class PlateauGraphique extends JComponent implements Observable {
 	private int nbColonnes;
 	private int nbLignes = nbColonnes = 7;
@@ -191,4 +188,5 @@ public class PlateauGraphique extends JComponent implements Observable {
 
 	}
 
+	
 }
