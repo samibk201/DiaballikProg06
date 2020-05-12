@@ -3,6 +3,7 @@ package IHM;
 import java.awt.*;
 import java.awt.Color;
 import javax.swing.*;
+import java.awt.event.*;
 
 
 
