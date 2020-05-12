@@ -1,20 +1,24 @@
 package IHM;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import javax.swing.border.Border;
+
+import org.w3c.dom.events.MouseEvent;
 
 import java.awt.FlowLayout;
 import java.awt.Font;
+
+import java.awt.event.*;
 
 
 public class InterfaceGameSetIA extends JPanel{
@@ -27,17 +31,17 @@ public class InterfaceGameSetIA extends JPanel{
     JPanel panelColor;
 
     ButtonGroup bgPlat;
-    public JRadioButton standard;
-    public JRadioButton melange;
+	JRadioButton standard;
+    JRadioButton melange;
     
     ButtonGroup bgAvatar;
-    public JRadioButton a1;
-    public JRadioButton a2;
-    public JRadioButton a3;
+    JRadioButton a1;
+    JRadioButton a2;
+    JRadioButton a3;
 
     ButtonGroup bgColor;
-    public JRadioButton white;
-    public JRadioButton black;
+    JRadioButton white;
+    JRadioButton black;
 
     Button plateau;
     Button name;
@@ -45,7 +49,10 @@ public class InterfaceGameSetIA extends JPanel{
     Button color;
 
     public Button next;
-	
+    public Button back;
+    public Button volum;
+
+
     InterfaceGameSetIA(){
         super();
     }
@@ -54,10 +61,22 @@ public class InterfaceGameSetIA extends JPanel{
 
         Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
         this.setBackground(new Color(53, 79, 82));
-        this.setBounds((screen.width-600)/2, (screen.height-600)/2, 600, 600);
+        this.setBounds(0, 0, screen.width, screen.height);
+
+        this.setLayout(new BorderLayout());
+
+        JPanel bord = new JPanel();
+        bord.setLayout(new BorderLayout());
+
+        JPanel flow = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        back = new Button("ressources/ButtonImage/backSR.png");
+        volum = new Button("ressources/ButtonImage/volume.png");
+        flow.add(back);
+        flow.add(volum);
 
         title = new JLabel("Paramètres de la partie");
-        title.setFont(new Font("Tahoma", Font.BOLD, 36));
+        title.setFont(new Font("Tahoma", Font.BOLD, 56));
+        title.setForeground(Color.white);
         JPanel flowTitle = new JPanel();
         flowTitle.setLayout(new FlowLayout(FlowLayout.CENTER));
         flowTitle.setBackground(new Color(53, 79, 82));
@@ -95,7 +114,7 @@ public class InterfaceGameSetIA extends JPanel{
         panelPlat.add(melange);
 
         this.panelName = new JPanel();
-        panelName.setLayout(new BoxLayout(panelName, BoxLayout.LINE_AXIS));
+        panelName.setLayout(new FlowLayout());
         panelName.setBackground(new Color(53, 79, 82));
         this.name = new Button("ressources/ButtonImage/button1.png","Nom du joueur : ");
         panelName.add(name);
@@ -145,9 +164,12 @@ public class InterfaceGameSetIA extends JPanel{
         boxy.add(panelName);
         boxy.add(panelAvatar);
         boxy.add(panelColor);
-        boxy.add(next);
 
-        this.add(boxy);
+        bord.add(boxy, BorderLayout.CENTER);
+
+        // Ajout des composants dans le panel
+        this.add(flow, BorderLayout.NORTH);
+        this.add(bord, BorderLayout.CENTER);
+        this.add(next, BorderLayout.SOUTH);
     }
-    
 }
