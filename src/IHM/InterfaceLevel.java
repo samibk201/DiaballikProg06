@@ -7,6 +7,8 @@ import java.awt.Toolkit;
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
+import javax.swing.JLabel;
+import java.awt.*;
 
 
 public class InterfaceLevel extends JPanel{
@@ -37,7 +39,8 @@ public class InterfaceLevel extends JPanel{
         box.setBackground(new Color(53, 79, 82));
         box.setAlignmentY(Component.CENTER_ALIGNMENT);
 
-        JPanel flow = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JPanel flow = new JPanel();
+        flow.setLayout(new FlowLayout(FlowLayout.LEFT));
         back = new Button("ressources/ButtonImage/backSR.png");
         volum = new Button("ressources/ButtonImage/volume.png");
         flow.add(back);
