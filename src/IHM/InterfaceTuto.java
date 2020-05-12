@@ -25,6 +25,8 @@ public class InterfaceTuto extends JPanel{
     JTextArea text;
     
     public Button next;
+    public Button back;
+    public Button volum;
 
     InterfaceTuto(){
         super();
@@ -35,6 +37,14 @@ public class InterfaceTuto extends JPanel{
         Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
         this.setBackground(new Color(53, 79, 82));
         this.setBounds(0, 0, screen.width, screen.height);
+
+        this.setLayout(new BorderLayout());
+
+        JPanel flow = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        back = new Button("ressources/ButtonImage/backSR.png");
+        volum = new Button("ressources/ButtonImage/volume.png");
+        flow.add(back);
+        flow.add(volum);
 
         JPanel flowTitle = new JPanel();
         flowTitle.setLayout(new FlowLayout(FlowLayout.CENTER));
@@ -70,14 +80,14 @@ public class InterfaceTuto extends JPanel{
 
         flowNext.add(next);
 
-        JPanel box = new JPanel();
-        box.setLayout(new BoxLayout(box, BoxLayout.Y_AXIS));
-        box.setBackground(new Color(53, 79, 82));
-        box.add(flowText);
-        box.add(flowNext);
+        JPanel boxFlow = new JPanel();
+        boxFlow.setLayout(new BoxLayout(boxFlow, BoxLayout.Y_AXIS));
+        boxFlow.add(flow);
+        boxFlow.add(flowTitle);
 
-        this.add(flowTitle);
-        this.add(box);
+        this.add(boxFlow, BorderLayout.NORTH);
+        this.add(flowText, BorderLayout.CENTER);
+        this.add(flowNext, BorderLayout.SOUTH);
     }
     
 }
