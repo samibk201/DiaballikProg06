@@ -2,17 +2,10 @@ package IHM;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.BorderLayout;
 import java.awt.Toolkit;
-import java.awt.Component;
 import java.awt.event.*;
 
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
-import javax.swing.JPanel;
-import javax.swing.JComponent;
 
 
 public class InterfaceJeu extends JLayeredPane {
@@ -39,7 +32,6 @@ public class InterfaceJeu extends JLayeredPane {
         this.setBackground(new Color(53, 79, 82));
 
         // Initialisation des fenêtres
-
         acceuil = new InterfaceAccueil();
         acceuil.init();
 
@@ -95,7 +87,7 @@ public class InterfaceJeu extends JLayeredPane {
         acceuil.deuxJoueur.addMouseListener(new MouseAdapter(){  
             public void mouseClicked(MouseEvent e){  
                gameSetIA.setVisible(true);
-               gameSetIA.setVisible(false);
+               gameSetJ.setVisible(false);
                acceuil.setVisible(false);
                levelIA.setVisible(false);
                tuto.setVisible(false);
@@ -104,20 +96,6 @@ public class InterfaceJeu extends JLayeredPane {
                tuto4.setVisible(false);
                tuto5.setVisible(false);
             }  
-        });
-
-        gameSetIA.next.addMouseListener(new MouseAdapter(){
-            public void mouseClicked(MouseEvent e){
-                levelIA.setVisible(true);
-                acceuil.setVisible(false);
-                gameSetIA.setVisible(false);
-                gameSetIA.setVisible(false);
-                tuto.setVisible(false);
-                tuto2.setVisible(false);
-                tuto3.setVisible(false);
-                tuto4.setVisible(false);
-                tuto5.setVisible(false);
-            }
         });
 
         acceuil.tutoriel.addMouseListener(new MouseAdapter(){
@@ -134,13 +112,98 @@ public class InterfaceJeu extends JLayeredPane {
             }
         });
         
+
+        gameSetIA.next.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e){
+                levelIA.setVisible(true);
+                acceuil.setVisible(false);
+                gameSetIA.setVisible(false);
+                gameSetJ.setVisible(false);
+                tuto.setVisible(false);
+                tuto2.setVisible(false);
+                tuto3.setVisible(false);
+                tuto4.setVisible(false);
+                tuto5.setVisible(false);
+            }
+        });
+
+        gameSetIA.back.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e){
+                acceuil.setVisible(true);
+                gameSetIA.setVisible(false);
+                levelIA.setVisible(false);
+                gameSetJ.setVisible(false);
+                tuto.setVisible(false);
+                tuto2.setVisible(false);
+                tuto3.setVisible(false);
+                tuto4.setVisible(false);
+                tuto5.setVisible(false);
+            }
+        });
+
+        gameSetJ.back.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e){
+                acceuil.setVisible(true);
+                gameSetIA.setVisible(false);
+                levelIA.setVisible(false);
+                gameSetJ.setVisible(false);
+                tuto.setVisible(false);
+                tuto2.setVisible(false);
+                tuto3.setVisible(false);
+                tuto4.setVisible(false);
+                tuto5.setVisible(false);
+            }
+        });
+
+        levelIA.back.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e){
+                acceuil.setVisible(false);
+                gameSetIA.setVisible(true);
+                levelIA.setVisible(false);
+                gameSetJ.setVisible(false);
+                tuto.setVisible(false);
+                tuto2.setVisible(false);
+                tuto3.setVisible(false);
+                tuto4.setVisible(false);
+                tuto5.setVisible(false);
+            }
+        });
+        
         tuto.next.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent e){
                 tuto2.setVisible(true);
                 levelIA.setVisible(false);
                 acceuil.setVisible(false);
                 gameSetIA.setVisible(false);
+                gameSetJ.setVisible(false);
+                tuto.setVisible(false);
+                tuto3.setVisible(false);
+                tuto4.setVisible(false);
+                tuto5.setVisible(false);
+            }
+        });
+
+        tuto.back.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e){
+                acceuil.setVisible(true);
+                tuto2.setVisible(false);
+                levelIA.setVisible(false);
                 gameSetIA.setVisible(false);
+                gameSetJ.setVisible(false);
+                tuto.setVisible(false);
+                tuto3.setVisible(false);
+                tuto4.setVisible(false);
+                tuto5.setVisible(false);
+            }
+        });
+
+        tuto2.home.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e){
+                acceuil.setVisible(true);
+                tuto2.setVisible(false);
+                levelIA.setVisible(false);
+                gameSetIA.setVisible(false);
+                gameSetJ.setVisible(false);
                 tuto.setVisible(false);
                 tuto3.setVisible(false);
                 tuto4.setVisible(false);
@@ -154,7 +217,7 @@ public class InterfaceJeu extends JLayeredPane {
                 levelIA.setVisible(false);
                 acceuil.setVisible(false);
                 gameSetIA.setVisible(false);
-                gameSetIA.setVisible(false);
+                gameSetJ.setVisible(false);
                 tuto2.setVisible(false);
                 tuto3.setVisible(false);
                 tuto4.setVisible(false);
@@ -168,9 +231,23 @@ public class InterfaceJeu extends JLayeredPane {
                 levelIA.setVisible(false);
                 acceuil.setVisible(false);
                 gameSetIA.setVisible(false);
-                gameSetIA.setVisible(false);
+                gameSetJ.setVisible(false);
                 tuto.setVisible(false);
                 tuto2.setVisible(false);
+                tuto4.setVisible(false);
+                tuto5.setVisible(false);
+            }
+        });
+
+        tuto3.home.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e){
+                acceuil.setVisible(true);
+                tuto2.setVisible(false);
+                levelIA.setVisible(false);
+                gameSetIA.setVisible(false);
+                gameSetJ.setVisible(false);
+                tuto.setVisible(false);
+                tuto3.setVisible(false);
                 tuto4.setVisible(false);
                 tuto5.setVisible(false);
             }
@@ -182,7 +259,7 @@ public class InterfaceJeu extends JLayeredPane {
                 levelIA.setVisible(false);
                 acceuil.setVisible(false);
                 gameSetIA.setVisible(false);
-                gameSetIA.setVisible(false);
+                gameSetJ.setVisible(false);
                 tuto.setVisible(false);
                 tuto3.setVisible(false);
                 tuto4.setVisible(false);
@@ -196,10 +273,24 @@ public class InterfaceJeu extends JLayeredPane {
                 levelIA.setVisible(false);
                 acceuil.setVisible(false);
                 gameSetIA.setVisible(false);
-                gameSetIA.setVisible(false);
+                gameSetJ.setVisible(false);
                 tuto.setVisible(false);
                 tuto2.setVisible(false);
                 tuto3.setVisible(false);
+                tuto5.setVisible(false);
+            }
+        });
+
+        tuto4.home.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e){
+                acceuil.setVisible(true);
+                tuto2.setVisible(false);
+                levelIA.setVisible(false);
+                gameSetIA.setVisible(false);
+                gameSetJ.setVisible(false);
+                tuto.setVisible(false);
+                tuto3.setVisible(false);
+                tuto4.setVisible(false);
                 tuto5.setVisible(false);
             }
         });
@@ -210,7 +301,7 @@ public class InterfaceJeu extends JLayeredPane {
                 levelIA.setVisible(false);
                 acceuil.setVisible(false);
                 gameSetIA.setVisible(false);
-                gameSetIA.setVisible(false);
+                gameSetJ.setVisible(false);
                 tuto.setVisible(false);
                 tuto2.setVisible(false);
                 tuto4.setVisible(false);
@@ -224,11 +315,25 @@ public class InterfaceJeu extends JLayeredPane {
                 levelIA.setVisible(false);
                 acceuil.setVisible(false);
                 gameSetIA.setVisible(false);
-                gameSetIA.setVisible(false);
+                gameSetJ.setVisible(false);
                 tuto.setVisible(false);
                 tuto2.setVisible(false);
                 tuto3.setVisible(false);
                 tuto4.setVisible(false);
+            }
+        });
+
+        tuto5.home.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e){
+                acceuil.setVisible(true);
+                tuto2.setVisible(false);
+                levelIA.setVisible(false);
+                gameSetIA.setVisible(false);
+                gameSetJ.setVisible(false);
+                tuto.setVisible(false);
+                tuto3.setVisible(false);
+                tuto4.setVisible(false);
+                tuto5.setVisible(false);
             }
         });
 
@@ -238,15 +343,27 @@ public class InterfaceJeu extends JLayeredPane {
                 levelIA.setVisible(false);
                 acceuil.setVisible(false);
                 gameSetIA.setVisible(false);
-                gameSetIA.setVisible(false);
+                gameSetJ.setVisible(false);
                 tuto.setVisible(false);
                 tuto2.setVisible(false);
                 tuto3.setVisible(false);
                 tuto5.setVisible(false);
             }
         });
-
         
+        tuto5.next.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e){
+                acceuil.setVisible(true);
+                tuto2.setVisible(false);
+                levelIA.setVisible(false);
+                gameSetIA.setVisible(false);
+                gameSetJ.setVisible(false);
+                tuto.setVisible(false);
+                tuto3.setVisible(false);
+                tuto4.setVisible(false);
+                tuto5.setVisible(false);
+            }
+        });
 
         this.add(acceuil);
         this.add(levelIA);
