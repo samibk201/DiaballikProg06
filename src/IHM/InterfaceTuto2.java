@@ -29,6 +29,9 @@ public class InterfaceTuto2 extends JPanel{
 
     public Button next;
     public Button previous;
+public Button home;
+    public Button volum;
+
 
     InterfaceTuto2(){
         super();
@@ -39,6 +42,14 @@ public class InterfaceTuto2 extends JPanel{
         Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
         this.setBackground(new Color(53, 79, 82));
         this.setBounds(0, 0, screen.width, screen.height);
+
+        this.setLayout(new BorderLayout());
+
+        JPanel flow = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        home = new Button("ressources/ButtonImage/homeBSR.png");
+        volum = new Button("ressources/ButtonImage/volume.png");
+        flow.add(home);
+        flow.add(volum);
 
         panelTitle = new JPanel();
         panelTitle.setLayout(new FlowLayout(FlowLayout.CENTER));
@@ -94,9 +105,10 @@ public class InterfaceTuto2 extends JPanel{
         box.setBackground(new Color(53, 79, 82));
         box.add(panelTitle);
         box.add(panelText);
-        box.add(flowBut);
 
-        this.add(box);
+        this.add(flow, BorderLayout.NORTH);
+        this.add(box, BorderLayout.CENTER);
+        this.add(flowBut, BorderLayout.SOUTH);
     }
     
 }
