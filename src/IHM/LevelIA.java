@@ -75,13 +75,10 @@ public class LevelIA extends JFrame{
         box.add(easy);
         box.add(mid);
         box.add(diff);
-
-
-        // Background
-        Image img = new ImageIcon("ressources/ButtonImage/bg.png").getImage();
-        BackgroundPanel panel = new BackgroundPanel(img);
         
-        // Remplissage panel principal
+        // Remplissage panel principal        
+        JPanel panel = new JPanel();
+        panel.setLayout(new BorderLayout());
         panel.add(boxNT, BorderLayout.NORTH);
         panel.add(box, BorderLayout.CENTER);
 
