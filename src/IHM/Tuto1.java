@@ -83,13 +83,11 @@ public class Tuto1 extends JFrame{
         next = new Button("ressources/ButtonImage/nextSR.png");
         next.setAlignmentX(Component.CENTER_ALIGNMENT);
         panelBut.add(next);
-        
-
-        // Background
-        Image img = new ImageIcon("ressources/ButtonImage/bg.png").getImage();
-        BackgroundPanel panel = new BackgroundPanel(img);
+       
         
         // Remplissage panel principal
+                JPanel panel = new JPanel();
+        panel.setLayout(new BorderLayout());
         panel.add(boxNT, BorderLayout.NORTH);
         panel.add(flowText, BorderLayout.CENTER);
         panel.add(panelBut, BorderLayout.SOUTH);
