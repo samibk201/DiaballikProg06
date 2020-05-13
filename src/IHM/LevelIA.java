@@ -50,7 +50,7 @@ public class LevelIA extends JFrame{
         title = new JLabel("Choix du niveau de l'IA");
         title.setFont(new Font("Tahoma", Font.BOLD, 56));
         title.setAlignmentX(CENTER_ALIGNMENT);
-        title.setForeground(Color.white);
+        title.setForeground(Color.black);
 
         // Remplissage panel titre + navig
         JPanel boxNT = new JPanel();
