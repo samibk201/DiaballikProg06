@@ -170,9 +170,9 @@ public class GameSetIA extends JFrame{
         panelBut.add(next);
 
         
-        // Background
-        Image img = new ImageIcon("ressources/ButtonImage/bg.png").getImage();
-        BackgroundPanel panel = new BackgroundPanel(img);
+        // Panel principal
+	JPanel panel = new JPanel();
+        panel.setLayout(new BorderLayout());
         panel.setLayout(new BorderLayout());
         panel.add(boxNT, BorderLayout.NORTH);
         panel.add(bigBox, BorderLayout.CENTER);
