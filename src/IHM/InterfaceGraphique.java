@@ -79,14 +79,6 @@ public class InterfaceGraphique implements Runnable{
                 gameSetJ.init(frame.getWidth(), frame.getHeight());
                 frame.dispose();
             }
-            public void mouseEntered(MouseEvent e){
-                deuxJoueur = new Button("ressources/ButtonImage/jVSjCl.png");
-                deuxJoueur.setVisible(true);
-            }
-            public void mouseExited(MouseEvent e){
-                deuxJoueur = new Button("ressources/ButtonImage/jVSjSR(1).png");
-                deuxJoueur.setVisible(true);
-            }
         });
 
         unJoueur.addMouseListener(new MouseAdapter(){
