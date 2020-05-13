@@ -90,11 +90,9 @@ public class Tuto2 extends JFrame{
         panelBut.add(next);
         
 
-        // Background
-        Image img = new ImageIcon("ressources/ButtonImage/bg.png").getImage();
-        BackgroundPanel panel = new BackgroundPanel(img);
-        
         // Remplissage panel principal
+                JPanel panel = new JPanel();
+        panel.setLayout(new BorderLayout());
         panel.add(boxNT, BorderLayout.NORTH);
         panel.add(flowText, BorderLayout.CENTER);
         panel.add(panelBut, BorderLayout.SOUTH);
