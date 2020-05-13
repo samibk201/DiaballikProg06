@@ -70,7 +70,7 @@ public class GameSetIA extends JFrame{
         title = new JLabel("Paramètres de la partie");
         title.setFont(new Font("Tahoma", Font.BOLD, 56));
         title.setAlignmentX(CENTER_ALIGNMENT);
-        title.setForeground(Color.white);
+        title.setForeground(Color.black);
 
         JPanel boxNT = new JPanel();
         boxNT.setLayout(new BoxLayout(boxNT, BoxLayout.Y_AXIS));
