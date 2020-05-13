@@ -120,9 +120,9 @@ public class InterfaceGraphique implements Runnable{
         mainPanel.add(box, BorderLayout.CENTER);
 
 
-        // Background
-        Image img = new ImageIcon("ressources/ButtonImage/bg.png").getImage();
-        BackgroundPanel panel = new BackgroundPanel(img);
+        // Panel princi        
+	JPanel panel = new JPanel();
+        panel.setLayout(new BorderLayout());
         panel.add(mainPanel);
 
 
