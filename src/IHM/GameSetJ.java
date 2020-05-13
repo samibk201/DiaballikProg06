@@ -77,7 +77,7 @@ public class GameSetJ extends JFrame{
         title = new JLabel("Paramètres de la partie");
         title.setFont(new Font("Tahoma", Font.BOLD, 56));
         title.setAlignmentX(CENTER_ALIGNMENT);
-        title.setForeground(Color.white);
+        title.setForeground(Color.black);
         
         // Panel navig + titre
         JPanel boxNT = new JPanel();
