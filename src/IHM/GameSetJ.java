@@ -74,18 +74,16 @@ public class GameSetJ extends JFrame{
         navig.add(back);
         navig.add(volum);
 
-        JPanel panelTitle = new JPanel();
-        panelTitle.setLayout(new FlowLayout());
-        panelTitle.setOpaque(false);
-        title = new JLabel();
-        title.setIcon(new ImageIcon("ressources/ButtonImage/generatedtext.png"));
-        title.setAlignmentX(Component.CENTER_ALIGNMENT);
-        panelTitle.add(title);
-
+        title = new JLabel("Paramètres de la partie");
+        title.setFont(new Font("Tahoma", Font.BOLD, 56));
+        title.setAlignmentX(CENTER_ALIGNMENT);
+        title.setForeground(Color.white);
+        
+        // Panel navig + titre
         JPanel boxNT = new JPanel();
         boxNT.setLayout(new BoxLayout(boxNT, BoxLayout.Y_AXIS));
         boxNT.add(navig);
-        boxNT.add(panelTitle);
+        boxNT.add(title);
 
 
         // Choix plateau
