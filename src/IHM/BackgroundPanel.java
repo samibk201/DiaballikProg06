@@ -1,4 +1,4 @@
-package src.IHM;
+package IHM;
 
 import java.awt.*;
 import java.awt.image.*;
