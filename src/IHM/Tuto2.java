@@ -21,7 +21,7 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.*;
 
-public class Tuto4 extends JFrame{
+public class Tuto2 extends JFrame{
 
     JTextArea text;
 
@@ -32,7 +32,7 @@ public class Tuto4 extends JFrame{
     Button home;
     Button volum;
     
-    Tuto4(){
+    Tuto2(){
         super();
     }
 
@@ -65,8 +65,10 @@ public class Tuto4 extends JFrame{
         JPanel flowText = new JPanel();
         flowText.setLayout(new FlowLayout());
 
-        text = new JTextArea(" 3. Un pion peut se déplacer uniquement orthogonalement, \n et une case "+
-                            "à la fois. \n Un pion avec une balle ne peut pas bouger.");
+        text = new JTextArea(" 1. Une partie se joue à 2. \n On peut commencer la partie selon "+
+                                "deux configurations : \n     - tous les pions d'un joueur sont devant lui \n"+
+                                "     - deux pions sont placés dans le camp adverse \n" +
+                                " La balle est placée sur le pion centrale.");
         text.setFont(new Font("Tahoma", Font.ITALIC, 26));
         Border border = BorderFactory.createLineBorder(Color.black, 5);
         text.setBorder(border);
@@ -84,29 +86,29 @@ public class Tuto4 extends JFrame{
         prev = new Button("ressources/ButtonImage/previousSR.png");
         panelBut.add(next, BorderLayout.EAST);
         panelBut.add(prev, BorderLayout.WEST);
-   
         
+
         // Remplissage panel principal
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
         panel.add(boxNT, BorderLayout.NORTH);
         panel.add(flowText, BorderLayout.CENTER);
         panel.add(panelBut, BorderLayout.SOUTH);
-        
+
 
         // Clicks
         next.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent e){
-                Tuto5 tuto5 = new Tuto5();
-                tuto5.init(frame.getWidth(), frame.getHeight());
+                Tuto3 tuto3 = new Tuto3();
+                tuto3.init(frame.getWidth(), frame.getHeight());
                 frame.dispose();
             }
         });
 
         prev.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent e){
-                Tuto3 tuto3 = new Tuto3();
-                tuto3.init(frame.getWidth(), frame.getHeight());
+                Tuto1 tuto1 = new Tuto1();
+                tuto1.init(frame.getWidth(), frame.getHeight());
                 frame.dispose();
             }
         });
