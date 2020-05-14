@@ -21,7 +21,7 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.*;
 
-public class Tuto2 extends JFrame{
+public class Tuto3 extends JFrame{
 
     JTextArea text;
 
@@ -32,7 +32,7 @@ public class Tuto2 extends JFrame{
     Button home;
     Button volum;
     
-    Tuto2(){
+    Tuto3(){
         super();
     }
 
@@ -62,20 +62,21 @@ public class Tuto2 extends JFrame{
 
 
         // Panel text
-        JPanel flowText = new JPanel();
-        flowText.setLayout(new FlowLayout());
+        JPanel panelText = new JPanel();
+        panelText = new JPanel();
+        panelText.setLayout(new FlowLayout(FlowLayout.CENTER));
+        panelText.setOpaque(false);
 
-        text = new JTextArea(" 1. Une partie se joue à 2. \n On peut commencer la partie selon "+
-                                "deux configurations : \n     - tous les pions d'un joueur sont devant lui \n"+
-                                "     - deux pions sont placés dans le camp adverse \n" +
-                                " La balle est placée sur le pion centrale.");
+        text = new JTextArea(" 2. Pendant son tour le joueur peut jouer jusqu'à 3 coups : \n"+
+                                " - 2 coups pour avancer : (2 fois un pion ou 2 pions une fois chacun)\n"+
+                                " - faire une passe à un autre de ses pions");
         text.setFont(new Font("Tahoma", Font.ITALIC, 26));
         Border border = BorderFactory.createLineBorder(Color.black, 5);
         text.setBorder(border);
         text.setEditable(false);
         text.setAlignmentY(Component.CENTER_ALIGNMENT);
 
-        flowText.add(text);
+        panelText.add(text);
 
 
         // Boutons
@@ -87,28 +88,28 @@ public class Tuto2 extends JFrame{
         panelBut.add(next, BorderLayout.EAST);
         panelBut.add(prev, BorderLayout.WEST);
         
-
+        
         // Remplissage panel principal
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
         panel.add(boxNT, BorderLayout.NORTH);
-        panel.add(flowText, BorderLayout.CENTER);
+        panel.add(panelText, BorderLayout.CENTER);
         panel.add(panelBut, BorderLayout.SOUTH);
 
 
         // Clicks
         next.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent e){
-                Tuto3 tuto3 = new Tuto3();
-                tuto3.init(frame.getWidth(), frame.getHeight());
+                Tuto4 tuto4 = new Tuto4();
+                tuto4.init(frame.getWidth(), frame.getHeight());
                 frame.dispose();
             }
         });
 
         prev.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent e){
-                Tuto1 tuto1 = new Tuto1();
-                tuto1.init(frame.getWidth(), frame.getHeight());
+                Tuto2 tuto2 = new Tuto2();
+                tuto2.init(frame.getWidth(), frame.getHeight());
                 frame.dispose();
             }
         });
