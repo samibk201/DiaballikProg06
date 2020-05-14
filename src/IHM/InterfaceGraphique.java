@@ -12,6 +12,7 @@ import javax.swing.SwingUtilities;
 import java.awt.event.*;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.FlowLayout;
 
@@ -35,11 +36,14 @@ public class InterfaceGraphique implements Runnable{
   
     @Override
     public void run() {
-        
+
         JFrame frame = new JFrame();
         JLabel bg;
 
         frame.setSize(w, h);
+        
+        //MusicPlayer musicPlayer = new MusicPlayer();
+        //musicPlayer.play("sound.mp3");
 
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
@@ -48,17 +52,26 @@ public class InterfaceGraphique implements Runnable{
         box.setLayout(new BoxLayout(box, BoxLayout.Y_AXIS));
         box.setOpaque(false);
 
-        volum = new Button("volume.png");
-        volum.setAlignmentX(Component.RIGHT_ALIGNMENT);
+        JPanel panelVo = new JPanel();
+        panelVo.setLayout(new FlowLayout(FlowLayout.LEFT));
+        volum = new Button("ressources/ButtonImage/volume.png");
+        panelVo.add(volum);
 
 
         JPanel panelTitle = new JPanel();
         panelTitle.setLayout(new FlowLayout());
         panelTitle.setOpaque(false);
         title = new JLabel();
-        title.setIcon(new ImageIcon("ressources/ButtonImage/diaballik.png"));
+        title.setIcon(new ImageIcon("ressources/Titles/diaballik.png"));
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
         panelTitle.add(title);
+
+
+        JPanel navig = new JPanel();
+        navig.setLayout(new BoxLayout(navig, BoxLayout.Y_AXIS));
+        navig.add(panelVo);
+        navig.add(panelTitle);
+
 
         this.deuxJoueur = new Button("ressources/ButtonImage/jVSjSR(1).png");
         deuxJoueur.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -116,12 +129,12 @@ public class InterfaceGraphique implements Runnable{
         box.add(quit);
 
 
-        mainPanel.add(panelTitle, BorderLayout.NORTH);
+        mainPanel.add(navig, BorderLayout.NORTH);
         mainPanel.add(box, BorderLayout.CENTER);
 
 
         // Panel princi        
-	JPanel panel = new JPanel();
+	    JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
         panel.add(mainPanel);
 
