@@ -41,6 +41,10 @@ public class Tuto2 extends JFrame{
         JFrame frame = new JFrame();
         frame.setSize(w, h);
         frame.setLayout(new BorderLayout());
+        
+        // Background
+        Background background = new Background();
+        background.Background(frame);
 
         JPanel navig = new JPanel();
         navig.setLayout(new FlowLayout(FlowLayout.LEFT));
