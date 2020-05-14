@@ -38,9 +38,11 @@ public class InterfaceGraphique implements Runnable{
     public void run() {
 
         JFrame frame = new JFrame();
-        JLabel bg;
-
         frame.setSize(w, h);
+	    
+	// Background
+        Background background = new Background();
+        background.Background(frame);
         
         //MusicPlayer musicPlayer = new MusicPlayer();
         //musicPlayer.play("sound.mp3");
