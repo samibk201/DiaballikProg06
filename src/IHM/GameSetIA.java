@@ -67,10 +67,9 @@ public class GameSetIA extends JFrame{
         navig.add(back);
         navig.add(volum);
 
-        title = new JLabel("Paramètres de la partie");
-        title.setFont(new Font("Tahoma", Font.BOLD, 56));
+        title = new JLabel();
+        title.setIcon(new ImageIcon("ressources/Titles/paramTitle.png"));
         title.setAlignmentX(CENTER_ALIGNMENT);
-        title.setForeground(Color.black);
 
         JPanel boxNT = new JPanel();
         boxNT.setLayout(new BoxLayout(boxNT, BoxLayout.Y_AXIS));
@@ -108,6 +107,13 @@ public class GameSetIA extends JFrame{
 
 
         // Choix avatar
+        JLabel panda = new JLabel();
+        panda.setIcon(new ImageIcon("ressources/Avatars/panda.png"));
+        JLabel pirate = new JLabel();
+        pirate.setIcon(new ImageIcon("ressources/Avatars/pirate.jpg"));
+        JLabel armure = new JLabel();
+        armure.setIcon(new ImageIcon("ressources/Avatars/armure.png"));
+
         JPanel panelAvatar = new JPanel();
         panelAvatar.setLayout(new FlowLayout());
         panelAvatar.setAlignmentX(panelPlato.getAlignmentX());
@@ -115,20 +121,28 @@ public class GameSetIA extends JFrame{
         avatar = new Button("ressources/ButtonImage/button1.png","Avatar du joueur : ");
 
         this.bgAvatar = new ButtonGroup();
-        this.a1 = new JRadioButton("Avatar 1");
-        this.a2 = new JRadioButton("Avatar 2");
-        this.a3 = new JRadioButton("Avatar 3");
+        this.a1 = new JRadioButton("");
+        this.a2 = new JRadioButton("");
+        this.a3 = new JRadioButton("");
         a1.setSelected(true);
         bgAvatar.add(a1);
         bgAvatar.add(a2);
         bgAvatar.add(a3);
         panelAvatar.add(avatar);
         panelAvatar.add(a1);
+        panelAvatar.add(panda);
         panelAvatar.add(a2);
+        panelAvatar.add(pirate);
         panelAvatar.add(a3);
+        panelAvatar.add(armure);
 
         
         // Choix couleur pions
+        JLabel whiteS = new JLabel();
+        whiteS.setIcon(new ImageIcon("ressources/Avatars/whiteSquare.png"));
+        JLabel blackS = new JLabel();
+        blackS.setIcon(new ImageIcon("ressources/Avatars/blackSquare.png"));
+
         JPanel panelColor = new JPanel();
         panelColor.setLayout(new FlowLayout());
         panelColor.setAlignmentX(panelPlato.getAlignmentX());
@@ -136,8 +150,8 @@ public class GameSetIA extends JFrame{
         color = new Button("ressources/ButtonImage/button1.png","Couleur des pions : ");
 
         this.bgColor = new ButtonGroup();
-        this.white = new JRadioButton("Blanc");
-        this.black = new JRadioButton("Noir");
+        this.white = new JRadioButton("");
+        this.black = new JRadioButton("");
         this.bgColorB = new ButtonGroup();
         this.bgColorW = new ButtonGroup();
         white.setSelected(true);
@@ -145,7 +159,9 @@ public class GameSetIA extends JFrame{
         bgColor.add(black);
         panelColor.add(color);
         panelColor.add(white);
+        panelColor.add(whiteS);
         panelColor.add(black);
+        panelColor.add(blackS);
 
 
         // Box principale
