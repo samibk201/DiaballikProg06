@@ -74,10 +74,9 @@ public class GameSetJ extends JFrame{
         navig.add(back);
         navig.add(volum);
 
-        title = new JLabel("Paramètres de la partie");
-        title.setFont(new Font("Tahoma", Font.BOLD, 56));
+        title = new JLabel();
+        title.setIcon(new ImageIcon("ressources/Titles/paramTitle.png"));
         title.setAlignmentX(CENTER_ALIGNMENT);
-        title.setForeground(Color.black);
         
         // Panel navig + titre
         JPanel boxNT = new JPanel();
@@ -124,6 +123,20 @@ public class GameSetJ extends JFrame{
 
 
         // Choix avatar
+        JLabel panda = new JLabel();
+        panda.setIcon(new ImageIcon("ressources/Avatars/panda.png"));
+        JLabel pirate = new JLabel();
+        pirate.setIcon(new ImageIcon("ressources/Avatars/pirate.jpg"));
+        JLabel armure = new JLabel();
+        armure.setIcon(new ImageIcon("ressources/Avatars/armure.png"));
+
+        JLabel panda2 = new JLabel();
+        panda2.setIcon(new ImageIcon("ressources/Avatars/panda.png"));
+        JLabel pirate2 = new JLabel();
+        pirate2.setIcon(new ImageIcon("ressources/Avatars/pirate.jpg"));
+        JLabel armure2 = new JLabel();
+        armure2.setIcon(new ImageIcon("ressources/Avatars/armure.png"));
+
         Button circle1A = new Button("ressources/ButtonImage/circleR.png", "J1");
         Button circle2A = new Button("ressources/ButtonImage/circleR.png", "J2");
         //circle2A.setAlignmentX(circle2N.getX());
@@ -134,13 +147,13 @@ public class GameSetJ extends JFrame{
         avatar = new Button("ressources/ButtonImage/button1.png","Avatar des joueurs : ");
 
         this.bgAvatar1 = new ButtonGroup();
-        this.a1j1 = new JRadioButton("Avatar 1");
-        this.a2j1 = new JRadioButton("Avatar 2");
-        this.a3j1 = new JRadioButton("Avatar 3");
+        this.a1j1 = new JRadioButton("");
+        this.a2j1 = new JRadioButton("");
+        this.a3j1 = new JRadioButton("");
         this.bgAvatar2 = new ButtonGroup();
-        this.a1j2 = new JRadioButton("Avatar 1");
-        this.a2j2 = new JRadioButton("Avatar 2");
-        this.a3j2 = new JRadioButton("Avatar 3");
+        this.a1j2 = new JRadioButton("");
+        this.a2j2 = new JRadioButton("");
+        this.a3j2 = new JRadioButton("");
         a1j1.setSelected(true);
         bgAvatar1.add(a1j1);
         bgAvatar1.add(a2j1);
@@ -148,19 +161,34 @@ public class GameSetJ extends JFrame{
         panelAvatar.add(avatar);
         panelAvatar.add(circle1A);
         panelAvatar.add(a1j1);
+        panelAvatar.add(panda);
         panelAvatar.add(a2j1);
+        panelAvatar.add(pirate);
         panelAvatar.add(a3j1);
+        panelAvatar.add(armure);
         panelAvatar.add(circle2A);
         bgAvatar2.add(a1j2);
         bgAvatar2.add(a2j2);
         bgAvatar2.add(a3j2);
         a1j2.setSelected(true);
         panelAvatar.add(a1j2);
+        panelAvatar.add(panda2);
         panelAvatar.add(a2j2);
+        panelAvatar.add(pirate2);
         panelAvatar.add(a3j2);
+        panelAvatar.add(armure2);
 
         
         // Choix couleur pions
+        JLabel whiteS = new JLabel();
+        whiteS.setIcon(new ImageIcon("ressources/Avatars/whiteSquare.png"));
+        JLabel blackS = new JLabel();
+        blackS.setIcon(new ImageIcon("ressources/Avatars/blackSquare.png"));
+        JLabel whiteS2 = new JLabel();
+        whiteS2.setIcon(new ImageIcon("ressources/Avatars/whiteSquare.png"));
+        JLabel blackS2 = new JLabel();
+        blackS2.setIcon(new ImageIcon("ressources/Avatars/blackSquare.png"));
+
         Button circle1C = new Button("ressources/ButtonImage/circleR.png", "J1");
         Button circle2C = new Button("ressources/ButtonImage/circleR.png", "J2");
 
@@ -170,11 +198,11 @@ public class GameSetJ extends JFrame{
         color = new Button("ressources/ButtonImage/button1.png","Couleur des pions : ");
 
         this.bgColor = new ButtonGroup();
-        this.white = new JRadioButton("Blanc");
-        this.black = new JRadioButton("Noir");
+        this.white = new JRadioButton("");
+        this.black = new JRadioButton("");
         this.bgColor2 = new ButtonGroup();
-        this.white2 = new JRadioButton("Blanc");
-        this.black2 = new JRadioButton("Noir");
+        this.white2 = new JRadioButton("");
+        this.black2 = new JRadioButton("");
         this.bgColorB = new ButtonGroup();
         this.bgColorW = new ButtonGroup();
         white.setSelected(true);
@@ -183,13 +211,17 @@ public class GameSetJ extends JFrame{
         panelColor.add(color);
         panelColor.add(circle1C);
         panelColor.add(white);
+        panelColor.add(whiteS);
         panelColor.add(black);
+        panelColor.add(blackS);
         black2.setSelected(true);
         bgColor2.add(white2);
         bgColor2.add(black2);
         panelColor.add(circle2C);
         panelColor.add(white2);
+        panelColor.add(whiteS2);
         panelColor.add(black2);
+        panelColor.add(blackS2);
 
 
         // Box principale
