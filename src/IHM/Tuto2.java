@@ -80,18 +80,16 @@ public class Tuto2 extends JFrame{
 
         // Boutons
         JPanel panelBut = new JPanel();
-        panelBut.setLayout(new FlowLayout(FlowLayout.TRAILING));
+        panelBut.setLayout(new BorderLayout());
         panelBut.setOpaque(false);
         next = new Button("ressources/ButtonImage/nextSR.png");
-        next.setAlignmentX(Component.RIGHT_ALIGNMENT);
         prev = new Button("ressources/ButtonImage/previousSR.png");
-        prev.setAlignmentX(Component.LEFT_ALIGNMENT);
-        panelBut.add(prev);
-        panelBut.add(next);
+        panelBut.add(next, BorderLayout.EAST);
+        panelBut.add(prev, BorderLayout.WEST);
         
 
         // Remplissage panel principal
-                JPanel panel = new JPanel();
+        JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
         panel.add(boxNT, BorderLayout.NORTH);
         panel.add(flowText, BorderLayout.CENTER);
