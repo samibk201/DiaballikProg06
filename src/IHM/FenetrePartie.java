@@ -143,6 +143,14 @@ public class FenetrePartie extends JComponent implements Runnable {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
+		
+		retour.addMouseListener(new MouseAdapter(){
+            	  public void mouseClicked(MouseEvent e){
+                    GameSetJ g = new GameSetJ();
+                    g.init(frame.getWidth(), frame.getHeight());
+                    frame.dispose();
+                 }
+               });
 
 	}
 	public static void main(String[] args) {
