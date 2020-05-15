@@ -303,13 +303,13 @@ public class GameSetJ extends JFrame{
         
 
         // Clicks
-        /*start.addMouseListener(new MouseAdapter(){
+        start.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent e){
                 FenetrePartie fenetrePartie = new FenetrePartie();
-                fenetrePartie.init(frame.getWidth(), frame.getHeight());
+                fenetrePartie.run();
                 frame.dispose();
             }
-        });*/
+        });
 
         back.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent e){
