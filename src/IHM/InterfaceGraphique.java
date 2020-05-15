@@ -49,6 +49,7 @@ public class InterfaceGraphique implements Runnable{
 
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
+	mainPanel.box.setOpaque(false);
 
         JPanel box = new JPanel();
         box.setLayout(new BoxLayout(box, BoxLayout.Y_AXIS));
@@ -56,6 +57,7 @@ public class InterfaceGraphique implements Runnable{
 
         JPanel panelVo = new JPanel();
         panelVo.setLayout(new FlowLayout(FlowLayout.LEFT));
+	panelVo.box.setOpaque(false);
         volum = new Button("ressources/ButtonImage/volume.png");
         panelVo.add(volum);
 
@@ -71,6 +73,7 @@ public class InterfaceGraphique implements Runnable{
 
         JPanel navig = new JPanel();
         navig.setLayout(new BoxLayout(navig, BoxLayout.Y_AXIS));
+	navig.box.setOpaque(false);
         navig.add(panelVo);
         navig.add(panelTitle);
 
@@ -135,9 +138,10 @@ public class InterfaceGraphique implements Runnable{
         mainPanel.add(box, BorderLayout.CENTER);
 
 
-        // Panel princi        
+        // Panel principal        
 	    JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
+	    panel.box.setOpaque(false);
         panel.add(mainPanel);
 
 
