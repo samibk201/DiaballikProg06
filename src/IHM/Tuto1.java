@@ -60,6 +60,7 @@ public class Tuto1 extends JFrame{
 
         JPanel boxNT = new JPanel();
         boxNT.setLayout(new BoxLayout(boxNT, BoxLayout.Y_AXIS));
+        boxNT.setOpaque(false);
         boxNT.add(navig);
         boxNT.add(title);
 
@@ -67,6 +68,7 @@ public class Tuto1 extends JFrame{
         // Panel text
         JPanel flowText = new JPanel();
         flowText.setLayout(new FlowLayout(FlowLayout.CENTER));
+        flowText.setOpaque(false);
 
         this.text = new JTextArea("Pour avancer, il suffit de cliquer sur le pion \n puis sur la case "+
                                     "où on veut le déplacer. \n Pour faire une passe on clique \n sur le "+
@@ -91,6 +93,7 @@ public class Tuto1 extends JFrame{
         // Remplissage panel principal
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
+        panel.setOpaque(false);
         panel.add(boxNT, BorderLayout.NORTH);
         panel.add(flowText, BorderLayout.CENTER);
         panel.add(panelNext, BorderLayout.SOUTH);
