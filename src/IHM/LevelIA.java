@@ -59,6 +59,7 @@ public class LevelIA extends JFrame{
         // Remplissage panel titre + navig
         JPanel boxNT = new JPanel();
         boxNT.setLayout(new BoxLayout(boxNT, BoxLayout.Y_AXIS));
+        boxNT.setOpaque(false);
         boxNT.add(navig);
         boxNT.add(title);
 
@@ -66,6 +67,7 @@ public class LevelIA extends JFrame{
         // Buttons
         JPanel box = new JPanel();
         box.setLayout(new BoxLayout(box, BoxLayout.Y_AXIS));
+        box.setOpaque(false);
 
         this.easy = new Button("ressources/ButtonImage/easySR.png");
         easy.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -83,6 +85,7 @@ public class LevelIA extends JFrame{
         // Remplissage panel principal        
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
+        panel.setOpaque(false);
         panel.add(boxNT, BorderLayout.NORTH);
         panel.add(box, BorderLayout.CENTER);
 
