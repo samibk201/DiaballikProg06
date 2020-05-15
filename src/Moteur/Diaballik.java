@@ -1,7 +1,7 @@
 package Moteur;
 import java.util.Scanner;
 
-class Diabalik {
+public class Diaballik {
 	public static void main (String [] args) {
 		Scanner scan = new Scanner (System.in);
 		System.out.println ("Entrez nom1:");

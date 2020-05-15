@@ -101,7 +101,29 @@ public class JeuPlateau {
 	/**TO DO: Il Faut gérer le lancement de la balle
 	 * Mdofier la fonction pour qu'elle renvoie un boolean en fonction que le coup soit valide
 	 * ou pas**/
-	boolean joueCoup (Joueur joueur,int action,int x,int y) {
+	public boolean joueCoup (Joueur joueur,int action,int x,int y) {
+		boolean etat = false;
+		System.out.println ("nom et num:"+joueur.getNom ()+"et "+joueur.getNum ());
+		System.out.println ("occupant de la case ="+getCase (x,y).getJoueur ().getNum ());
+		if (joueur.getNum () != getCase (x,y).getJoueur ().getNum ()) {
+			System.out.println ("!!!!Vous ne pouvez pas déplacer un pion adverse ou case sélectionner vide");
+			etat = false;
+		} else {
+			if (getCase (x,y).getEtat () == OC_BALLE) {//si c'est la balle
+				System.out.println ("Lancement de la balle");
+				System.out.println ("Entrez les coordonnées de destinations");
+				Scanner scan = new Scanner (System.in);
+				int destX,destY;
+				destX = scan.nextInt (); destY = scan.nextInt ();
+				etat = lancerBalleVers (x,y,destX,destY,joueur);
+			} else if (getCase (x,y).getEtat () == OCCUPE) {//Déplacement d'un pion
+				etat = deplacerVers (action,joueur,x,y);
+			}
+		}
+		return etat;
+	}
+	
+	boolean joueCoup2 (Joueur joueur,int action,int x,int y) {
 		boolean etat = false;
 		System.out.println ("nom et num:"+joueur.getNom ()+"et "+joueur.getNum ());
 		System.out.println ("occupant de la case ="+getCase (x,y).getJoueur ().getNum ());
@@ -268,14 +290,11 @@ public class JeuPlateau {
 		}
 		return false;
 	}
-
-	public boolean estOccupe(int i, int j) {
-		// TODO Auto-generated method stub
-		return getCase(i, j).getEtat() == OCCUPE;
+	
+	public Joueur tourJoueur(int i) {
+		i++;
+		return this.joueurs[i%2];
 	}
 
-	public boolean estOccupeAvecBalle(int i, int j) {
-		// TODO Auto-generated method stub
-		return getCase(i, j).getEtat() == OC_BALLE;
-	}
+	
 }

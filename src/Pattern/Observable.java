@@ -19,7 +19,7 @@ import java.util.List;
 public interface Observable{
 	
 	public void ajouteObservateur(Observateur o) ;
-	public void metAJour();
+	public void metAJour(int x, int y,int action);
 	
 	
 }
