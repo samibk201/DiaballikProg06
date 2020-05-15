@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -16,9 +17,16 @@ import javax.swing.JTextField;
 import Moteur.Joueur;
 
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.*;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 
 public class GameSetJ extends JFrame{
@@ -65,11 +73,12 @@ public class GameSetJ extends JFrame{
         JFrame frame = new JFrame();
         frame.setSize(w, h);
         frame.setLayout(new BorderLayout());
-        
+
         // Background
         Background background = new Background();
         background.Background(frame);
-
+        
+        
         JPanel navig = new JPanel();
         navig.setLayout(new FlowLayout(FlowLayout.LEFT));
         navig.setOpaque(false);
@@ -85,16 +94,17 @@ public class GameSetJ extends JFrame{
         // Panel navig + titre
         JPanel boxNT = new JPanel();
         boxNT.setLayout(new BoxLayout(boxNT, BoxLayout.Y_AXIS));
+        boxNT.setOpaque(false);
         boxNT.add(navig);
         boxNT.add(title);
 
 
         // Choix plateau
         JPanel panelPlato = new JPanel();
-        panelPlato.setLayout(new FlowLayout(FlowLayout.CENTER));
+        panelPlato.setLayout(new BoxLayout(panelPlato, BoxLayout.Y_AXIS));
         panelPlato.setOpaque(false);
         plateau = new Button("ressources/ButtonImage/button1.png","Configuration du plateau : ");
-        plateau.setAlignmentX(Component.LEFT_ALIGNMENT);
+        plateau.setAlignmentX(Component.CENTER_ALIGNMENT);
         this.bgPlat = new ButtonGroup();
         this.standard = new JRadioButton("Plateau standard");
         this.melange = new JRadioButton("Plateau mélangé");
@@ -102,8 +112,12 @@ public class GameSetJ extends JFrame{
         bgPlat.add(standard);
         bgPlat.add(melange);
         panelPlato.add(plateau);
-        panelPlato.add(standard);
-        panelPlato.add(melange);
+        JPanel flowPlato = new JPanel();
+        flowPlato.setLayout(new FlowLayout());
+        flowPlato.setOpaque(false);
+        flowPlato.add(standard);
+        flowPlato.add(melange);
+        panelPlato.add(flowPlato);
 
 
         // Nom joueur
@@ -115,15 +129,25 @@ public class GameSetJ extends JFrame{
         nameField.setColumns(10);
         nameField2.setColumns(10);
         name = new Button("ressources/ButtonImage/button1.png","Nom des joueurs : ");
+        name.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JPanel panelName = new JPanel();
-        panelName.setLayout(new FlowLayout(FlowLayout.CENTER));
+        panelName.setLayout(new BoxLayout(panelName, BoxLayout.Y_AXIS));
+        panelName.setAlignmentX(Component.CENTER_ALIGNMENT);
         panelName.setOpaque(false);
         panelName.add(name);
-        panelName.add(circle1N);
-        panelName.add(nameField);
-        panelName.add(circle2N);
-        panelName.add(nameField2);
+        JPanel flowName1 = new JPanel();
+        flowName1.setLayout(new FlowLayout());
+        flowName1.setOpaque(false);
+        flowName1.add(circle1N);
+        flowName1.add(nameField);
+        JPanel flowName2 = new JPanel();
+        flowName2.setLayout(new FlowLayout());
+        flowName2.setOpaque(false);
+        flowName2.add(circle2N);
+        flowName2.add(nameField2);
+        panelName.add(flowName1);
+        panelName.add(flowName2);
 
 
         // Choix avatar
@@ -146,9 +170,10 @@ public class GameSetJ extends JFrame{
         //circle2A.setAlignmentX(circle2N.getX());
 
         JPanel panelAvatar = new JPanel();
-        panelAvatar.setLayout(new FlowLayout(FlowLayout.CENTER));
+        panelAvatar.setLayout(new BoxLayout(panelAvatar, BoxLayout.Y_AXIS));
         panelAvatar.setOpaque(false);
         avatar = new Button("ressources/ButtonImage/button1.png","Avatar des joueurs : ");
+        avatar.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         this.bgAvatar1 = new ButtonGroup();
         this.a1j1 = new JRadioButton("");
@@ -163,24 +188,32 @@ public class GameSetJ extends JFrame{
         bgAvatar1.add(a2j1);
         bgAvatar1.add(a3j1);
         panelAvatar.add(avatar);
-        panelAvatar.add(circle1A);
-        panelAvatar.add(a1j1);
-        panelAvatar.add(panda);
-        panelAvatar.add(a2j1);
-        panelAvatar.add(pirate);
-        panelAvatar.add(a3j1);
-        panelAvatar.add(armure);
-        panelAvatar.add(circle2A);
+        JPanel flowAv = new JPanel();
+        flowAv.setLayout(new FlowLayout());
+        flowAv.setOpaque(false);
+        flowAv.add(circle1A);
+        flowAv.add(a1j1);
+        flowAv.add(panda);
+        flowAv.add(a2j1);
+        flowAv.add(pirate);
+        flowAv.add(a3j1);
+        flowAv.add(armure);
         bgAvatar2.add(a1j2);
         bgAvatar2.add(a2j2);
         bgAvatar2.add(a3j2);
         a1j2.setSelected(true);
-        panelAvatar.add(a1j2);
-        panelAvatar.add(panda2);
-        panelAvatar.add(a2j2);
-        panelAvatar.add(pirate2);
-        panelAvatar.add(a3j2);
-        panelAvatar.add(armure2);
+        JPanel flowAv2 = new JPanel();
+        flowAv2.setLayout(new FlowLayout());
+        flowAv2.setOpaque(false);
+        flowAv2.add(circle2A);
+        flowAv2.add(a1j2);
+        flowAv2.add(panda2);
+        flowAv2.add(a2j2);
+        flowAv2.add(pirate2);
+        flowAv2.add(a3j2);
+        flowAv2.add(armure2);
+        panelAvatar.add(flowAv);
+        panelAvatar.add(flowAv2);
 
         
         // Choix couleur pions
@@ -197,9 +230,10 @@ public class GameSetJ extends JFrame{
         Button circle2C = new Button("ressources/ButtonImage/circleR.png", "J2");
 
         JPanel panelColor = new JPanel();
-        panelColor.setLayout(new FlowLayout(FlowLayout.CENTER));
+        panelColor.setLayout(new BoxLayout(panelColor, BoxLayout.Y_AXIS));
         panelColor.setOpaque(false);
         color = new Button("ressources/ButtonImage/button1.png","Couleur des pions : ");
+        color.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         this.bgColor = new ButtonGroup();
         this.white = new JRadioButton("");
@@ -213,19 +247,27 @@ public class GameSetJ extends JFrame{
         bgColor.add(white);
         bgColor.add(black);
         panelColor.add(color);
-        panelColor.add(circle1C);
-        panelColor.add(white);
-        panelColor.add(whiteS);
-        panelColor.add(black);
-        panelColor.add(blackS);
+        JPanel flowCol = new JPanel();
+        flowCol.setLayout(new FlowLayout());
+        flowCol.setOpaque(false);
+        flowCol.add(circle1C);
+        flowCol.add(white);
+        flowCol.add(whiteS);
+        flowCol.add(black);
+        flowCol.add(blackS);
         black2.setSelected(true);
         bgColor2.add(white2);
         bgColor2.add(black2);
-        panelColor.add(circle2C);
-        panelColor.add(white2);
-        panelColor.add(whiteS2);
-        panelColor.add(black2);
-        panelColor.add(blackS2);
+        JPanel flowCol2 = new JPanel();
+        flowCol2.setLayout(new FlowLayout());
+        flowCol2.setOpaque(false);
+        flowCol2.add(circle2C);
+        flowCol2.add(white2);
+        flowCol2.add(whiteS2);
+        flowCol2.add(black2);
+        flowCol2.add(blackS2);
+        panelColor.add(flowCol);
+        panelColor.add(flowCol2);
 
 
         // Box principale
@@ -233,13 +275,14 @@ public class GameSetJ extends JFrame{
         box.setLayout(new BoxLayout(box, BoxLayout.Y_AXIS));
         box.setOpaque(false);
         box.add(panelPlato);
-        box.add(panelName);
         box.add(panelAvatar);
+        box.add(panelName);
         box.add(panelColor);
 
         JPanel bigBox = new JPanel();
         bigBox.setLayout(new BorderLayout());
-        bigBox.add(box, BorderLayout.NORTH);
+        bigBox.add(box, BorderLayout.CENTER);
+        bigBox.setOpaque(false);
 
         // Boutons
         JPanel panelBut = new JPanel();
@@ -253,25 +296,25 @@ public class GameSetJ extends JFrame{
         // Panel principal        
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
-        panel.setLayout(new BorderLayout());
+        panel.setOpaque(false);
         panel.add(boxNT, BorderLayout.NORTH);
         panel.add(bigBox, BorderLayout.CENTER);
         panel.add(panelBut, BorderLayout.SOUTH);
-
+        
 
         // Clicks
+        /*start.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e){
+                FenetrePartie fenetrePartie = new FenetrePartie();
+                fenetrePartie.init(frame.getWidth(), frame.getHeight());
+                frame.dispose();
+            }
+        });*/
+
         back.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent e){
                 InterfaceGraphique mainMenu = new InterfaceGraphique();
                 mainMenu.run();
-                frame.dispose();
-            }
-        });
-        
-        start.addMouseListener(new MouseAdapter(){
-            public void mouseClicked(MouseEvent e){
-                FenetrePartie partie = new FenetrePartie();
-                partie.run();
                 frame.dispose();
             }
         });
