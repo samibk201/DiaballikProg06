@@ -61,6 +61,7 @@ public class Tuto2 extends JFrame{
 
         JPanel boxNT = new JPanel();
         boxNT.setLayout(new BoxLayout(boxNT, BoxLayout.Y_AXIS));
+        boxNT.setOpaque(false);
         boxNT.add(navig);
         boxNT.add(title);
 
@@ -68,6 +69,7 @@ public class Tuto2 extends JFrame{
         // Panel text
         JPanel flowText = new JPanel();
         flowText.setLayout(new FlowLayout());
+        flowText.setOpaque(false);
 
         text = new JTextArea(" 1. Une partie se joue à 2. \n On peut commencer la partie selon "+
                                 "deux configurations : \n     - tous les pions d'un joueur sont devant lui \n"+
@@ -95,6 +97,7 @@ public class Tuto2 extends JFrame{
         // Remplissage panel principal
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
+        panel.setOpaque(false);
         panel.add(boxNT, BorderLayout.NORTH);
         panel.add(flowText, BorderLayout.CENTER);
         panel.add(panelBut, BorderLayout.SOUTH);
