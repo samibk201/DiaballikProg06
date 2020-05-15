@@ -268,6 +268,14 @@ public class GameSetJ extends JFrame{
             }
         });
         
+        start.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e){
+                FenetrePartie partie = new FenetrePartie();
+                partie.run();
+                frame.dispose();
+            }
+        });
+        
         
         // Gestion entrées joueurs
         Joueur j1 = new Joueur(1, nameField.getText());
