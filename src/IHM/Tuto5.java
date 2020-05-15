@@ -60,6 +60,7 @@ public class Tuto5 extends JFrame{
 
         JPanel boxNT = new JPanel();
         boxNT.setLayout(new BoxLayout(boxNT, BoxLayout.Y_AXIS));
+        boxNT.setOpaque(false);
         boxNT.add(navig);
         boxNT.add(title);
 
@@ -67,6 +68,7 @@ public class Tuto5 extends JFrame{
         // Panel text
         JPanel flowText = new JPanel();
         flowText.setLayout(new FlowLayout());
+        flowText.setOpaque(false);
 
         text = new JTextArea(" 4. Un pion peut faire une passe à un autre pion à n'importe quelle \n"+
                             " distance uniquement si : \n - il n'y a pas de pions adverses entre les deux \n"+
@@ -94,6 +96,7 @@ public class Tuto5 extends JFrame{
         // Remplissage panel principal
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
+        panel.setOpaque(false);
         panel.add(boxNT, BorderLayout.NORTH);
         panel.add(flowText, BorderLayout.CENTER);
         panel.add(panelBut, BorderLayout.SOUTH);
