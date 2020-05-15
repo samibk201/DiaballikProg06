@@ -61,6 +61,7 @@ public class Tuto3 extends JFrame{
 
         JPanel boxNT = new JPanel();
         boxNT.setLayout(new BoxLayout(boxNT, BoxLayout.Y_AXIS));
+        boxNT.setOpaque(false);
         boxNT.add(navig);
         boxNT.add(title);
 
@@ -96,6 +97,7 @@ public class Tuto3 extends JFrame{
         // Remplissage panel principal
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
+        panel.setOpaque(false);
         panel.add(boxNT, BorderLayout.NORTH);
         panel.add(panelText, BorderLayout.CENTER);
         panel.add(panelBut, BorderLayout.SOUTH);
