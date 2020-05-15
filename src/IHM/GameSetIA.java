@@ -16,9 +16,16 @@ import javax.swing.JTextField;
 import Moteur.Joueur;
 
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.*;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 
 public class GameSetIA extends JFrame{
@@ -58,10 +65,11 @@ public class GameSetIA extends JFrame{
         JFrame frame = new JFrame();
         frame.setSize(w, h);
         frame.setLayout(new BorderLayout());
-	    
-	// Background
+
+        // Background
         Background background = new Background();
         background.Background(frame);
+
 
         JPanel navig = new JPanel();
         navig.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -77,15 +85,17 @@ public class GameSetIA extends JFrame{
 
         JPanel boxNT = new JPanel();
         boxNT.setLayout(new BoxLayout(boxNT, BoxLayout.Y_AXIS));
+        boxNT.setOpaque(false);
         boxNT.add(navig);
         boxNT.add(title);
 
 
         // Choix plateau
         JPanel panelPlato = new JPanel();
-        panelPlato.setLayout(new FlowLayout(FlowLayout.CENTER));
+        panelPlato.setLayout(new BoxLayout(panelPlato, BoxLayout.Y_AXIS));
         panelPlato.setOpaque(false);
         plateau = new Button("ressources/ButtonImage/button1.png","Configuration du plateau : ");
+        plateau.setAlignmentX(Component.CENTER_ALIGNMENT);
         this.bgPlat = new ButtonGroup();
         this.standard = new JRadioButton("Plateau standard");
         this.melange = new JRadioButton("Plateau mélangé");
@@ -93,21 +103,31 @@ public class GameSetIA extends JFrame{
         bgPlat.add(standard);
         bgPlat.add(melange);
         panelPlato.add(plateau);
-        panelPlato.add(standard);
-        panelPlato.add(melange);
-
+        JPanel flowPlato = new JPanel();
+        flowPlato.setLayout(new FlowLayout());
+        flowPlato.setOpaque(false);
+        flowPlato.add(standard);
+        flowPlato.add(melange);
+        panelPlato.add(flowPlato);
+        
 
         // Nom joueur
         JTextField nameField = new JTextField("Joueur1");
         nameField.setColumns(10);
         name = new Button("ressources/ButtonImage/button1.png","Nom du joueur : ");
+        name.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JPanel panelName = new JPanel();
-        panelName.setLayout(new FlowLayout());
+        panelName.setLayout(new BoxLayout(panelName, BoxLayout.Y_AXIS));
+        panelName.setOpaque(false);
         panelName.setAlignmentX(panelPlato.getAlignmentX());
         panelName.setOpaque(false);
         panelName.add(name);
-        panelName.add(nameField);
+        JPanel flowName = new JPanel();
+        flowName.setLayout(new FlowLayout());
+        flowName.setOpaque(false);
+        flowName.add(nameField);
+        panelName.add(flowName);
 
 
         // Choix avatar
@@ -119,10 +139,11 @@ public class GameSetIA extends JFrame{
         armure.setIcon(new ImageIcon("ressources/Avatars/armure.png"));
 
         JPanel panelAvatar = new JPanel();
-        panelAvatar.setLayout(new FlowLayout());
+        panelAvatar.setLayout(new BoxLayout(panelAvatar, BoxLayout.Y_AXIS));
         panelAvatar.setAlignmentX(panelPlato.getAlignmentX());
         panelAvatar.setOpaque(false);
         avatar = new Button("ressources/ButtonImage/button1.png","Avatar du joueur : ");
+        avatar.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         this.bgAvatar = new ButtonGroup();
         this.a1 = new JRadioButton("");
@@ -133,12 +154,16 @@ public class GameSetIA extends JFrame{
         bgAvatar.add(a2);
         bgAvatar.add(a3);
         panelAvatar.add(avatar);
-        panelAvatar.add(a1);
-        panelAvatar.add(panda);
-        panelAvatar.add(a2);
-        panelAvatar.add(pirate);
-        panelAvatar.add(a3);
-        panelAvatar.add(armure);
+        JPanel flowAv = new JPanel();
+        flowAv.setLayout(new FlowLayout());
+        flowAv.setOpaque(false);
+        flowAv.add(a1);
+        flowAv.add(panda);
+        flowAv.add(a2);
+        flowAv.add(pirate);
+        flowAv.add(a3);
+        flowAv.add(armure);
+        panelAvatar.add(flowAv);
 
         
         // Choix couleur pions
@@ -148,10 +173,10 @@ public class GameSetIA extends JFrame{
         blackS.setIcon(new ImageIcon("ressources/Avatars/blackSquare.png"));
 
         JPanel panelColor = new JPanel();
-        panelColor.setLayout(new FlowLayout());
-        panelColor.setAlignmentX(panelPlato.getAlignmentX());
+        panelColor.setLayout(new BoxLayout(panelColor, BoxLayout.Y_AXIS));
         panelColor.setOpaque(false);
         color = new Button("ressources/ButtonImage/button1.png","Couleur des pions : ");
+        color.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         this.bgColor = new ButtonGroup();
         this.white = new JRadioButton("");
@@ -162,10 +187,14 @@ public class GameSetIA extends JFrame{
         bgColor.add(white);
         bgColor.add(black);
         panelColor.add(color);
-        panelColor.add(white);
-        panelColor.add(whiteS);
-        panelColor.add(black);
-        panelColor.add(blackS);
+        JPanel flowCol = new JPanel();
+        flowCol.setLayout(new FlowLayout());
+        flowCol.setOpaque(false);
+        flowCol.add(white);
+        flowCol.add(whiteS);
+        flowCol.add(black);
+        flowCol.add(blackS);
+        panelColor.add(flowCol);
 
 
         // Box principale
@@ -179,7 +208,9 @@ public class GameSetIA extends JFrame{
 
         JPanel bigBox = new JPanel();
         bigBox.setLayout(new BorderLayout());
-        bigBox.add(box, BorderLayout.NORTH);
+        bigBox.add(box, BorderLayout.CENTER);
+        bigBox.setOpaque(false);
+
 
         // Boutons
         JPanel panelBut = new JPanel();
@@ -191,9 +222,10 @@ public class GameSetIA extends JFrame{
 
         
         // Panel principal
-	JPanel panel = new JPanel();
+	    JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
         panel.setLayout(new BorderLayout());
+        panel.setOpaque(false);
         panel.add(boxNT, BorderLayout.NORTH);
         panel.add(bigBox, BorderLayout.CENTER);
         panel.add(panelBut, BorderLayout.SOUTH);
