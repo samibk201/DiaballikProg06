@@ -20,6 +20,13 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.*;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
 
 public class Tuto4 extends JFrame{
 
@@ -41,11 +48,13 @@ public class Tuto4 extends JFrame{
         JFrame frame = new JFrame();
         frame.setSize(w, h);
         frame.setLayout(new BorderLayout());
-        
+
         // Background
         Background background = new Background();
-        background.Background(frame);
+        background.Background(frame, "Theme/bg.png");
+        
 
+        // Panel nord bouton retour + son
         JPanel navig = new JPanel();
         navig.setLayout(new FlowLayout(FlowLayout.LEFT));
         navig.setOpaque(false);
@@ -54,24 +63,13 @@ public class Tuto4 extends JFrame{
         navig.add(home);
         navig.add(volum);
 
-        title = new JLabel("Règles du jeu");
-        title.setFont(new Font("Tahoma", Font.BOLD, 56));
-        title.setAlignmentX(CENTER_ALIGNMENT);
-        title.setForeground(Color.black);
-
-        JPanel boxNT = new JPanel();
-        boxNT.setLayout(new BoxLayout(boxNT, BoxLayout.Y_AXIS));
-        boxNT.setOpaque(false);
-        boxNT.add(navig);
-        boxNT.add(title);
-
 
         // Panel text
         JPanel flowText = new JPanel();
         flowText.setLayout(new FlowLayout());
         flowText.setOpaque(false);
 
-        text = new JTextArea(" 3. Un pion peut se déplacer uniquement orthogonalement, \n et une case "+
+        text = new JTextArea(" Un pion peut se déplacer uniquement \n orthogonalement et une case "+
                             "à la fois. \n Un pion avec une balle ne peut pas bouger.");
         text.setFont(new Font("Tahoma", Font.ITALIC, 26));
         Border border = BorderFactory.createLineBorder(Color.black, 5);
@@ -80,6 +78,38 @@ public class Tuto4 extends JFrame{
         text.setAlignmentY(Component.CENTER_ALIGNMENT);
 
         flowText.add(text);
+
+
+        // Image du casque prof
+        JLabel prof = new JLabel();
+        prof.setIcon(new ImageIcon("ressources/Theme/prof.png"));
+
+
+        // Panel caque + texte
+        JPanel profTxt = new JPanel();
+        profTxt.setLayout(new FlowLayout());
+        profTxt.setOpaque(false);
+        profTxt.add(prof);
+        profTxt.add(flowText);
+
+
+        // Image du plateau
+        JLabel plateau = new JLabel();
+        plateau.setIcon(new ImageIcon("ressources/TutoImage/tuto4.png"));
+
+        // Panel image plateau
+        JPanel flowPla = new JPanel();
+        flowPla.setLayout(new FlowLayout());
+        flowPla.setOpaque(false);
+        flowPla.add(plateau);
+
+
+        // Box text + plateau
+        JPanel box = new JPanel();
+        box.setLayout(new BoxLayout(box, BoxLayout.Y_AXIS));
+        box.setOpaque(false);
+        box.add(profTxt);
+        box.add(flowPla);
 
 
         // Boutons
@@ -96,13 +126,20 @@ public class Tuto4 extends JFrame{
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
         panel.setOpaque(false);
-        panel.add(boxNT, BorderLayout.NORTH);
-        panel.add(flowText, BorderLayout.CENTER);
+        panel.add(navig, BorderLayout.NORTH);
+        panel.add(box, BorderLayout.CENTER);
         panel.add(panelBut, BorderLayout.SOUTH);
         
 
         // Clicks
+        // Click bouton suivant
         next.addMouseListener(new MouseAdapter(){
+            public void mouseEntered(MouseEvent e){
+                next.setIcon(new ImageIcon("ressources/ButtonImage/nextClik.png"));
+            }
+            public void mouseExited(MouseEvent e){
+                next.setIcon(new ImageIcon("ressources/ButtonImage/nextSR.png"));
+            }
             public void mouseClicked(MouseEvent e){
                 Tuto5 tuto5 = new Tuto5();
                 tuto5.init(frame.getWidth(), frame.getHeight());
@@ -110,7 +147,14 @@ public class Tuto4 extends JFrame{
             }
         });
 
+        // Click bouton précédent
         prev.addMouseListener(new MouseAdapter(){
+            public void mouseEntered(MouseEvent e){
+                prev.setIcon(new ImageIcon("ressources/ButtonImage/prevClik.png"));
+            }
+            public void mouseExited(MouseEvent e){
+                prev.setIcon(new ImageIcon("ressources/ButtonImage/previousSR.png"));
+            }
             public void mouseClicked(MouseEvent e){
                 Tuto3 tuto3 = new Tuto3();
                 tuto3.init(frame.getWidth(), frame.getHeight());
@@ -118,7 +162,14 @@ public class Tuto4 extends JFrame{
             }
         });
 
+        // Click bouton menu
         home.addMouseListener(new MouseAdapter(){
+            public void mouseEntered(MouseEvent e){
+                home.setIcon(new ImageIcon("ressources/ButtonImage/homeClik.png"));
+            }
+            public void mouseExited(MouseEvent e){
+                home.setIcon(new ImageIcon("ressources/ButtonImage/homeBSR.png"));
+            }
             public void mouseClicked(MouseEvent e){
                 InterfaceGraphique mainMenu = new InterfaceGraphique();
                 mainMenu.run();
