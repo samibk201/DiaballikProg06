@@ -50,15 +50,17 @@ public class JeuPlateau {
 		return val;
 	}
 	void placeJAverse (int disposition) {
-		switch (disposition) {
-			case 1:
-				cases [0][place(hauteur/2)] = new Case (joueurs [1],OCCUPE);
-				cases [largeur - 1][place(hauteur/2)] = new Case (joueurs [0],OCCUPE);
+        switch (disposition) {
+            case 1:
 				break;
 			case 2:
-				break;
-		}
-	}
+				cases [0][1] = new Case (joueurs [1],OCCUPE);
+                cases [0][5] = new Case (joueurs [1],OCCUPE);
+                cases [largeur - 1][1] = new Case (joueurs [0],OCCUPE);
+                cases [largeur - 1][5] = new Case (joueurs [0],OCCUPE);
+                break;
+        }
+    }
 	/**modifié**/
 	public void init (int l,int h,int disposition) {
 		int etat = LIBRE;
@@ -114,29 +116,8 @@ public class JeuPlateau {
 				System.out.println ("Entrez les coordonnées de destinations");
 				Scanner scan = new Scanner (System.in);
 				int destX,destY;
-				destX = scan.nextInt (); destY = scan.nextInt ();
-				etat = lancerBalleVers (x,y,destX,destY,joueur);
-			} else if (getCase (x,y).getEtat () == OCCUPE) {//Déplacement d'un pion
-				etat = deplacerVers (action,joueur,x,y);
-			}
-		}
-		return etat;
-	}
-	
-	boolean joueCoup2 (Joueur joueur,int action,int x,int y) {
-		boolean etat = false;
-		System.out.println ("nom et num:"+joueur.getNom ()+"et "+joueur.getNum ());
-		System.out.println ("occupant de la case ="+getCase (x,y).getJoueur ().getNum ());
-		if (joueur.getNum () != getCase (x,y).getJoueur ().getNum ()) {
-			System.out.println ("!!!!Vous ne pouvez pas déplacer un pion adverse ou case sélectionner vide");
-			etat = false;
-		} else {
-			if (getCase (x,y).getEtat () == OC_BALLE) {//si c'est la balle
-				System.out.println ("Lancement de la balle");
-				System.out.println ("Entrez les coordonnées de destinations");
-				Scanner scan = new Scanner (System.in);
-				int destX,destY;
-				destX = scan.nextInt (); destY = scan.nextInt ();
+				destX = scan.nextInt (); 
+				destY = scan.nextInt ();
 				etat = lancerBalleVers (x,y,destX,destY,joueur);
 			} else if (getCase (x,y).getEtat () == OCCUPE) {//Déplacement d'un pion
 				etat = deplacerVers (action,joueur,x,y);
@@ -207,7 +188,7 @@ public class JeuPlateau {
 		}
 	}
 	//lance la balle du même x,y vers (destX,destY)
-	boolean lancerBalleVers (int x,int y,int destX,int destY,Joueur joueur) {
+	public boolean lancerBalleVers (int x,int y,int destX,int destY,Joueur joueur) {
 		 if (!verifieDest (x,y,destX,destY,joueur)) {
 			 System.out.println ("pas possible de joueur là");
 			 return false;
@@ -234,30 +215,48 @@ public class JeuPlateau {
 		if (action == 0) {//Avancer
 			if (joueur.getNum () == 1 && (x+1) <  hauteur && getCase (x+1,y).getEtat () == LIBRE) {
 				etat = true;dX = x + 1; dY = y;
-			} else if (joueur.getNum () == 2 && 0 <= (x - 1) && (x - 1) < hauteur && getCase (x - 1,y).getEtat () == LIBRE) {
+			} 
+			else if (joueur.getNum () == 2 && 0 <= (x - 1) && (x - 1) < hauteur && getCase (x - 1,y).getEtat () == LIBRE) {
 				etat = true;dX = x - 1;dY = y;
-			} else {
+			} 
+			else {
 				System.out.println ("Impossible d'avancer"); etat = false;
 			}
-		} else if (action == 1) {//Gauche
+		} 
+		else if (action == 1) {//Gauche
 			if ((joueur.getNum () == 1) && y < largeur && getCase (x,y+1).getEtat () == LIBRE) {
-				etat = true; dX = x; dY = y + 1;
-			} else if ((joueur.getNum () == 2) && y > 0	&& getCase (x,y-1).getEtat () == LIBRE) {
-				etat = true; dX = x; dY = y - 1;
-			} else {
-				System.out.println ("Impossible d'aller à gauche"); etat = false;
+				etat = true; 
+				dX = x; 
+				dY = y + 1;
+			} 
+			else if ((joueur.getNum () == 2) && y > 0	&& getCase (x,y-1).getEtat () == LIBRE) {
+				etat = true; 
+				dX = x; 
+				dY = y - 1;
+			} 
+			else {
+				System.out.println ("Impossible d'aller à gauche"); 
+				etat = false;
 			}
 		} else if (action == 2) {//Droite
 			if ((joueur.getNum () == 1) && y - 1 >= 0 && getCase (x,y-1).getEtat () == LIBRE) {
 								//on diminue y de 1
-				etat = true; dX = x; dY = y - 1;
-			} else if ((joueur.getNum () == 2)	&& getCase (x,y+1).getEtat () == LIBRE) {
-				etat = true; dX = x; dY = y + 1;
-			} else {
+				etat = true; 
+				dX = x; 
+				dY = y - 1;
+			} 
+			else if ((joueur.getNum () == 2)	&& getCase (x,y+1).getEtat () == LIBRE) {
+				etat = true; 
+				dX = x; 
+				dY = y + 1;
+			} 
+			else {
 				System.out.println ("Impossible d'aller à droite"); etat = false;
 			}
-		} else if (action == 3) {//Arrière
-		} else if (action == 5) {
+		} 
+		else if (action == 3) {//Arrière
+		} 
+		else if (action == 5) {
 		}
 		if (etat == true)
 			modifeCase (x,y,dX,dY,joueur);
@@ -290,11 +289,14 @@ public class JeuPlateau {
 		}
 		return false;
 	}
-	
-	public Joueur tourJoueur(int i) {
-		i++;
-		return this.joueurs[i%2];
+
+	public boolean estOccupe(int i, int j) {
+		// TODO Auto-generated method stub
+		return getCase(i, j).getEtat() == OCCUPE;
 	}
 
-	
+	public boolean estOccupeAvecBalle(int i, int j) {
+		// TODO Auto-generated method stub
+		return getCase(i, j).getEtat() == OC_BALLE;
+	}
 }
