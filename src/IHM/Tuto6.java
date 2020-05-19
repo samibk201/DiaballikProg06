@@ -20,6 +20,13 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.*;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
 
 public class Tuto6 extends JFrame{
 
@@ -40,10 +47,11 @@ public class Tuto6 extends JFrame{
         JFrame frame = new JFrame();
         frame.setSize(w, h);
         frame.setLayout(new BorderLayout());
-        
+
         // Background
         Background background = new Background();
-        background.Background(frame);
+        background.Background(frame, "Theme/bg.png");
+        
 
         JPanel navig = new JPanel();
         navig.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -54,7 +62,7 @@ public class Tuto6 extends JFrame{
         navig.add(volum);
 
         title = new JLabel();
-        title.setIcon(new ImageIcon("ressources/Titles/regleJeu.png"));
+        title.setIcon(new ImageIcon("ressources/Titles/regles.png"));
         title.setAlignmentX(CENTER_ALIGNMENT);
 
         JPanel boxNT = new JPanel();
@@ -80,6 +88,15 @@ public class Tuto6 extends JFrame{
 
         flowText.add(text);
 
+        JLabel prof = new JLabel();
+        prof.setIcon(new ImageIcon("ressources/Theme/prof.png"));
+
+        JPanel profTxt = new JPanel();
+        profTxt.setLayout(new FlowLayout());
+        profTxt.setOpaque(false);
+        profTxt.add(prof);
+        profTxt.add(flowText);
+
 
         // Boutons
         JPanel panelBut = new JPanel();
@@ -94,7 +111,7 @@ public class Tuto6 extends JFrame{
         panel.setLayout(new BorderLayout());
         panel.setOpaque(false);
         panel.add(boxNT, BorderLayout.NORTH);
-        panel.add(flowText, BorderLayout.CENTER);
+        panel.add(profTxt, BorderLayout.CENTER);
         panel.add(panelBut, BorderLayout.SOUTH);
 
 
