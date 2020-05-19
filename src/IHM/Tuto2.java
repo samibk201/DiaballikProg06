@@ -20,6 +20,12 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.*;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 public class Tuto2 extends JFrame{
 
@@ -41,10 +47,11 @@ public class Tuto2 extends JFrame{
         JFrame frame = new JFrame();
         frame.setSize(w, h);
         frame.setLayout(new BorderLayout());
-        
+
         // Background
         Background background = new Background();
-        background.Background(frame);
+        background.Background(frame, "Theme/bg.png");
+        
 
         JPanel navig = new JPanel();
         navig.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -54,10 +61,9 @@ public class Tuto2 extends JFrame{
         navig.add(home);
         navig.add(volum);
 
-        title = new JLabel("Règles du jeu");
-        title.setFont(new Font("Tahoma", Font.BOLD, 56));
+        title = new JLabel();
+        title.setIcon(new ImageIcon("ressources/Titles/regles.png"));
         title.setAlignmentX(CENTER_ALIGNMENT);
-        title.setForeground(Color.black);
 
         JPanel boxNT = new JPanel();
         boxNT.setLayout(new BoxLayout(boxNT, BoxLayout.Y_AXIS));
@@ -83,6 +89,32 @@ public class Tuto2 extends JFrame{
 
         flowText.add(text);
 
+        JLabel prof = new JLabel();
+        prof.setIcon(new ImageIcon("ressources/Theme/prof.png"));
+
+        JPanel profTxt = new JPanel();
+        profTxt.setLayout(new FlowLayout());
+        profTxt.setOpaque(false);
+        profTxt.add(prof);
+        profTxt.add(flowText);
+
+
+        // Chargement image plateau
+        JLabel plateau = new JLabel();
+        plateau.setIcon(new ImageIcon("ressources/TutoImage/tuto1.png"));
+
+        JPanel flowPla = new JPanel();
+        flowPla.setLayout(new FlowLayout());
+        flowPla.setOpaque(false);
+        flowPla.add(plateau);
+
+        // Box text+plateaux
+        JPanel box = new JPanel();
+        box.setLayout(new BoxLayout(box, BoxLayout.Y_AXIS));
+        box.setOpaque(false);
+        box.add(profTxt);
+        box.add(flowPla);
+
 
         // Boutons
         JPanel panelBut = new JPanel();
@@ -99,7 +131,7 @@ public class Tuto2 extends JFrame{
         panel.setLayout(new BorderLayout());
         panel.setOpaque(false);
         panel.add(boxNT, BorderLayout.NORTH);
-        panel.add(flowText, BorderLayout.CENTER);
+        panel.add(box, BorderLayout.CENTER);
         panel.add(panelBut, BorderLayout.SOUTH);
 
 
