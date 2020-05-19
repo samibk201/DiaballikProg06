@@ -20,6 +20,13 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.*;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
 
 public class Tuto3 extends JFrame{
 
@@ -41,10 +48,11 @@ public class Tuto3 extends JFrame{
         JFrame frame = new JFrame();
         frame.setSize(w, h);
         frame.setLayout(new BorderLayout());
-        
+
         // Background
         Background background = new Background();
-        background.Background(frame);
+        background.Background(frame, "Theme/bg.png");
+        
 
         JPanel navig = new JPanel();
         navig.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -54,10 +62,9 @@ public class Tuto3 extends JFrame{
         navig.add(home);
         navig.add(volum);
 
-        title = new JLabel("Règles du jeu");
-        title.setFont(new Font("Tahoma", Font.BOLD, 56));
+        title = new JLabel();
+        title.setIcon(new ImageIcon("ressources/Titles/regles.png"));
         title.setAlignmentX(CENTER_ALIGNMENT);
-        title.setForeground(Color.black);
 
         JPanel boxNT = new JPanel();
         boxNT.setLayout(new BoxLayout(boxNT, BoxLayout.Y_AXIS));
@@ -83,6 +90,20 @@ public class Tuto3 extends JFrame{
 
         panelText.add(text);
 
+        JLabel prof = new JLabel();
+        prof.setIcon(new ImageIcon("ressources/Theme/prof.png"));
+        JPanel flowProf = new JPanel();
+        flowProf.setLayout(new FlowLayout(FlowLayout.LEFT));
+        flowProf.setOpaque(false);
+        flowProf.add(prof);
+        
+
+        JPanel profTxt = new JPanel();
+        profTxt.setLayout(new BoxLayout(profTxt, BoxLayout.Y_AXIS));
+        profTxt.setOpaque(false);
+        profTxt.add(panelText);
+        profTxt.add(flowProf);
+
 
         // Boutons
         JPanel panelBut = new JPanel();
@@ -99,7 +120,7 @@ public class Tuto3 extends JFrame{
         panel.setLayout(new BorderLayout());
         panel.setOpaque(false);
         panel.add(boxNT, BorderLayout.NORTH);
-        panel.add(panelText, BorderLayout.CENTER);
+        panel.add(profTxt, BorderLayout.CENTER);
         panel.add(panelBut, BorderLayout.SOUTH);
 
 
