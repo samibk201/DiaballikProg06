@@ -31,8 +31,6 @@ public class Tuto2 extends JFrame{
 
     JTextArea text;
 
-    JLabel title;
-
     Button next;
     Button prev;
     Button home;
@@ -57,19 +55,14 @@ public class Tuto2 extends JFrame{
         navig.setLayout(new FlowLayout(FlowLayout.LEFT));
         navig.setOpaque(false);
         home = new Button("ressources/ButtonImage/homeBSR.png");
-        volum = new Button("ressources/ButtonImage/volume.png");
+        volum = new Button("ressources/ButtonImage/sound.png");
         navig.add(home);
         navig.add(volum);
-
-        title = new JLabel();
-        title.setIcon(new ImageIcon("ressources/Titles/regles.png"));
-        title.setAlignmentX(CENTER_ALIGNMENT);
 
         JPanel boxNT = new JPanel();
         boxNT.setLayout(new BoxLayout(boxNT, BoxLayout.Y_AXIS));
         boxNT.setOpaque(false);
         boxNT.add(navig);
-        boxNT.add(title);
 
 
         // Panel text
@@ -77,7 +70,7 @@ public class Tuto2 extends JFrame{
         flowText.setLayout(new FlowLayout());
         flowText.setOpaque(false);
 
-        text = new JTextArea(" 1. Une partie se joue à 2. \n On peut commencer la partie selon "+
+        text = new JTextArea(" Une partie se joue à 2. \n On peut commencer la partie selon "+
                                 "deux configurations : \n     - tous les pions d'un joueur sont devant lui \n"+
                                 "     - deux pions sont placés dans le camp adverse \n" +
                                 " La balle est placée sur le pion centrale.");
@@ -101,7 +94,7 @@ public class Tuto2 extends JFrame{
 
         // Chargement image plateau
         JLabel plateau = new JLabel();
-        plateau.setIcon(new ImageIcon("ressources/TutoImage/tuto1.png"));
+        plateau.setIcon(new ImageIcon("ressources/TutoImage/tuto2.png"));
 
         JPanel flowPla = new JPanel();
         flowPla.setLayout(new FlowLayout());
@@ -137,6 +130,12 @@ public class Tuto2 extends JFrame{
 
         // Clicks
         next.addMouseListener(new MouseAdapter(){
+            public void mouseEntered(MouseEvent e){
+                next.setIcon(new ImageIcon("ressources/ButtonImage/nextClik.png"));
+            }
+            public void mouseExited(MouseEvent e){
+                next.setIcon(new ImageIcon("ressources/ButtonImage/nextSR.png"));
+            }
             public void mouseClicked(MouseEvent e){
                 Tuto3 tuto3 = new Tuto3();
                 tuto3.init(frame.getWidth(), frame.getHeight());
@@ -145,6 +144,12 @@ public class Tuto2 extends JFrame{
         });
 
         prev.addMouseListener(new MouseAdapter(){
+            public void mouseEntered(MouseEvent e){
+                prev.setIcon(new ImageIcon("ressources/ButtonImage/prevClik.png"));
+            }
+            public void mouseExited(MouseEvent e){
+                prev.setIcon(new ImageIcon("ressources/ButtonImage/previousSR.png"));
+            }
             public void mouseClicked(MouseEvent e){
                 Tuto1 tuto1 = new Tuto1();
                 tuto1.init(frame.getWidth(), frame.getHeight());
@@ -153,6 +158,12 @@ public class Tuto2 extends JFrame{
         });
 
         home.addMouseListener(new MouseAdapter(){
+            public void mouseEntered(MouseEvent e){
+                home.setIcon(new ImageIcon("ressources/ButtonImage/homeClik.png"));
+            }
+            public void mouseExited(MouseEvent e){
+                home.setIcon(new ImageIcon("ressources/ButtonImage/homeBSR.png"));
+            }
             public void mouseClicked(MouseEvent e){
                 InterfaceGraphique mainMenu = new InterfaceGraphique();
                 mainMenu.run();
