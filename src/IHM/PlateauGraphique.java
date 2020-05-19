@@ -2,46 +2,43 @@ package IHM;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.geom.Dimension2D;
 import java.awt.geom.RoundRectangle2D;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
 
 import javax.imageio.ImageIO;
 import javax.swing.JComponent;
 
 import Moteur.JeuPlateau;
 import Moteur.Joueur;
-import Moteur.JoueurHumain;
 import Moteur.Partie;
 import Pattern.Observable;
 import Pattern.Observateur;;
 
 @SuppressWarnings("serial")
-public class PlateauGraphique extends JComponent implements MouseListener, Observable {
+public class PlateauGraphique extends JComponent implements Observable {
 	private int nbColonnes;
 	private int nbLignes = nbColonnes = 7;
 	private int caseLargeur;
 	private int caseHauteur = caseLargeur = 100;
 	private int marge = caseLargeur / 10;
 	private Image imgPionJ1, imgPionJ2, imgPionJ1AvecBalle, imgPionJ2AvecBalle;
-	Partie partie;
 
+	Partie partie;
+	
 	JeuPlateau jeu;
-	private ArrayList<Observateur> observateurs = new ArrayList<Observateur>();
-	private int dx;
-	private int dy;
-	private boolean aFaitAction;
-	public boolean aucunPionSelectionne;
-	Image image = null;
+
+	GameSetIA gameIA = GameSetIA.getInstance();
+	GameSetJ gameJ = GameSetJ.getInstance();
+
+	public int pionSelected = 0;
+	public int turn = 0;
+	public int xSelected;
+	public int ySelected;
+
 	/*
 	 * private String[][] pions = { {"B","B","B","L","B", "B", "B"}, {null, null,
 	 * null, null, null, null, null}, {null, null, null, null, null, null, null},
@@ -50,32 +47,21 @@ public class PlateauGraphique extends JComponent implements MouseListener, Obser
 	 * "N", "N", "N"}, };
 	 */
 
-	public PlateauGraphique(JeuPlateau j) {
-		// Joueur j1 = new Joueur(0, "Dan");
-		// Joueur j2 = new Joueur(1, "Cissé");
-		// int disposition = 0;
-		// partie = Partie.getInstance();
-		// partie.init(j1, j2, disposition);
+	public PlateauGraphique() {
+		Joueur j1 = new Joueur(1, "Dan");
+		Joueur j2 = new Joueur(2, "CissÃ©");
+		int disposition = 1;
+		
+		if (gameIA.IA == 1)
+			disposition = gameIA.configPlateau-1;
+		else
+			disposition = gameJ.configPlateau-1;
 
-		// this.jeu = partie.getJeu();
-		/*
-		 * imgCaseSansPoint = new
-		 * ImageIcon(getClass().getResource("src/IHM/Images/vide.png"));
-		 * imgCaseAvecPoint = new
-		 * ImageIcon(getClass().getResource("/IHM/Images/vide.png")); imgPionJ1SurCase =
-		 * new ImageIcon(getClass().getResource("/IHM/Images/vide.png"));
-		 * imgPionJ2SurCase = new
-		 * ImageIcon(getClass().getResource("/IHM/Images/vide.pgg")); imgPionJ1AvecBalle
-		 * = new ImageIcon(getClass().getResource("/IHM/Images/vide.png"));
-		 * imgPionJ2AvecBalle = new
-		 * ImageIcon(getClass().getResource("/IHM/Images/vide.png"));
-		 */
-		this.jeu = j;
-		this.addMouseListener(this);
-		this.setPreferredSize(new Dimension(caseLargeur*nbColonnes, caseHauteur*nbLignes));
+		jeu = new JeuPlateau(j1, j2, disposition);
+		jeu.init(nbColonnes, nbLignes, disposition);
 	}
 
-	// Les cases doivent être carrées
+	// Les cases doivent Ãªtre carrÃ©es
 	public int getCaseLargeur() {
 		return caseLargeur = Math.min(caseLargeur, caseHauteur);
 	}
@@ -100,83 +86,298 @@ public class PlateauGraphique extends JComponent implements MouseListener, Obser
 		return getWidth();
 	}
 
-	public int marge() {
-		return this.marge;
-	}
-
 	private Image lisImage(String nom) {
 		Image img = null;
 		try {
 			img = ImageIO.read(new File("ressources/Pions/" + nom));
 		} catch (IOException io) {
-			System.out.println("Chargment de l'image " + nom + " Impossible");
+			System.out.println("Chargement de l'image " + nom + " Impossible");
 			System.exit(1);
 		}
 		return img;
 	}
 
-	private void tracer(Graphics2D g2D, Image i, int x, int y, int l, int h) {
+	void tracer(Graphics2D g2D, Image i, int x, int y, int l, int h) {
 		g2D.drawImage(i, x, y, l, h, this);
+	}
+	public void RemovePion() {
+		
+	}
+
+	public String choixImage(int typeImg, int numJ){
+		String nameImg = "";
+
+		if (gameIA.IA == 1){
+			if (typeImg == 1){
+				if (numJ == 1){
+					switch(gameIA.colorJ1){
+						case 1 :
+							nameImg = "vikHachGreen.png";
+							break;
+						case 2:
+							nameImg = "vikHachYello.png";
+							break;
+						case 3:
+							nameImg = "vikHachGrey.png";
+							break;
+					}
+				}
+				else if (numJ == 2){
+					switch(gameIA.colorJ2){
+						case 1 :
+							nameImg = "vikHachGreen.png";
+							break;
+						case 2:
+							nameImg = "vikHachYello.png";
+							break;
+						case 3:
+							nameImg = "vikHachGrey.png";
+							break;
+					}
+				}
+			}
+			else if (typeImg == 2){
+				if (numJ == 1){
+					switch(gameIA.colorJ1){
+						case 1 :
+							nameImg = "vikCoffreGreen.png";
+							break;
+						case 2:
+							nameImg = "vikCoffreYello.png";
+							break;
+						case 3:
+							nameImg = "vikCoffreGrey.png";
+							break;
+					}
+				}
+				else if (numJ == 2){
+					switch(gameIA.colorJ2){
+						case 1 :
+							nameImg = "vikCoffreGreen.png";
+							break;
+						case 2:
+							nameImg = "vikCoffreYello.png";
+							break;
+						case 3:
+							nameImg = "vikCoffreGrey.png";
+							break;
+					}
+				}
+			}
+		}
+		else{
+			if (typeImg == 1){
+				if (numJ == 1){
+					switch(gameJ.colorJ1){
+						case 1 :
+							nameImg = "vikHachGreen.png";
+							break;
+						case 2:
+							nameImg = "vikHachYello.png";
+							break;
+						case 3:
+							nameImg = "vikHachGrey.png";
+							break;
+					}
+				}
+				else if (numJ == 2){
+					switch(gameJ.colorJ2){
+						case 1 :
+							nameImg = "vikHachGreen.png";
+							break;
+						case 2:
+							nameImg = "vikHachYello.png";
+							break;
+						case 3:
+							nameImg = "vikHachGrey.png";
+							break;
+					}
+				}
+			}
+			else if (typeImg == 2){
+				if (numJ == 1){
+					switch(gameJ.colorJ1){
+						case 1 :
+							nameImg = "vikCoffreGreen.png";
+							break;
+						case 2:
+							nameImg = "vikCoffreYello.png";
+							break;
+						case 3:
+							nameImg = "vikCoffreGrey.png";
+							break;
+					}
+				}
+				else if (numJ == 2){
+					switch(gameJ.colorJ2){
+						case 1 :
+							nameImg = "vikCoffreGreen.png";
+							break;
+						case 2:
+							nameImg = "vikCoffreYello.png";
+							break;
+						case 3:
+							nameImg = "vikCoffreGrey.png";
+							break;
+					}
+				}
+			}
+		}
+
+		
+
+		return nameImg;
 	}
 
 	public void dessinerPlateau(Graphics2D g2D) {
 		// dessiner les cases
+		Image image = null;
 		int pair = 0;
-		for (int i = 0; i < this.nbColonnes; i++) {
-			for (int j = 0; j < this.nbLignes; j++) {
+		image = lisImage("oceanBoard.png");
+		tracer(g2D, image, caseLargeur-marge, caseLargeur-marge, (caseLargeur * this.nbColonnes) + marge, (caseLargeur * this.nbLignes) + marge);
+		for (int i = 0; i < this.nbLignes; i++) {
+			for (int j = 0; j < this.nbColonnes; j++) {
 				g2D.setPaint(Color.LIGHT_GRAY);
 				if (pair % 2 == 0) {
-
 					g2D.setStroke(new BasicStroke(2));
-					// Centre du cercle
-					g2D.fillOval(((j) * caseLargeur) + (caseLargeur / 2) - marge,
-							((i) * caseLargeur) + (caseLargeur / 2) - marge, marge, marge);
 					// Cercle = Case
-					g2D.drawOval((j ) * caseLargeur, (i ) * caseLargeur, caseLargeur - marge,
+					/*g2D.fillOval((j + 1) * caseLargeur, (i + 1) * caseLargeur, caseLargeur - marge,
+							caseLargeur - marge);*/
+					image = lisImage("bouee.png");
+					tracer(g2D, image, (j + 1) * caseLargeur, (i + 1) * caseLargeur, caseLargeur - marge,
 							caseLargeur - marge);
-				} else {
-					g2D.drawOval((j) * caseLargeur, (i) * caseLargeur, caseLargeur - marge,
+							
+				} 
+				else {
+					/*g2D.fillOval((j + 1) * caseLargeur, (i + 1) * caseLargeur, caseLargeur - marge,
+							caseLargeur - marge);*/
+					image = lisImage("bouee.png");
+					tracer(g2D, image, (j + 1) * caseLargeur, (i + 1) * caseLargeur, caseLargeur - marge,
 							caseLargeur - marge);
 				}
 				pair++;
 			}
 		}
 		// le cadre
-		g2D.setPaint(Color.LIGHT_GRAY);
+		g2D.setPaint(Color.BLACK);
 		g2D.setStroke(new BasicStroke(2)); // largeur 2 pixels
 
-		g2D.draw(new RoundRectangle2D.Double(0, 0,
+		/*g2D.draw(new RoundRectangle2D.Double(caseLargeur - marge, caseLargeur - marge,
 				(caseLargeur * this.nbColonnes) + marge, (caseLargeur * this.nbLignes) + marge, caseLargeur,
-				caseLargeur));
+				caseLargeur));*/
 
 	}
 
 	public void remplirPlateau(Graphics2D g2D) {
 		// chargement image
-		
-		for (int i =0; i < this.nbColonnes; i++) {
-			for (int j = 0; j < this.nbLignes; j++) {
-				if (jeu.getCase(i, j).estOccupe(i, j)) {
-					if (jeu.getCase(i, j).getJoueur().getNum() == 1) { // pion blanc
-						image = lisImage("pionBlanc.png");
-					} else if (jeu.getCase(i, j).getJoueur().getNum() == 2) { // pion noir
-						image = lisImage("pionNoir.png");
+		String nameImg;
+		Image image = null;
+		for (int i = 0; i < this.nbLignes; i++) {
+			for (int j = 0; j < this.nbColonnes; j++) {
+				if (jeu.estOccupe(i, j)) {
+					if (jeu.getCase(i, j).getJoueur().getNum() == 1) { // pion sans balle
+						nameImg = choixImage(1,1);
+						image = lisImage(nameImg);
+					} else if (jeu.getCase(i, j).getJoueur().getNum() == 2) { // pion sans balle
+						nameImg = choixImage(1,2);
+						image = lisImage(nameImg);
 					}
-					tracer(g2D, image, (j) * caseLargeur, (i) * caseLargeur, caseLargeur - marge,
+					tracer(g2D, image, (j + 1) * caseLargeur, (i + 1) * caseLargeur, caseLargeur - marge,
 							caseLargeur - marge);
-
-				} else if (jeu.getCase(i, j).estOccupeAvecBalle(i, j)) {
-					if (jeu.getCase(i, j).getJoueur().getNum() == 1) { // pion blanc avec balle
-						image = lisImage("pionBlancBall.png");
-					} else if (jeu.getCase(i, j).getJoueur().getNum() == 2) { // pion noir avec balle
-						image = lisImage("pionNoirBall.png");
+					
+				} else if (jeu.estOccupeAvecBalle(i, j)) {
+					if (jeu.getCase(i, j).getJoueur().getNum() == 1) { // pion avec balle
+						nameImg = choixImage(2,1);
+						image = lisImage(nameImg);
+					} else if (jeu.getCase(i, j).getJoueur().getNum() == 2) { // pion avec balle
+						nameImg = choixImage(2,2);
+						image = lisImage(nameImg);
 					}
-					tracer(g2D, image, (j) * caseLargeur, (i) * caseLargeur, caseLargeur - marge,
+					tracer(g2D, image, (j + 1) * caseLargeur, (i + 1) * caseLargeur, caseLargeur - marge,
 							caseLargeur - marge);
 				}
 			}
 		}
+		//&& jeu.estOccupe(ySelected, xSelected)
+		if (pionSelected == 1){
+			image = lisImage("ship.png");
+			tracer(g2D, image, (xSelected + 1) * caseLargeur, (ySelected + 1) * caseLargeur, caseLargeur - marge,
+							caseLargeur - marge);
+			pionSelected = 0;
+		}
 	}
+
+	public int check(Joueur j, int x, int y){
+		if (jeu.estOccupe(x, y))
+			return 1;
+		if (jeu.estOccupeAvecBalle(x, y))
+			return 2;
+		return 0;
+	}
+	
+	public int newPos(Joueur j, int x, int y, int newX, int newY) {
+		int c = 0;
+		if(j.getNum()==1) {
+			if(newX==x+1) {
+				if(newY==y)
+					c=0;
+				else
+					return 1;
+			}else if(newX==x-1) {
+				if(newY==y)
+					c=3;
+				else
+					return 1;
+			}else if(newY==y+1) {
+				if(newX==x)
+					c=1;
+				else
+					return 1;
+			}else if(newY==y-1) {
+				if(newX==x)
+					c=2;
+				else
+					return 1;
+			}else
+				return 1;
+		}
+		if(j.getNum()==2) {
+			if(newX==x+1) {
+				if(newY==y)
+					c=3;
+				else
+					return 1;
+			}else if(newX==x-1) {
+				if(newY==y)
+					c=0;
+				else
+					return 1;
+			}else if(newY==y+1) {
+				if(newX==x)
+					c=2;
+				else
+					return 1;
+			}else if(newY==y-1) {
+				if(newX==x)
+					c=1;
+				else
+					return 1;
+			}else
+				return 1;
+		}
+		boolean coupOK = jeu.joueCoup(j, c, x, y);
+		if (coupOK == false)
+			return 1;
+		return 0;
+	}
+
+	public int passe(Joueur j, int x, int y, int newX, int newY){
+		boolean passeOK = jeu.lancerBalleVers(x, y, newX, newY, j);
+		if (passeOK == false)
+			return 1;
+		return 0;
+	}
+
 
 	public void paintComponent(Graphics g) {
 		Graphics2D g2D = (Graphics2D) g;
@@ -195,67 +396,16 @@ public class PlateauGraphique extends JComponent implements MouseListener, Obser
 	@Override
 	public void ajouteObservateur(Observateur o) {
 		// TODO Auto-generated method stub
-		this.observateurs.add(o);
-	}
-
-	@Override
-	public void metAJour(int x, int y, int action) {
-		// TODO Auto-generated method stub
-		Iterator<Observateur> it;
-		it = observateurs.iterator();
-		while (it.hasNext()) {
-			Observateur o = it.next();
-			o.miseAJour(x, y, action);
-		}
-	}
-
-	@Override
-	public void mouseClicked(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		if ((arg0.getX() > 0) && (arg0.getX() < this.largeurPlateau()) && (arg0.getY() > 0)
-				&& (arg0.getY() < this.hauteurPlateau())) {
-			int j = (arg0.getX() - this.marge()) / this.getCaseLargeur();
-			int i = (arg0.getY() - this.marge()) / this.getCaseLargeur();
-			if(jeu.getCase(i, j).estOccupe(i, j)) {
-				aucunPionSelectionne = false;
-				int action = 0;
-				//this.metAJour(i, j, action);
-				System.out.println("Pion select " + i + "  " + j);
-				image = lisImage("pionClic.png");
-				this.repaint();
-				if(!aFaitAction) {
-					
-				}
-			}else {
-				System.out.println("case libre");
-			}
-			
-		}
 
 	}
 
 	@Override
-	public void mouseEntered(MouseEvent arg0) {
+	public void metAJour() {
 		// TODO Auto-generated method stub
+		Graphics g = null;
+		paintComponent(g);
 
 	}
 
-	@Override
-	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mousePressed(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-
-	}
-
+	
 }
