@@ -15,11 +15,11 @@ import javax.imageio.ImageIO;
 
 public class Background {
 
-    public void Background(JFrame frame){
+    public void Background(JFrame frame, String imgPath){
 
         // Background
         try {
-		    final Image backgroundImage = ImageIO.read(new File("ressources/ButtonImage/bg.png"));
+		    final Image backgroundImage = ImageIO.read(new File("ressources/"+imgPath));
 			
 		    frame.setContentPane(new JPanel(new BorderLayout()) {
 				private static final long serialVersionUID = 422561129403137988L;
