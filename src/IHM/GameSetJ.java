@@ -27,45 +27,82 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import java.awt.Dimension;
 
 
 public class GameSetJ extends JFrame{
 
     JLabel title;
-    Button name;
-    Button avatar;
-    Button color;
-    Button plateau;
+    public JTextField nameField;
+    public JTextField nameJ1;
+    public JTextField nameJ2;
 
-    ButtonGroup bgPlat;
-    public JRadioButton standard;
-    public JRadioButton melange;
+    Button boardNor;
+    Button boardMel;
 
-    ButtonGroup bgAvatar1;
-    ButtonGroup bgAvatar2;
-    public JRadioButton a1j1;
-    public JRadioButton a2j1;
-    public JRadioButton a3j1;
-    public JRadioButton a1j2;
-    public JRadioButton a2j2;
-    public JRadioButton a3j2;
+    Button vikingJ1;
+    Button beaverJ1;
+    Button garfieldJ1;
+    Button vikingJ2;
+    Button beaverJ2;
+    Button garfieldJ2;
 
-    ButtonGroup bgColor;
-    ButtonGroup bgColor2;
-    ButtonGroup bgColorW;
-    ButtonGroup bgColorB;
-    public JRadioButton white;
-    public JRadioButton black;
-    public JRadioButton white2;
-    public JRadioButton black2;
+    Button greenJ1;
+    Button yelloJ1;
+    Button greyJ1;
+    Button greenJ2;
+    Button yelloJ2;
+    Button greyJ2;
 
+    Button sepNameJ1;
+    Button sepAvJ1;
+    Button sepColJ1;
+    Button sepNameJ2;
+    Button sepAvJ2;
+    Button sepColJ2;
 
-    public Button start; 
+    public Button next; 
     public Button back;
     public Button volum;
 
+    // 1 = vert, 2 = jaune, 3 = gris
+    public int colorJ1 = 1;
+    public int colorJ2 = 2;
+    // 1 = viking, 2 = beaver, 3 = garfield
+    public int avatarJ1 = 1;
+    public int avatarJ2 = 2;
+    // 1 = plateau simple, 2 = plateau mélangé
+    public int configPlateau = 1;
+
+    int greenSelectedJ1 = 1;
+    int greySelectedJ1 = 0;
+    int yelloSelectedJ1 = 0;
+    int vikSelectedJ1 = 1;
+    int beavSelectedJ1 = 0;
+    int garfSelectedJ1 = 0;
+
+    int greenSelectedJ2 = 0;
+    int greySelectedJ2 = 0;
+    int yelloSelectedJ2 = 1;
+    int vikSelectedJ2 = 0;
+    int beavSelectedJ2 = 0;
+    int garfSelectedJ2 = 1;
+
+    int boardMelSelected = 0;
+    int boardNorSelected = 1;
+
+
     GameSetJ(){
         super();
+    }
+
+    static GameSetJ gameSetJ = null;
+
+    public static GameSetJ getInstance(){
+        if (gameSetJ == null){
+            GameSetJ.gameSetJ = new GameSetJ();
+        }
+        return GameSetJ.gameSetJ;
     }
 
     public void init(int w, int h){
@@ -76,254 +113,594 @@ public class GameSetJ extends JFrame{
 
         // Background
         Background background = new Background();
-        background.Background(frame);
+        background.Background(frame, "Theme/bgParam.png");
+
+
+        // Chargement des bouttons
+        back = new Button("ressources/ButtonImage/backSR.png");
+        volum = new Button("ressources/ButtonImage/volume.png");
         
         
+        // Panel nord
         JPanel navig = new JPanel();
         navig.setLayout(new FlowLayout(FlowLayout.LEFT));
         navig.setOpaque(false);
-        back = new Button("ressources/ButtonImage/backSR.png");
-        volum = new Button("ressources/ButtonImage/volume.png");
         navig.add(back);
         navig.add(volum);
 
-        title = new JLabel();
-        title.setIcon(new ImageIcon("ressources/Titles/paramTitle.png"));
-        title.setAlignmentX(CENTER_ALIGNMENT);
+
+        // Panel nom du joueur
+        JPanel nom = new JPanel();
+        nom.setLayout(new FlowLayout());
+        nom.setOpaque(false);
+
+        JLabel lnom = new JLabel("Joueur : ");
+        lnom.setFont(new Font("Tahoma", Font.BOLD, 26));
+
+        nameJ1 = new JTextField("Joueur1");
+        nameJ1.setColumns(10);
+
+        nameJ2 = new JTextField("Joueur2");
+        nameJ2.setColumns(10);
+
+        // Séparateurs des champs des joueurs
+        sepNameJ1 = new Button("ressources/ButtonImage/circleR.png","J1");
+        sepNameJ2 = new Button("ressources/ButtonImage/circleR.png","J2");
         
-        // Panel navig + titre
-        JPanel boxNT = new JPanel();
-        boxNT.setLayout(new BoxLayout(boxNT, BoxLayout.Y_AXIS));
-        boxNT.setOpaque(false);
-        boxNT.add(navig);
-        boxNT.add(title);
+        nom.add(lnom);
+        nom.add(sepNameJ1);
+        nom.add(nameJ1);
+        nom.add(sepNameJ2);
+        nom.add(nameJ2);
+        nom.add(Box.createRigidArea(new Dimension(20, 0)));
 
 
-        // Choix plateau
-        JPanel panelPlato = new JPanel();
-        panelPlato.setLayout(new BoxLayout(panelPlato, BoxLayout.Y_AXIS));
-        panelPlato.setOpaque(false);
-        plateau = new Button("ressources/ButtonImage/button1.png","Configuration du plateau : ");
-        plateau.setAlignmentX(Component.CENTER_ALIGNMENT);
-        this.bgPlat = new ButtonGroup();
-        this.standard = new JRadioButton("Plateau standard");
-        this.melange = new JRadioButton("Plateau mélangé");
-        standard.setSelected(true);
-        bgPlat.add(standard);
-        bgPlat.add(melange);
-        panelPlato.add(plateau);
-        JPanel flowPlato = new JPanel();
-        flowPlato.setLayout(new FlowLayout());
-        flowPlato.setOpaque(false);
-        flowPlato.add(standard);
-        flowPlato.add(melange);
-        panelPlato.add(flowPlato);
+
+        // Panel du choix de l'avatar
+        JPanel av = new JPanel();
+        av.setLayout(new FlowLayout());
+        av.setOpaque(false);
+
+        // Titre du champs
+        JLabel avLab = new JLabel("Avatar : ");
+        avLab.setFont(new Font("Tahoma", Font.BOLD, 26));
+
+        // Chargement des images des avatars
+        vikingJ1 = new Button("ressources/Avatars/vikClik.png");
+        garfieldJ1 = new Button("ressources/Avatars/garfield.png");
+        beaverJ1 = new Button("ressources/Avatars/beaver.png");
+
+        vikingJ2 = new Button("ressources/Avatars/vik.png");
+        garfieldJ2 = new Button("ressources/Avatars/garfieldClik.png");
+        beaverJ2 = new Button("ressources/Avatars/beaver.png");
+
+        // Séparateur champs des deux joueurs
+        sepAvJ1 = new Button("ressources/ButtonImage/circleR.png","J1");
+        sepAvJ2 = new Button("ressources/ButtonImage/circleR.png","J2");
+
+        // Remplissage panel du choix des avatars
+        av.add(avLab);
+        av.add(sepAvJ1);
+        av.add(vikingJ1);
+        av.add(garfieldJ1);
+        av.add(beaverJ1);
+        av.add(sepAvJ2);
+        av.add(vikingJ2);
+        av.add(garfieldJ2);
+        av.add(beaverJ2);
+        av.add(Box.createRigidArea(new Dimension(20,0)));
 
 
-        // Nom joueur
-        Button circle1N = new Button("ressources/ButtonImage/circleR.png", "J1");
-        Button circle2N = new Button("ressources/ButtonImage/circleR.png", "J2");
 
-        JTextField nameField = new JTextField("Joueur1");
-        JTextField nameField2 = new JTextField("Joueur2");
-        nameField.setColumns(10);
-        nameField2.setColumns(10);
-        name = new Button("ressources/ButtonImage/button1.png","Nom des joueurs : ");
-        name.setAlignmentX(Component.CENTER_ALIGNMENT);
+        // Panel du choix de la couleur des pions
+        JPanel col = new JPanel();
+        col.setLayout(new FlowLayout());
+        col.setOpaque(false);
 
-        JPanel panelName = new JPanel();
-        panelName.setLayout(new BoxLayout(panelName, BoxLayout.Y_AXIS));
-        panelName.setAlignmentX(Component.CENTER_ALIGNMENT);
-        panelName.setOpaque(false);
-        panelName.add(name);
-        JPanel flowName1 = new JPanel();
-        flowName1.setLayout(new FlowLayout());
-        flowName1.setOpaque(false);
-        flowName1.add(circle1N);
-        flowName1.add(nameField);
-        JPanel flowName2 = new JPanel();
-        flowName2.setLayout(new FlowLayout());
-        flowName2.setOpaque(false);
-        flowName2.add(circle2N);
-        flowName2.add(nameField2);
-        panelName.add(flowName1);
-        panelName.add(flowName2);
+        // Titre du champs
+        JLabel colLab = new JLabel("Pions : ");
+        colLab.setFont(new Font("Tahoma", Font.BOLD, 26));
 
+        // Chargement des images des couleurs
+        greenJ1 = new Button("ressources/ButtonImage/radioGreenClik.png");
+        greyJ1 = new Button("ressources/ButtonImage/radioGrey.png");
+        yelloJ1 = new Button("ressources/ButtonImage/radioYello.png");
 
-        // Choix avatar
-        JLabel panda = new JLabel();
-        panda.setIcon(new ImageIcon("ressources/Avatars/panda.png"));
-        JLabel pirate = new JLabel();
-        pirate.setIcon(new ImageIcon("ressources/Avatars/pirate.jpg"));
-        JLabel armure = new JLabel();
-        armure.setIcon(new ImageIcon("ressources/Avatars/armure.png"));
+        greenJ2 = new Button("ressources/ButtonImage/radioGreen.png");
+        greyJ2 = new Button("ressources/ButtonImage/radioGrey.png");
+        yelloJ2 = new Button("ressources/ButtonImage/radioYelloClik.png");
 
-        JLabel panda2 = new JLabel();
-        panda2.setIcon(new ImageIcon("ressources/Avatars/panda.png"));
-        JLabel pirate2 = new JLabel();
-        pirate2.setIcon(new ImageIcon("ressources/Avatars/pirate.jpg"));
-        JLabel armure2 = new JLabel();
-        armure2.setIcon(new ImageIcon("ressources/Avatars/armure.png"));
+        // Séparateur champs des deux joueurs
+        sepColJ1 = new Button("ressources/ButtonImage/circleR.png","J1");
+        sepColJ2 = new Button("ressources/ButtonImage/circleR.png","J2");
 
-        Button circle1A = new Button("ressources/ButtonImage/circleR.png", "J1");
-        Button circle2A = new Button("ressources/ButtonImage/circleR.png", "J2");
-        //circle2A.setAlignmentX(circle2N.getX());
+        // Remplissage panel des choix des couleurs
+        col.add(colLab);
+        col.add(sepColJ1);
+        col.add(greenJ1);
+        col.add(yelloJ1);
+        col.add(greyJ1);
+        col.add(sepColJ2);
+        col.add(greenJ2);
+        col.add(yelloJ2);
+        col.add(greyJ2);
+        col.add(Box.createRigidArea(new Dimension(160, 0)));
 
-        JPanel panelAvatar = new JPanel();
-        panelAvatar.setLayout(new BoxLayout(panelAvatar, BoxLayout.Y_AXIS));
-        panelAvatar.setOpaque(false);
-        avatar = new Button("ressources/ButtonImage/button1.png","Avatar des joueurs : ");
-        avatar.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        this.bgAvatar1 = new ButtonGroup();
-        this.a1j1 = new JRadioButton("");
-        this.a2j1 = new JRadioButton("");
-        this.a3j1 = new JRadioButton("");
-        this.bgAvatar2 = new ButtonGroup();
-        this.a1j2 = new JRadioButton("");
-        this.a2j2 = new JRadioButton("");
-        this.a3j2 = new JRadioButton("");
-        a1j1.setSelected(true);
-        bgAvatar1.add(a1j1);
-        bgAvatar1.add(a2j1);
-        bgAvatar1.add(a3j1);
-        panelAvatar.add(avatar);
-        JPanel flowAv = new JPanel();
-        flowAv.setLayout(new FlowLayout());
-        flowAv.setOpaque(false);
-        flowAv.add(circle1A);
-        flowAv.add(a1j1);
-        flowAv.add(panda);
-        flowAv.add(a2j1);
-        flowAv.add(pirate);
-        flowAv.add(a3j1);
-        flowAv.add(armure);
-        bgAvatar2.add(a1j2);
-        bgAvatar2.add(a2j2);
-        bgAvatar2.add(a3j2);
-        a1j2.setSelected(true);
-        JPanel flowAv2 = new JPanel();
-        flowAv2.setLayout(new FlowLayout());
-        flowAv2.setOpaque(false);
-        flowAv2.add(circle2A);
-        flowAv2.add(a1j2);
-        flowAv2.add(panda2);
-        flowAv2.add(a2j2);
-        flowAv2.add(pirate2);
-        flowAv2.add(a3j2);
-        flowAv2.add(armure2);
-        panelAvatar.add(flowAv);
-        panelAvatar.add(flowAv2);
 
         
-        // Choix couleur pions
-        JLabel whiteS = new JLabel();
-        whiteS.setIcon(new ImageIcon("ressources/Avatars/whiteSquare.png"));
-        JLabel blackS = new JLabel();
-        blackS.setIcon(new ImageIcon("ressources/Avatars/blackSquare.png"));
-        JLabel whiteS2 = new JLabel();
-        whiteS2.setIcon(new ImageIcon("ressources/Avatars/whiteSquare.png"));
-        JLabel blackS2 = new JLabel();
-        blackS2.setIcon(new ImageIcon("ressources/Avatars/blackSquare.png"));
+        // Panel du choix de la configuration du plateau de départ
+        JPanel board = new JPanel();
+        board.setLayout(new FlowLayout());
+        board.setOpaque(false);
 
-        Button circle1C = new Button("ressources/ButtonImage/circleR.png", "J1");
-        Button circle2C = new Button("ressources/ButtonImage/circleR.png", "J2");
+        // Titre du champs
+        JLabel lboard = new JLabel("Plateau : ");
+        lboard.setFont(new Font("Tahoma", Font.BOLD, 26));
 
-        JPanel panelColor = new JPanel();
-        panelColor.setLayout(new BoxLayout(panelColor, BoxLayout.Y_AXIS));
-        panelColor.setOpaque(false);
-        color = new Button("ressources/ButtonImage/button1.png","Couleur des pions : ");
-        color.setAlignmentX(Component.CENTER_ALIGNMENT);
+        // Chargement des images des plateaux
+        boardNor = new Button("ressources/ButtonImage/plateauSimpleClik.png");
+        boardMel = new Button("ressources/ButtonImage/plateauMel.png");
 
-        this.bgColor = new ButtonGroup();
-        this.white = new JRadioButton("");
-        this.black = new JRadioButton("");
-        this.bgColor2 = new ButtonGroup();
-        this.white2 = new JRadioButton("");
-        this.black2 = new JRadioButton("");
-        this.bgColorB = new ButtonGroup();
-        this.bgColorW = new ButtonGroup();
-        white.setSelected(true);
-        bgColor.add(white);
-        bgColor.add(black);
-        panelColor.add(color);
-        JPanel flowCol = new JPanel();
-        flowCol.setLayout(new FlowLayout());
-        flowCol.setOpaque(false);
-        flowCol.add(circle1C);
-        flowCol.add(white);
-        flowCol.add(whiteS);
-        flowCol.add(black);
-        flowCol.add(blackS);
-        black2.setSelected(true);
-        bgColor2.add(white2);
-        bgColor2.add(black2);
-        JPanel flowCol2 = new JPanel();
-        flowCol2.setLayout(new FlowLayout());
-        flowCol2.setOpaque(false);
-        flowCol2.add(circle2C);
-        flowCol2.add(white2);
-        flowCol2.add(whiteS2);
-        flowCol2.add(black2);
-        flowCol2.add(blackS2);
-        panelColor.add(flowCol);
-        panelColor.add(flowCol2);
+        // Remplissage panel de choix du plateau
+        board.add(lboard);
+        board.add(boardNor);
+        board.add(boardMel);
+        board.add(Box.createRigidArea(new Dimension(50, 0)));
 
 
-        // Box principale
-        JPanel box = new JPanel();
-        box.setLayout(new BoxLayout(box, BoxLayout.Y_AXIS));
-        box.setOpaque(false);
-        box.add(panelPlato);
-        box.add(panelAvatar);
-        box.add(panelName);
-        box.add(panelColor);
+        // Panel de tous les panels de choix
+        JPanel vik = new JPanel();
+        vik.setLayout(new BoxLayout(vik, BoxLayout.Y_AXIS));
+        vik.setOpaque(false);
+        vik.add(Box.createRigidArea(new Dimension(0,150)));
+        vik.add(nom);
+        vik.add(av);
+        vik.add(col);
+        vik.add(board);
+        vik.add(Box.createRigidArea(new Dimension(0,120)));
+        
 
-        JPanel bigBox = new JPanel();
-        bigBox.setLayout(new BorderLayout());
-        bigBox.add(box, BorderLayout.CENTER);
-        bigBox.setOpaque(false);
+        // Panel borderLayout contenant le panel vik
+        JPanel bord = new JPanel();
+        bord.setLayout(new BorderLayout());
+        bord.setOpaque(false);
+        bord.add(vik, BorderLayout.CENTER);
 
-        // Boutons
+
+
+        // Panel des bouttons
         JPanel panelBut = new JPanel();
         panelBut.setLayout(new FlowLayout());
         panelBut.setOpaque(false);
-        start = new Button("ressources/ButtonImage/startSR.png");
-        start.setAlignmentX(Component.CENTER_ALIGNMENT);
-        panelBut.add(start);
+        next = new Button("ressources/ButtonImage/nextSR.png");
+        next.setAlignmentX(Component.CENTER_ALIGNMENT);
+        panelBut.add(next);
 
-        
-        // Panel principal        
-        JPanel panel = new JPanel();
-        panel.setLayout(new BorderLayout());
-        panel.setOpaque(false);
-        panel.add(boxNT, BorderLayout.NORTH);
-        panel.add(bigBox, BorderLayout.CENTER);
-        panel.add(panelBut, BorderLayout.SOUTH);
-        
 
-        // Clicks
-        start.addMouseListener(new MouseAdapter(){
+        // Clicks + gestion du passage de la souris sur le bouton
+        // Bouton 'suivant'
+        next.addMouseListener(new MouseAdapter(){
+            public void mouseEntered(MouseEvent e){
+                next.setIcon(new ImageIcon("ressources/ButtonImage/nextClik.png"));
+            }
+            public void mouseExited(MouseEvent e){
+                next.setIcon(new ImageIcon("ressources/ButtonImage/nextSR.png"));
+            }
             public void mouseClicked(MouseEvent e){
-                FenetrePartie fenetrePartie = new FenetrePartie();
-                fenetrePartie.run();
+                InterfacePartie interfacePartie = new InterfacePartie();
+                interfacePartie.run();
                 frame.dispose();
             }
         });
 
+        // Bouton 'retour'
         back.addMouseListener(new MouseAdapter(){
+            public void mouseEntered(MouseEvent e){
+                back.setIcon(new ImageIcon("ressources/ButtonImage/backCLicked.png"));
+            }
+
+            public void mouseExited(MouseEvent e){
+                back.setIcon(new ImageIcon("ressources/ButtonImage/backSR.png"));
+            }
+
             public void mouseClicked(MouseEvent e){
                 InterfaceGraphique mainMenu = new InterfaceGraphique();
                 mainMenu.run();
                 frame.dispose();
             }
         });
-        
-        
-        // Gestion entrées joueurs
-        Joueur j1 = new Joueur(1, nameField.getText());
-        Joueur j2 = new Joueur(2, nameField2.getText());
 
+
+        // Bouton vert du choix de couleurs
+        greenJ1.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e){
+                greenJ1.setIcon(new ImageIcon("ressources/ButtonImage/radioGreenClik.png"));
+                greenSelectedJ1 = 1;
+                colorJ1 = 1;
+                if (greySelectedJ1 == 1){
+                    greyJ1.setIcon(new ImageIcon("ressources/ButtonImage/radioGrey.png"));
+                    greySelectedJ1 = 0;
+                    greyJ1.repaint();
+                }
+                if (yelloSelectedJ1 == 1){
+                    yelloJ1.setIcon(new ImageIcon("ressources/ButtonImage/radioYello.png"));
+                    yelloSelectedJ1 = 0;
+                    yelloJ1.repaint();
+                }
+                if (greenSelectedJ2 == 1){
+                    greenJ2.setIcon(new ImageIcon("ressources/ButtonImage/radioGreen.png"));
+                    greenSelectedJ2 = 0;
+                    greyJ2.setIcon(new ImageIcon("ressources/ButtonImage/radioGreyClik.png"));
+                    greySelectedJ2 = 1;
+                    colorJ2 = 3;
+                    greyJ2.repaint();
+                    greenJ2.repaint();
+                }
+                greenJ1.repaint();
+            }
+        });
+
+        // Bouton gris du choix de couleurs
+        greyJ1.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e){
+                greyJ1.setIcon(new ImageIcon("ressources/ButtonImage/radioGreyClik.png"));
+                greySelectedJ1 = 1;
+                colorJ1 = 3;
+                if (greenSelectedJ1 == 1){
+                    greenJ1.setIcon(new ImageIcon("ressources/ButtonImage/radioGreen.png"));
+                    greenSelectedJ1 = 0;
+                    greenJ1.repaint();
+                }
+                if (yelloSelectedJ1 == 1){
+                    yelloJ1.setIcon(new ImageIcon("ressources/ButtonImage/radioYello.png"));
+                    yelloSelectedJ1 = 0;
+                    yelloJ1.repaint();
+                }
+                if (greySelectedJ2 == 1){
+                    greyJ2.setIcon(new ImageIcon("ressources/ButtonImage/radioGrey.png"));
+                    greySelectedJ2 = 0;
+                    yelloJ2.setIcon(new ImageIcon("ressources/ButtonImage/radioYelloClik.png"));
+                    yelloSelectedJ2 = 1;
+                    colorJ2 = 2;
+                    yelloJ2.repaint();
+                    greyJ2.repaint();
+                }
+                greyJ1.repaint();
+            }
+        });
+
+        // Bouton jaune du choix de couleurs de J1
+        yelloJ1.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e){
+                yelloJ1.setIcon(new ImageIcon("ressources/ButtonImage/radioYelloClik.png"));
+                yelloSelectedJ1 = 1;
+                colorJ1 = 2;
+                if (greySelectedJ1 == 1){
+                    greyJ1.setIcon(new ImageIcon("ressources/ButtonImage/radioGrey.png"));
+                    greySelectedJ1 = 0;
+                    greyJ1.repaint();
+                }
+                if (greenSelectedJ1 == 1){
+                    greenJ1.setIcon(new ImageIcon("ressources/ButtonImage/radioGreen.png"));
+                    greenSelectedJ1 = 0;
+                    greenJ1.repaint();
+                }
+                if (yelloSelectedJ2 == 1){
+                    yelloJ2.setIcon(new ImageIcon("ressources/ButtonImage/radioYello.png"));
+                    yelloSelectedJ2 = 0;
+                    greenJ2.setIcon(new ImageIcon("ressources/ButtonImage/radioGreenClik.png"));
+                    greenSelectedJ2 = 1;
+                    colorJ2 = 1;
+                    greenJ2.repaint();
+                    yelloJ2.repaint();
+                }
+                yelloJ1.repaint();
+            }
+        });
+
+        // Bouton vert du choix de couleurs de J1
+        greenJ2.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e){
+                greenJ2.setIcon(new ImageIcon("ressources/ButtonImage/radioGreenClik.png"));
+                greenSelectedJ2 = 1;
+                colorJ2 = 1;
+                if (greySelectedJ2 == 1){
+                    greyJ2.setIcon(new ImageIcon("ressources/ButtonImage/radioGrey.png"));
+                    greySelectedJ2 = 0;
+                    greyJ2.repaint();
+                }
+                if (yelloSelectedJ2 == 1){
+                    yelloJ2.setIcon(new ImageIcon("ressources/ButtonImage/radioYello.png"));
+                    yelloSelectedJ2 = 0;
+                    yelloJ2.repaint();
+                }
+                if (greenSelectedJ1 == 1){
+                    greenJ1.setIcon(new ImageIcon("ressources/ButtonImage/radioGreen.png"));
+                    greenSelectedJ1 = 0;
+                    greyJ1.setIcon(new ImageIcon("ressources/ButtonImage/radioGreyClik.png"));
+                    greySelectedJ1 = 1;
+                    colorJ1 = 3;
+                    greyJ1.repaint();
+                    greenJ1.repaint();
+                }
+                greenJ2.repaint();
+            }
+        });
+
+        // Bouton gris du choix de couleurs de J1
+        greyJ2.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e){
+                greyJ2.setIcon(new ImageIcon("ressources/ButtonImage/radioGreyClik.png"));
+                greySelectedJ2 = 1;
+                colorJ2 = 3;
+                if (greenSelectedJ2 == 1){
+                    greenJ2.setIcon(new ImageIcon("ressources/ButtonImage/radioGreen.png"));
+                    greenSelectedJ2 = 0;
+                    greenJ2.repaint();
+                }
+                if (yelloSelectedJ2 == 1){
+                    yelloJ2.setIcon(new ImageIcon("ressources/ButtonImage/radioYello.png"));
+                    yelloSelectedJ2 = 0;
+                    yelloJ2.repaint();
+                }
+                if (greySelectedJ1 == 1){
+                    greyJ1.setIcon(new ImageIcon("ressources/ButtonImage/radioGrey.png"));
+                    greySelectedJ1 = 0;
+                    yelloJ1.setIcon(new ImageIcon("ressources/ButtonImage/radioYelloClik.png"));
+                    yelloSelectedJ1 = 1;
+                    colorJ1 = 2;
+                    yelloJ1.repaint();
+                    greyJ1.repaint();
+                }
+                greyJ2.repaint();
+            }
+        });
+
+        // Bouton jaune du choix de couleurs de J2
+        yelloJ2.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e){
+                yelloJ2.setIcon(new ImageIcon("ressources/ButtonImage/radioYelloClik.png"));
+                yelloSelectedJ2 = 1;
+                colorJ2 = 2;
+                if (greySelectedJ2 == 1){
+                    greyJ2.setIcon(new ImageIcon("ressources/ButtonImage/radioGrey.png"));
+                    greySelectedJ2 = 0;
+                    greyJ2.repaint();
+                }
+                if (greenSelectedJ2 == 1){
+                    greenJ2.setIcon(new ImageIcon("ressources/ButtonImage/radioGreen.png"));
+                    greenSelectedJ2 = 0;
+                    greenJ2.repaint();
+                }
+                if (yelloSelectedJ1 == 1){
+                    yelloJ1.setIcon(new ImageIcon("ressources/ButtonImage/radioYello.png"));
+                    yelloSelectedJ1 = 0;
+                    greenJ1.setIcon(new ImageIcon("ressources/ButtonImage/radioGreenClik.png"));
+                    greenSelectedJ1 = 1;
+                    colorJ1 = 1;
+                    greenJ1.repaint();
+                    yelloJ1.repaint();
+                }
+                yelloJ2.repaint();
+            }
+        });
+        
+        // Bouton de l'avatar viking de J1
+        vikingJ1.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e){
+                vikingJ1.setIcon(new ImageIcon("ressources/Avatars/vikClik.png"));
+                vikSelectedJ1 = 1;
+                avatarJ1 = 1;
+                if (garfSelectedJ1 == 1){
+                    garfieldJ1.setIcon(new ImageIcon("ressources/Avatars/garfield.png"));
+                    garfSelectedJ1 = 0;
+                    garfieldJ1.repaint();
+                }
+                if (beavSelectedJ1 == 1){
+                    beaverJ1.setIcon(new ImageIcon("ressources/Avatars/beaver.png"));
+                    beavSelectedJ1 = 0;
+                    beaverJ1.repaint();
+
+                }
+                if (vikSelectedJ2 == 1){
+                    vikingJ2.setIcon(new ImageIcon("ressources/Avatars/vik.png"));
+                    vikSelectedJ2 = 0;
+                    garfieldJ2.setIcon(new ImageIcon("ressources/Avatars/garfieldClik.png"));;
+                    garfSelectedJ2 = 1;
+                    avatarJ2 = 3;
+                    garfieldJ2.repaint();
+                    vikingJ2.repaint();
+                }
+                vikingJ1.repaint();
+            }
+        });
+
+        // Bouton de l'avatar garfield de J1
+        garfieldJ1.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e){
+                garfieldJ1.setIcon(new ImageIcon("ressources/Avatars/garfieldClik.png"));
+                garfSelectedJ1 = 1;
+                avatarJ1 = 3;
+                if (vikSelectedJ1 == 1){
+                    vikingJ1.setIcon(new ImageIcon("ressources/Avatars/vik.png"));
+                    vikSelectedJ1 = 0;
+                    vikingJ1.repaint();
+                }
+                if (beavSelectedJ1 == 1){
+                    beaverJ1.setIcon(new ImageIcon("ressources/Avatars/beaver.png"));
+                    beavSelectedJ1 = 0;
+                    beaverJ1.repaint();
+
+                }
+                if (garfSelectedJ2 == 1){
+                    garfieldJ2.setIcon(new ImageIcon("ressources/Avatars/garfield.png"));
+                    garfSelectedJ2 = 0;
+                    beaverJ2.setIcon(new ImageIcon("ressources/Avatars/beaverClik.png"));
+                    beavSelectedJ2 = 1;
+                    avatarJ2 = 2;
+                    beaverJ2.repaint();
+                    garfieldJ2.repaint();
+                }
+                garfieldJ1.repaint();
+            }
+        });
+
+        // Bouton de l'avatar castor de J1
+        beaverJ1.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e){
+                beaverJ1.setIcon(new ImageIcon("ressources/Avatars/beaverClik.png"));
+                beavSelectedJ1 = 1;
+                avatarJ1 = 2;
+                if (garfSelectedJ1 == 1){
+                    garfieldJ1.setIcon(new ImageIcon("ressources/Avatars/garfield.png"));
+                    garfSelectedJ1 = 0;
+                    garfieldJ1.repaint();
+                }
+                if (vikSelectedJ1 == 1){
+                    vikingJ1.setIcon(new ImageIcon("ressources/Avatars/vik.png"));
+                    vikSelectedJ1 = 0;
+                    vikingJ1.repaint();
+
+                }
+                if (beavSelectedJ2 == 1){
+                    beaverJ2.setIcon(new ImageIcon("ressources/Avatars/beaver.png"));
+                    beavSelectedJ2 = 0;
+                    vikingJ2.setIcon(new ImageIcon("ressources/Avatars/vikClik.png"));
+                    vikSelectedJ2 = 1;
+                    avatarJ2 = 1;
+                    vikingJ2.repaint();
+                    beaverJ2.repaint();
+
+                }
+                beaverJ1.repaint();
+            }
+        });
+
+        // Bouton de l'avatar viking de J2
+        vikingJ2.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e){
+                vikingJ2.setIcon(new ImageIcon("ressources/Avatars/vikClik.png"));
+                vikSelectedJ2 = 1;
+                avatarJ2 = 1;
+                if (garfSelectedJ2 == 1){
+                    garfieldJ2.setIcon(new ImageIcon("ressources/Avatars/garfield.png"));
+                    garfSelectedJ2 = 0;
+                    garfieldJ2.repaint();
+                }
+                if (beavSelectedJ2 == 1){
+                    beaverJ2.setIcon(new ImageIcon("ressources/Avatars/beaver.png"));
+                    beavSelectedJ2 = 0;
+                    beaverJ2.repaint();
+
+                }
+                if (vikSelectedJ1 == 1){
+                    vikingJ1.setIcon(new ImageIcon("ressources/Avatars/vik.png"));
+                    vikSelectedJ1 = 0;
+                    garfieldJ1.setIcon(new ImageIcon("ressources/Avatars/garfieldClik.png"));
+                    garfSelectedJ1 = 1;
+                    avatarJ1 = 3;
+                    garfieldJ1.repaint();
+                    vikingJ1.repaint();
+                }
+                vikingJ2.repaint();
+            }
+        });
+
+        // Bouton de l'avatar garfield de J2
+        garfieldJ2.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e){
+                garfieldJ2.setIcon(new ImageIcon("ressources/Avatars/garfieldClik.png"));
+                garfSelectedJ2 = 1;
+                avatarJ2 = 3;
+                if (vikSelectedJ2 == 1){
+                    vikingJ2.setIcon(new ImageIcon("ressources/Avatars/vik.png"));
+                    vikSelectedJ2 = 0;
+                    vikingJ2.repaint();
+                }
+                if (beavSelectedJ2 == 1){
+                    beaverJ2.setIcon(new ImageIcon("ressources/Avatars/beaver.png"));
+                    beavSelectedJ2 = 0;
+                    beaverJ2.repaint();
+
+                }
+                if (garfSelectedJ1 == 1){
+                    garfieldJ1.setIcon(new ImageIcon("ressources/Avatars/garfield.png"));
+                    garfSelectedJ1 = 0;
+                    beaverJ1.setIcon(new ImageIcon("ressources/Avatars/beaverClik.png"));
+                    beavSelectedJ1 = 1;
+                    avatarJ1 = 2;
+                    beaverJ1.repaint();
+                    garfieldJ1.repaint();
+                }
+                garfieldJ2.repaint();
+            }
+        });
+
+        // Bouton de l'avatar castor de J2
+        beaverJ2.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e){
+                beaverJ2.setIcon(new ImageIcon("ressources/Avatars/beaverClik.png"));
+                beavSelectedJ2 = 1;
+                avatarJ2 = 2;
+                if (garfSelectedJ2 == 1){
+                    garfieldJ2.setIcon(new ImageIcon("ressources/Avatars/garfield.png"));
+                    garfSelectedJ2 = 0;
+                    garfieldJ2.repaint();
+                }
+                if (vikSelectedJ2 == 1){
+                    vikingJ2.setIcon(new ImageIcon("ressources/Avatars/vik.png"));
+                    vikSelectedJ2 = 0;
+                    vikingJ2.repaint();
+                }
+                if (beavSelectedJ1 == 1){
+                    beaverJ1.setIcon(new ImageIcon("ressources/Avatars/beaver.png"));
+                    beavSelectedJ1 = 0;
+                    vikingJ1.setIcon(new ImageIcon("ressources/Avatars/vikClik.png"));
+                    vikSelectedJ1 = 1;
+                    avatarJ1 = 1;
+                    vikingJ1.repaint();
+                    beaverJ1.repaint();
+                }
+                beaverJ2.repaint();
+            }
+        });
+
+        // Bouton plateau mélangé
+        boardMel.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e){
+                boardMel.setIcon(new ImageIcon("ressources/ButtonImage/plateauMelClik.png"));
+                boardMelSelected = 1;
+                configPlateau = 2;
+                if (boardNorSelected == 1){
+                    boardNor.setIcon(new ImageIcon("ressources/ButtonImage/plateauSimple.png"));
+                    boardNor.repaint();
+                }
+                boardMel.repaint();
+            }
+        });
+
+        // Bouton plateau simple
+        boardNor.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e){
+                boardNor.setIcon(new ImageIcon("ressources/ButtonImage/plateauSimpleClik.png"));
+                boardNorSelected = 1;
+                configPlateau = 1;
+                if (boardMelSelected == 1){
+                    boardMel.setIcon(new ImageIcon("ressources/ButtonImage/plateauMel.png"));
+                    boardMel.repaint();
+                }
+                boardNor.repaint();
+            }
+        });
+
+        // Panel principal
+	    JPanel panel = new JPanel();
+        panel.setLayout(new BorderLayout());
+        panel.setLayout(new BorderLayout());
+        panel.setOpaque(false);
+        panel.add(navig, BorderLayout.NORTH);
+        panel.add(bord, BorderLayout.CENTER);
+        panel.add(panelBut, BorderLayout.SOUTH);
 
         // Paramètrage fenêtre
         frame.getContentPane().add(panel);
