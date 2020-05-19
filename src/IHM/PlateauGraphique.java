@@ -19,7 +19,7 @@ import Pattern.Observable;
 import Pattern.Observateur;;
 
 @SuppressWarnings("serial")
-public class PlateauGraphique extends JComponent implements Observable {
+public class PlateauGraphique extends JComponent {
 	private int nbColonnes;
 	private int nbLignes = nbColonnes = 7;
 	private int caseLargeur;
@@ -53,9 +53,9 @@ public class PlateauGraphique extends JComponent implements Observable {
 		int disposition = 1;
 		
 		if (gameIA.IA == 1)
-			disposition = gameIA.configPlateau-1;
+			disposition = gameIA.configPlateau;
 		else
-			disposition = gameJ.configPlateau-1;
+			disposition = gameJ.configPlateau;
 
 		jeu = new JeuPlateau(j1, j2, disposition);
 		jeu.init(nbColonnes, nbLignes, disposition);
@@ -393,13 +393,6 @@ public class PlateauGraphique extends JComponent implements Observable {
 		g2D.dispose();
 	}
 
-	@Override
-	public void ajouteObservateur(Observateur o) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public void metAJour() {
 		// TODO Auto-generated method stub
 		Graphics g = null;
