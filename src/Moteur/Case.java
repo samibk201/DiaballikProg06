@@ -9,9 +9,6 @@ package Moteur;
 public class Case {	
 	private Joueur joueur;
 	private int etat;
-	static final int LIBRE = 0;
-	static final int OC_BALLE = 1;
-	static final int OCCUPE = 2;
 	
 	//Constructeur
 	public Case (Joueur joueur,int etat) {
@@ -41,19 +38,5 @@ public class Case {
 	//modifie l'état d'une case
 	public void setEtat (int etat) {
 		this.etat = etat;
-	}
-	
-	public boolean estLibre(int i, int j) {
-		return this.etat == LIBRE;
-	}
-	
-	public boolean estOccupe(int i, int j) {
-		// TODO Auto-generated method stub
-		return this.etat == OCCUPE;
-	}
-
-	public boolean estOccupeAvecBalle(int i, int j) {
-		// TODO Auto-generated method stub
-		return this.etat == OC_BALLE;
 	}
 }
