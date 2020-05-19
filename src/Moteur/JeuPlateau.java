@@ -214,10 +214,10 @@ public class JeuPlateau {
 		boolean etat = false;
 		if (action == 0) {//Avancer
 			if (joueur.getNum () == 1 && (x+1) <  hauteur && getCase (x+1,y).getEtat () == LIBRE) {
-				etat = true;dX = x + 1; dY = y;
+				etat = true; dX = x + 1; dY = y;
 			} 
 			else if (joueur.getNum () == 2 && 0 <= (x - 1) && (x - 1) < hauteur && getCase (x - 1,y).getEtat () == LIBRE) {
-				etat = true;dX = x - 1;dY = y;
+				etat = true; dX = x - 1; dY = y;
 			} 
 			else {
 				System.out.println ("Impossible d'avancer"); etat = false;
@@ -225,14 +225,10 @@ public class JeuPlateau {
 		} 
 		else if (action == 1) {//Gauche
 			if ((joueur.getNum () == 1) && y < largeur && getCase (x,y+1).getEtat () == LIBRE) {
-				etat = true; 
-				dX = x; 
-				dY = y + 1;
+				etat = true; dX = x; dY = y + 1;
 			} 
 			else if ((joueur.getNum () == 2) && y > 0	&& getCase (x,y-1).getEtat () == LIBRE) {
-				etat = true; 
-				dX = x; 
-				dY = y - 1;
+				etat = true; dX = x; dY = y - 1;
 			} 
 			else {
 				System.out.println ("Impossible d'aller à gauche"); 
@@ -241,20 +237,24 @@ public class JeuPlateau {
 		} else if (action == 2) {//Droite
 			if ((joueur.getNum () == 1) && y - 1 >= 0 && getCase (x,y-1).getEtat () == LIBRE) {
 								//on diminue y de 1
-				etat = true; 
-				dX = x; 
-				dY = y - 1;
+				etat = true; dX = x; dY = y - 1;
 			} 
-			else if ((joueur.getNum () == 2)	&& getCase (x,y+1).getEtat () == LIBRE) {
-				etat = true; 
-				dX = x; 
-				dY = y + 1;
+			else if ((joueur.getNum () == 2)&& getCase (x,y+1).getEtat () == LIBRE) {
+				etat = true; dX = x; dY = y + 1;
 			} 
 			else {
 				System.out.println ("Impossible d'aller à droite"); etat = false;
 			}
 		} 
 		else if (action == 3) {//Arrière
+			if  ((joueur.getNum () == 1)&&(x - 1 >= 0)&& getCase (x - 1,y).getEtat () == LIBRE) {
+				etat = true; dX = x - 1; dY = y;
+			} else if ((joueur.getNum () == 2) &&  (x+1) <  hauteur && getCase (x + 1,y).getEtat () == LIBRE) {
+				etat = true; dX = x + 1; dY = y;
+
+			} else {
+				System.out.println ("Imossible d'aller en Arrière"); etat = false;
+			}
 		} 
 		else if (action == 5) {
 		}
