@@ -57,19 +57,15 @@ public class Tuto6 extends JFrame{
         navig.setLayout(new FlowLayout(FlowLayout.LEFT));
         navig.setOpaque(false);
         home = new Button("ressources/ButtonImage/homeBSR.png");
-        volum = new Button("ressources/ButtonImage/volume.png");
+        volum = new Button("ressources/ButtonImage/sound.png");
         navig.add(home);
         navig.add(volum);
 
-        title = new JLabel();
-        title.setIcon(new ImageIcon("ressources/Titles/regles.png"));
-        title.setAlignmentX(CENTER_ALIGNMENT);
 
         JPanel boxNT = new JPanel();
         boxNT.setLayout(new BoxLayout(boxNT, BoxLayout.Y_AXIS));
         boxNT.setOpaque(false);
         boxNT.add(navig);
-        boxNT.add(title);
 
 
         // Panel text
@@ -77,25 +73,47 @@ public class Tuto6 extends JFrame{
         flowText.setLayout(new FlowLayout());
         flowText.setOpaque(false);
 
-        text = new JTextArea(" 5. Anti-jeu : \n Si un joueur crée une ligne infranchissable, et que 3 pions adverses \n "+
-                                "se situent en face des pions de cette ligne, le joueur qui a constitué\n la ligne "+
+        text = new JTextArea(" Anti-jeu : \n Si un joueur crée une ligne infranchissable, et que \n 3 pions adverses "+
+                                "se situent en face des pions de \n cette ligne, le joueur qui a constitué \n la ligne "+
                                 "perd immédiatement.");
         text.setFont(new Font("Tahoma", Font.ITALIC, 26));
-        Border border = BorderFactory.createLineBorder(Color.black, 5);
+        Border border = BorderFactory.createLineBorder(Color.black, 2);
         text.setBorder(border);
         text.setEditable(false);
         text.setAlignmentY(Component.CENTER_ALIGNMENT);
 
         flowText.add(text);
 
+        // Image du casque prof
         JLabel prof = new JLabel();
         prof.setIcon(new ImageIcon("ressources/Theme/prof.png"));
 
+
+        // Panel caque + texte
         JPanel profTxt = new JPanel();
         profTxt.setLayout(new FlowLayout());
         profTxt.setOpaque(false);
         profTxt.add(prof);
         profTxt.add(flowText);
+
+
+        // Image du plateau
+        JLabel plateau = new JLabel();
+        plateau.setIcon(new ImageIcon("ressources/TutoImage/tuto6.png"));
+
+        // Panel image plateau
+        JPanel flowPla = new JPanel();
+        flowPla.setLayout(new FlowLayout());
+        flowPla.setOpaque(false);
+        flowPla.add(plateau);
+
+
+        // Box text + plateau
+        JPanel box = new JPanel();
+        box.setLayout(new BoxLayout(box, BoxLayout.Y_AXIS));
+        box.setOpaque(false);
+        box.add(profTxt);
+        box.add(flowPla);
 
 
         // Boutons
@@ -111,12 +129,18 @@ public class Tuto6 extends JFrame{
         panel.setLayout(new BorderLayout());
         panel.setOpaque(false);
         panel.add(boxNT, BorderLayout.NORTH);
-        panel.add(profTxt, BorderLayout.CENTER);
+        panel.add(box, BorderLayout.CENTER);
         panel.add(panelBut, BorderLayout.SOUTH);
 
 
         // Clicks
         prev.addMouseListener(new MouseAdapter(){
+            public void mouseEntered(MouseEvent e){
+                prev.setIcon(new ImageIcon("ressources/ButtonImage/prevClik.png"));
+            }
+            public void mouseExited(MouseEvent e){
+                prev.setIcon(new ImageIcon("ressources/ButtonImage/previousSR.png"));
+            }
             public void mouseClicked(MouseEvent e){
                 Tuto5 tuto5 = new Tuto5();
                 tuto5.init(frame.getWidth(), frame.getHeight());
@@ -125,6 +149,12 @@ public class Tuto6 extends JFrame{
         });
 
         home.addMouseListener(new MouseAdapter(){
+            public void mouseEntered(MouseEvent e){
+                home.setIcon(new ImageIcon("ressources/ButtonImage/homeClik.png"));
+            }
+            public void mouseExited(MouseEvent e){
+                home.setIcon(new ImageIcon("ressources/ButtonImage/homeBSR.png"));
+            }
             public void mouseClicked(MouseEvent e){
                 InterfaceGraphique mainMenu = new InterfaceGraphique();
                 mainMenu.run();
