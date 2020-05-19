@@ -5,7 +5,7 @@ package Moteur;
 //1:Un joueur adverse dans un camp adverse
 //2:Deux joueurs adverses dans un camp adverse
 public class Partie {
-	private static Partie partie; // mémoriser l'instnace du jeu
+	private static Partie partie;
 	private Joueur [] joueurs = new Joueur [2];
 	private JeuPlateau jeu;
 	private int disposition;
@@ -31,21 +31,9 @@ public class Partie {
 	 *   Dansc ce cas le joueur 1 à gagner
 	 * **/
 	public void joue () {
-		System.out.println("Début");
 		while (!jeu.joueurXGagne ()) {
 			joueurs [0].joue (jeu);
-			System.out.println("J1 a joué");
 			joueurs [1].joue (jeu);
-			System.out.println("J2 a joué");
-		}
-	}
-	public void joue2 (int x, int y, int or) {
-		System.out.println("Début");
-		while (!jeu.joueurXGagne ()) {
-			joueurs [0].joue2 (jeu,x,y,or);
-			System.out.println("J1 a joué");
-			joueurs [1].joue2 (jeu,x,y,or);
-			System.out.println("J2 a joué");
 		}
 	}
 	public static Partie getInstance() {
@@ -53,9 +41,5 @@ public class Partie {
 			partie = new Partie();
 		}
 		return Partie.partie;
-	}
-	
-	public JeuPlateau jeu() {
-		return this.jeu;
 	}
 }
