@@ -19,7 +19,7 @@ import Pattern.Observable;
 import Pattern.Observateur;;
 
 @SuppressWarnings("serial")
-public class PlateauGraphique extends JComponent implements Observable {
+public class PlateauGraphique extends JComponent{
 	private int nbColonnes;
 	private int nbLignes = nbColonnes = 7;
 	private int caseLargeur;
@@ -734,13 +734,6 @@ public class PlateauGraphique extends JComponent implements Observable {
 		g2D.dispose();
 	}
 
-	@Override
-	public void ajouteObservateur(Observateur o) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public void metAJour() {
 		// TODO Auto-generated method stub
 		Graphics g = null;
