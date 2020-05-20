@@ -127,8 +127,7 @@ public class JeuPlateau {
 	}
 	
 	boolean testENJr (int i,int j,Joueur joueur) {
-		if (cases [i][j].getEtat () == LIBRE ||	(cases [i][j].getEtat () == OCCUPE 
-			&& joueur == cases [i][j].getJoueur ()))
+		if (cases [i][j].getEtat () == LIBRE)
 			return true;
 		return false;
 	}
@@ -144,16 +143,16 @@ public class JeuPlateau {
 		return i == destX;
 	}
 	boolean verifHorizontal (int x,int y,int destY,Joueur joueur) {
-		int i = y,j = x;
+		int i = x,j = y;
 		//à l'horizontal
 		if (destY < y) {//gauche
-			i -= 1;
-			while (i > destY && (testENJr (i,j,joueur))) i --;
+			j -= 1;
+			while (j > destY && (testENJr (i,j,joueur))) j --;
 		} else if (destY > y) {//droite
-			i += 1;
-			while (i < destY && (testENJr (i,j,joueur))) i ++;
+			j += 1;
+			while (j < destY && (testENJr (i,j,joueur))) j ++;
 		}
-		return i == destY;
+		return j == destY;
 	}
 	boolean verifDiagonal (int x,int y,int destX,int destY,Joueur joueur) {
 		int i =  x,j = y;
@@ -170,12 +169,15 @@ public class JeuPlateau {
 			i += 1; j += 1;
 			while ((i < destX && j < destY) && (testENJr (i,j,joueur))) {i ++; j ++;}
 		}
-		return i ==  destX || j == destY;
+		return i ==  destX && j == destY;
 	}
 	//Cette fonction vérie si on peut lancer ou pas la balle à (destX,destY)
 	//elle utilise les fonctions verifVer....
 	boolean verifieDest (int x,int y,int destX,int destY , Joueur joueur) {
-		if ((joueur.getNum() != getCase(destX,destY).getJoueur().getNum())) return false;
+		if ((joueur.getNum() != getCase(destX,destY).getJoueur().getNum())) {
+			System.out.println ("eo "+cases [destX][destY].getJoueur ().getNum ());
+			return false;
+		}
 		if (y == destY) {
 			//Déplacement vértical
 			return verifVertical (x,y,destX,joueur);
@@ -193,14 +195,14 @@ public class JeuPlateau {
 			 System.out.println ("pas possible de joueur là");
 			 return false;
 		 } else {
-			System.out.println ("Vous avez joueur");
+			System.out.println ("Vous avez joueur"+joueur.getNum ()+"+"+cases [destX][destY].getJoueur ().getNum ());
 			getCase (destX,destY).setEtat (OC_BALLE);
 			getCase (x,y).setEtat (OCCUPE);
 			return true;
 		 }
 	}
 	void modifeCase (int x,int y,int dX,int dY,Joueur joueur) {
-		getCase (dX,dY).setJoueur (joueur);
+		getCase (dX,dY).setJoueur (new Joueur (joueur.getNum (),joueur.getNom ()));
 		getCase (dX,dY).setEtat (OCCUPE);
 		getCase (x,y).setJoueur (new Joueur (0,"Aucun"));
 		getCase (x,y).setEtat (LIBRE);
@@ -264,11 +266,6 @@ public class JeuPlateau {
 	 }	
 	
 	/****Gestion Vainqueur**/
-	int jOCBALLE (int i) {
-		int j = 0;
-		while (j < this.hauteur && cases [i][j].getEtat () != OC_BALLE) j ++;
-		return j;
-	}
 	void vainqueur (int i,int j) {
 		System.out.println ("Bravo "+cases [i][j].getJoueur ().getNom ()+":"+
 		cases [i][j].getJoueur ().getNum ()+" vous avez gagné ");
@@ -276,16 +273,21 @@ public class JeuPlateau {
 	//Cette fonction vérifie s'il y a un vainqueur et affiche le vainqueur à chaque coup joué
 	boolean joueurXGagne () {
 		boolean etat;
-		int j = jOCBALLE (0);
-		//on vérifie sur la ligne 0 camps du joueur 1
-		if (j < hauteur && cases [0][j].getJoueur ().getNum () == 2) {
-			vainqueur (0,j);
-			return true;
+		int j = 0;
+		while (j < hauteur) {
+			if (cases [0][j].getJoueur ().getNum () == 2 && cases [0][j].getEtat () == OC_BALLE) {
+				vainqueur (0,j);
+				return true;
+			}
+			j ++;
 		}
-		j = jOCBALLE (largeur - 1);
-		if (j < hauteur && cases [largeur - 1][j].getJoueur ().getNum () == 1) {
-			vainqueur (largeur - 1,j);
-			return true;
+		j = 0;
+		while (j < hauteur) {
+			if (cases [largeur - 1][j].getJoueur ().getNum () == 1 && cases[largeur - 1][j].getEtat () == OC_BALLE) {
+				vainqueur (largeur - 1,j);
+				return true;
+			}
+			j ++;
 		}
 		return false;
 	}
