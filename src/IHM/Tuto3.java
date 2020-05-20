@@ -62,15 +62,10 @@ public class Tuto3 extends JFrame{
         navig.add(home);
         navig.add(volum);
 
-        title = new JLabel();
-        title.setIcon(new ImageIcon("ressources/Titles/regles.png"));
-        title.setAlignmentX(CENTER_ALIGNMENT);
-
         JPanel boxNT = new JPanel();
         boxNT.setLayout(new BoxLayout(boxNT, BoxLayout.Y_AXIS));
         boxNT.setOpaque(false);
         boxNT.add(navig);
-        boxNT.add(title);
 
 
         // Panel text
@@ -79,11 +74,11 @@ public class Tuto3 extends JFrame{
         panelText.setLayout(new FlowLayout(FlowLayout.CENTER));
         panelText.setOpaque(false);
 
-        text = new JTextArea(" 2. Pendant son tour le joueur peut jouer jusqu'à 3 coups : \n"+
-                                " - 2 coups pour avancer : (2 fois un pion ou 2 pions une fois chacun)\n"+
+        text = new JTextArea(" Pendant son tour le joueur peut jouer jusqu'à 3 coups : \n"+
+                                " - 2 coups pour avancer : \n (2 fois un pion ou 2 pions une fois chacun)\n"+
                                 " - faire une passe à un autre de ses pions");
         text.setFont(new Font("Tahoma", Font.ITALIC, 26));
-        Border border = BorderFactory.createLineBorder(Color.black, 5);
+        Border border = BorderFactory.createLineBorder(Color.black, 2);
         text.setBorder(border);
         text.setEditable(false);
         text.setAlignmentY(Component.CENTER_ALIGNMENT);
@@ -92,17 +87,12 @@ public class Tuto3 extends JFrame{
 
         JLabel prof = new JLabel();
         prof.setIcon(new ImageIcon("ressources/Theme/prof.png"));
-        JPanel flowProf = new JPanel();
-        flowProf.setLayout(new FlowLayout(FlowLayout.LEFT));
-        flowProf.setOpaque(false);
-        flowProf.add(prof);
-        
 
         JPanel profTxt = new JPanel();
-        profTxt.setLayout(new BoxLayout(profTxt, BoxLayout.Y_AXIS));
+        profTxt.setLayout(new FlowLayout());
         profTxt.setOpaque(false);
+        profTxt.add(prof);
         profTxt.add(panelText);
-        profTxt.add(flowProf);
 
 
         // Boutons
@@ -126,6 +116,12 @@ public class Tuto3 extends JFrame{
 
         // Clicks
         next.addMouseListener(new MouseAdapter(){
+            public void mouseEntered(MouseEvent e){
+                next.setIcon(new ImageIcon("ressources/ButtonImage/nextClik.png"));
+            }
+            public void mouseExited(MouseEvent e){
+                next.setIcon(new ImageIcon("ressources/ButtonImage/nextSR.png"));
+            }
             public void mouseClicked(MouseEvent e){
                 Tuto4 tuto4 = new Tuto4();
                 tuto4.init(frame.getWidth(), frame.getHeight());
@@ -134,6 +130,12 @@ public class Tuto3 extends JFrame{
         });
 
         prev.addMouseListener(new MouseAdapter(){
+            public void mouseEntered(MouseEvent e){
+                prev.setIcon(new ImageIcon("ressources/ButtonImage/prevClik.png"));
+            }
+            public void mouseExited(MouseEvent e){
+                prev.setIcon(new ImageIcon("ressources/ButtonImage/previousSR.png"));
+            }
             public void mouseClicked(MouseEvent e){
                 Tuto2 tuto2 = new Tuto2();
                 tuto2.init(frame.getWidth(), frame.getHeight());
@@ -142,6 +144,12 @@ public class Tuto3 extends JFrame{
         });
 
         home.addMouseListener(new MouseAdapter(){
+            public void mouseEntered(MouseEvent e){
+                home.setIcon(new ImageIcon("ressources/ButtonImage/homeClik.png"));
+            }
+            public void mouseExited(MouseEvent e){
+                home.setIcon(new ImageIcon("ressources/ButtonImage/homeBSR.png"));
+            }
             public void mouseClicked(MouseEvent e){
                 InterfaceGraphique mainMenu = new InterfaceGraphique();
                 mainMenu.run();
