@@ -50,6 +50,8 @@ public class InterfacePartie extends JFrame implements Runnable{
     String nameImg;
 
     PlateauGraphique plateau;
+    RedacteurPlateau r;
+    OutputStream fic;
 
     Button home;
     Button son;
@@ -517,8 +519,25 @@ public class InterfacePartie extends JFrame implements Runnable{
                 save.setIcon(new ImageIcon("ressources/ButtonImage/SavePartie.png"));
             }
             public void mouseClicked(MouseEvent e){
-                JOptionPane.showMessageDialog(frame, "Partie sauvegardée !", "Sauvegarder", JOptionPane.INFORMATION_MESSAGE);
-                plateau.save(turn, move, nbPasse);
+                ImageIcon saveIcon = new ImageIcon("ressources/ButtonImage/SavePartie.png");
+                String save = (String)JOptionPane.showInputDialog(frame, "Entrer un nom de partie", "SAUVEGARDE!", JOptionPane.INFORMATION_MESSAGE, saveIcon , null, "");
+                if(save.length() > 0)
+                {
+                    save = save+".txt";
+                    try {
+                        fic = new FileOutputStream(save);    
+                    } catch (IOException e1) {
+                        //TODO: handle exception
+                        System.err.println("Impossible d'ouvrir le fichier "+save);
+                        e1.printStackTrace();
+                        System.exit(1);
+                    }
+                    
+                    r = new RedacteurPlateau(fic);
+                    r.ecrisPlateau(plateau.jeu, j1, j2);
+                    JOptionPane.showMessageDialog(frame, "Partie Sauvegarder dans "+save); 
+                }
+                    
             }
         });
 
