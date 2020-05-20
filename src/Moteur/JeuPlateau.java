@@ -1,5 +1,10 @@
 package Moteur;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 /*-Cette classe modelise le plateau du jeu
  *-Elle contient essentiellement :
  *  - un tableau de cases qui une matrice largeur*hauteur
@@ -51,13 +56,13 @@ public class JeuPlateau {
 	}
 	void placeJAverse (int disposition) {
         switch (disposition) {
-            case 1:
-				break;
-			case 2:
-				cases [0][1] = new Case (joueurs [1],OCCUPE);
+            case 2:
+                cases [0][1] = new Case (joueurs [1],OCCUPE);
                 cases [0][5] = new Case (joueurs [1],OCCUPE);
                 cases [largeur - 1][1] = new Case (joueurs [0],OCCUPE);
                 cases [largeur - 1][5] = new Case (joueurs [0],OCCUPE);
+                break;
+            case 1:
                 break;
         }
     }
@@ -116,8 +121,7 @@ public class JeuPlateau {
 				System.out.println ("Entrez les coordonnées de destinations");
 				Scanner scan = new Scanner (System.in);
 				int destX,destY;
-				destX = scan.nextInt (); 
-				destY = scan.nextInt ();
+				destX = scan.nextInt (); destY = scan.nextInt ();
 				etat = lancerBalleVers (x,y,destX,destY,joueur);
 			} else if (getCase (x,y).getEtat () == OCCUPE) {//Déplacement d'un pion
 				etat = deplacerVers (action,joueur,x,y);
@@ -158,26 +162,23 @@ public class JeuPlateau {
 		int i =  x,j = y;
 		if (destX < x && destY < y) {//cas montée vers la gauche
 			i -= 1;j -=1;
-			while ((i > destX && j > destY) && (testENJr (i,j,joueur))) {i --;j --;}
-		} else if (destX < x && destY > y) {//cas montée vers la droite
+			while ((i > destX || j > destY) && (testENJr (i,j,joueur))) {i --;j --;}
+		} else if (destX < x || destY > y) {//cas montée vers la droite
 			i -= 1;j += 1;
-			while ((i > destX && j < destY) && (testENJr (i,j,joueur))) {i --;j ++;}
-		} else if (x < destX && y > destY) {//cas descente vers la gauche
+			while ((i > destX || j < destY) && (testENJr (i,j,joueur))) {i --;j ++;}
+		} else if (x < destX || y > destY) {//cas descente vers la gauche
 			i += 1; j -= 1;
-			while ((i < destX && j > destY) && (testENJr (i,j,joueur))) {i ++; j --;}
-		} else if (x < destX && y < destY) {//cas descente vers la droite
+			while ((i < destX || j > destY) && (testENJr (i,j,joueur))) {i ++; j --;}
+		} else if (x < destX || y < destY) {//cas descente vers la droite
 			i += 1; j += 1;
-			while ((i < destX && j < destY) && (testENJr (i,j,joueur))) {i ++; j ++;}
+			while ((i < destX || j < destY) && (testENJr (i,j,joueur))) {i ++; j ++;}
 		}
-		return i ==  destX && j == destY;
+		return i ==  destX || j == destY;
 	}
 	//Cette fonction vérie si on peut lancer ou pas la balle à (destX,destY)
 	//elle utilise les fonctions verifVer....
 	boolean verifieDest (int x,int y,int destX,int destY , Joueur joueur) {
-		if ((joueur.getNum() != getCase(destX,destY).getJoueur().getNum())) {
-			System.out.println ("eo "+cases [destX][destY].getJoueur ().getNum ());
-			return false;
-		}
+		if ((joueur.getNum() != getCase(destX,destY).getJoueur().getNum())) return false;
 		if (y == destY) {
 			//Déplacement vértical
 			return verifVertical (x,y,destX,joueur);
@@ -195,7 +196,7 @@ public class JeuPlateau {
 			 System.out.println ("pas possible de joueur là");
 			 return false;
 		 } else {
-			System.out.println ("Vous avez joueur"+joueur.getNum ()+"+"+cases [destX][destY].getJoueur ().getNum ());
+			System.out.println ("Vous avez joueur");
 			getCase (destX,destY).setEtat (OC_BALLE);
 			getCase (x,y).setEtat (OCCUPE);
 			return true;
@@ -211,59 +212,60 @@ public class JeuPlateau {
 	/**TO DO:Cette fonction doit être modifier pour renvoyer un boolean en fonction que
 	 * ça soit permis le déplacement ou pas**/
 	 //cette fontion déplace le pion (x,y) vers la gauche,la droite,devant
-	 boolean deplacerVers (int action,Joueur joueur,int x,int y) {
+	 public boolean deplacerVers (int action,Joueur joueur,int x,int y) {
 		int dX = 0,dY = 0;
 		boolean etat = false;
 		if (action == 0) {//Avancer
 			if (joueur.getNum () == 1 && (x+1) <  hauteur && getCase (x+1,y).getEtat () == LIBRE) {
-				etat = true; dX = x + 1; dY = y;
-			} 
-			else if (joueur.getNum () == 2 && 0 <= (x - 1) && (x - 1) < hauteur && getCase (x - 1,y).getEtat () == LIBRE) {
-				etat = true; dX = x - 1; dY = y;
-			} 
-			else {
+				etat = true;dX = x + 1; dY = y;
+			} else if (joueur.getNum () == 2 && 0 <= (x - 1) && (x - 1) < hauteur && getCase (x - 1,y).getEtat () == LIBRE) {
+				etat = true;dX = x - 1;dY = y;
+			} else {
 				System.out.println ("Impossible d'avancer"); etat = false;
 			}
-		} 
-		else if (action == 1) {//Gauche
+		} else if (action == 1) {//Gauche
 			if ((joueur.getNum () == 1) && y < largeur && getCase (x,y+1).getEtat () == LIBRE) {
 				etat = true; dX = x; dY = y + 1;
-			} 
-			else if ((joueur.getNum () == 2) && y > 0	&& getCase (x,y-1).getEtat () == LIBRE) {
+			} else if ((joueur.getNum () == 2) && y > 0	&& getCase (x,y-1).getEtat () == LIBRE) {
 				etat = true; dX = x; dY = y - 1;
-			} 
-			else {
-				System.out.println ("Impossible d'aller à gauche"); 
-				etat = false;
+			} else {
+				System.out.println ("Impossible d'aller à gauche"); etat = false;
 			}
 		} else if (action == 2) {//Droite
 			if ((joueur.getNum () == 1) && y - 1 >= 0 && getCase (x,y-1).getEtat () == LIBRE) {
 								//on diminue y de 1
 				etat = true; dX = x; dY = y - 1;
-			} 
-			else if ((joueur.getNum () == 2)&& getCase (x,y+1).getEtat () == LIBRE) {
+			} else if ((joueur.getNum () == 2)	&& getCase (x,y+1).getEtat () == LIBRE) {
 				etat = true; dX = x; dY = y + 1;
-			} 
-			else {
+			} else {
 				System.out.println ("Impossible d'aller à droite"); etat = false;
 			}
-		} 
-		else if (action == 3) {//Arrière
-			if  ((joueur.getNum () == 1)&&(x - 1 >= 0)&& getCase (x - 1,y).getEtat () == LIBRE) {
-				etat = true; dX = x - 1; dY = y;
-			} else if ((joueur.getNum () == 2) &&  (x+1) <  hauteur && getCase (x + 1,y).getEtat () == LIBRE) {
-				etat = true; dX = x + 1; dY = y;
+		} else if (action == 3) {//Arrière
+            if  ((joueur.getNum () == 1)&&(x - 1 >= 0)&& getCase (x - 1,y).getEtat () == LIBRE) {
+                etat = true; dX = x - 1; dY = y;
+            } else if ((joueur.getNum () == 2) &&  (x+1) <  hauteur && getCase (x + 1,y).getEtat () == LIBRE) {
+                etat = true; dX = x + 1; dY = y;
 
-			} else {
-				System.out.println ("Imossible d'aller en Arrière"); etat = false;
-			}
+            } else {
+                System.out.println ("Imossible d'aller en Arrière"); etat = false;
+            }
 		} 
-		else if (action == 5) {
+		 else if (action == 5) {
 		}
 		if (etat == true)
 			modifeCase (x,y,dX,dY,joueur);
 		return etat;
 	 }	
+	 
+	 public boolean estOccupe(int i, int j) {
+        // TODO Auto-generated method stub
+        return getCase(i, j).getEtat() == OCCUPE;
+    }
+
+    public boolean estOccupeAvecBalle(int i, int j) {
+        // TODO Auto-generated method stub
+        return getCase(i, j).getEtat() == OC_BALLE;
+    }
 	
 	/****Gestion Vainqueur**/
 	void vainqueur (int i,int j) {
@@ -271,7 +273,7 @@ public class JeuPlateau {
 		cases [i][j].getJoueur ().getNum ()+" vous avez gagné ");
 	}
 	//Cette fonction vérifie s'il y a un vainqueur et affiche le vainqueur à chaque coup joué
-	boolean joueurXGagne () {
+	public boolean joueurXGagne () {
 		boolean etat;
 		int j = 0;
 		while (j < hauteur) {
@@ -292,13 +294,107 @@ public class JeuPlateau {
 		return false;
 	}
 
-	public boolean estOccupe(int i, int j) {
-		// TODO Auto-generated method stub
-		return getCase(i, j).getEtat() == OCCUPE;
+	public void SaveGame(int p, int c, int passe) {
+		try {
+			 File dataSave = new File("GameData/dataSave.txt");
+			 if (dataSave.createNewFile()) {
+			   System.out.println("File created: " + dataSave.getName());
+			 } else {
+				System.out.println("File already exists.");
+			 }
+		   } catch (IOException e) {
+			 System.out.println("An error occurred.");
+			 e.printStackTrace();
+		   }
+		try {
+			 FileWriter myWriter = new FileWriter("GameData/dataSave.txt");
+			 for(int i=-3; i<hauteur; i++) {
+				 if (i == -3){
+					myWriter.write(p+"");
+					myWriter.write(System.getProperty( "line.separator" ));
+				 }
+				 else if(i==-2) {
+					 myWriter.write(passe+"");
+					 myWriter.write(System.getProperty( "line.separator" ));
+				 }else if (i==-1) {
+					 myWriter.write(c+"");
+					 myWriter.write(System.getProperty( "line.separator" ));
+				 }else {
+					 for(int j=0;j<largeur;j++) {
+						 if(estOccupeAvecBalle(i,j)) {
+							 myWriter.write(getCase(i,j).getJoueur().getNum()+"B"); //Ball
+							 myWriter.write(System.getProperty( "line.separator" ));
+						 }else if(estOccupe(i,j)) {
+							 myWriter.write(getCase(i,j).getJoueur().getNum()+"N"); //NoBall
+							 myWriter.write(System.getProperty( "line.separator" ));
+						 }else {
+							 myWriter.write("#"); // empty
+							 myWriter.write(System.getProperty( "line.separator" ));
+						 }
+					 }
+				 }
+			  }
+			 myWriter.close();
+			 System.out.println("Successfully wrote to the file.");
+		   } catch (IOException e) {
+			 System.out.println("An error occurred.");
+			 e.printStackTrace();
+		   }
+   }
+   
+public int[] LoadGame() {
+	int[] t = new int[3];
+	BufferedReader reader;
+	try {
+		reader = new BufferedReader(new FileReader(
+				"GameData/dataSave.txt"));
+		String line = reader.readLine();
+		int i=0, j=0, k=0;
+		Joueur J1, J2;
+
+		J1 = new Joueur(1, "test");
+		J2 = new Joueur(2, "toto");
+		while (line != null) {
+			if(i==7 && j==7)
+				break;
+			else if(i==7) {
+				i=0;
+				j++;
+			}
+
+			if(k>2) {
+
+				if(line.equals("1N")) {
+					cases[j][i].setEtat(2);
+					cases[j][i].setJoueur(J1);
+				}else if(line.equals("1B")){
+					cases[j][i].setEtat(1);
+					cases[j][i].setJoueur(J1);
+				}else if(line.equals("2N")){
+					cases[j][i].setEtat(2);
+					cases[j][i].setJoueur(J2);
+				}else if(line.equals("2B")){
+					cases[j][i].setEtat(1);
+					cases[j][i].setJoueur(J2);
+				}else {
+					cases[j][i].setEtat(0);
+				}
+				i++;
+			}else {
+				t[k]= Integer.parseInt(line);
+			}
+			//System.out.println(line);
+			// read next line
+			line = reader.readLine();
+			k++;
+
+		}
+		reader.close();
+	} catch (IOException e) {
+		e.printStackTrace();
 	}
 
-	public boolean estOccupeAvecBalle(int i, int j) {
-		// TODO Auto-generated method stub
-		return getCase(i, j).getEtat() == OC_BALLE;
-	}
+	return t;
+}
+   
 }
