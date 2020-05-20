@@ -13,5 +13,7 @@ public class Joueur {
 	public String getNom () {
 		return this.nom;
 	}
+	public void setNum (int num) {this.num = num;}
+	public void setNom (String nom) {this.nom = nom;}
 	public void joue (JeuPlateau jeu) {}
 }
