@@ -58,20 +58,23 @@ public class InterfacePartie extends JFrame implements Runnable{
     Button redo;
     Button save;
     Button restart;
-    JButton endT1;
-    JButton endT2;
+    Button endT1;
+    Button endT2;
     Button IA1;
     Button IA2;
 
     int IAon = 1;
     int IAon2 = 1;
 
-    Joueur j1 = new Joueur(1,"test");
-	Joueur j2 = new Joueur(2, "toto");
+    Joueur j1;
+	Joueur j2 ;
 
     int pionSel = 0;
-    int turn = 1;
-    int x=0, y=0, newX=0, newY=0, move=0, passe = 0, check, nbPasse = 0, nbDepl = 0, undo = 0;
+    public int turn = 1;
+    public int move = 0;
+    int x=0, y=0, newX=0, newY=0, passe = 0, check, nbPasse = 0, nbDepl = 0, undo = 0;
+    
+    public boolean loaded = false;
 
     @Override
     public void run() {
@@ -99,10 +102,10 @@ public class InterfacePartie extends JFrame implements Runnable{
         redo = new Button("ressources/ButtonImage/RedoCoup.png");
         save = new Button("ressources/ButtonImage/SavePartie.png");
         restart = new Button("ressources/ButtonImage/Restart.png");
-        endT1 = new JButton("Fin du tour");
-        endT2 = new JButton("Fin du tour");
-        IA1 = new Button("ressources/ButtonImage/IAon.png");
-        IA2 = new Button("ressources/ButtonImage/IAon.png");
+        endT1 = new Button("ressources/ButtonImage/fintourSel.png");
+        endT2 = new Button("ressources/ButtonImage/fintourSel.png");
+        IA1 = new Button("ressources/ButtonImage/IAoff.png");
+        IA2 = new Button("ressources/ButtonImage/IAoff.png");
 
         // Remplissage panel nord
         navig.add(home, BorderLayout.WEST);
@@ -118,6 +121,8 @@ public class InterfacePartie extends JFrame implements Runnable{
             nameJ1 = gameIA.nameJ.getText();
             // Nom de l'IA par défaut
             nameJ2 = "Ordinateur";
+            //nameJ1 = "TOTO";
+            //nameJ2 = "TATA";
             // Récupération identifiant des avatars
             avatarJ1 = gameIA.avatarJ1;
             avatarJ2 = gameIA.avatarJ2;
@@ -129,6 +134,8 @@ public class InterfacePartie extends JFrame implements Runnable{
             // Récupération noms des joueurs
             nameJ1 = gameJ.nameJ1.getText();
             nameJ2 = gameJ.nameJ2.getText();
+            //nameJ1 = "TOTO";
+            //nameJ2 = "TATA";
             if (nameJ1.equals(nameJ2)){
                 nameJ2+="2";
             }
@@ -137,6 +144,8 @@ public class InterfacePartie extends JFrame implements Runnable{
             avatarJ2 = gameJ.avatarJ2;
         }
 
+        j1 = new Joueur(1,nameJ1);
+        j2 = new Joueur(2, nameJ2);
 
         // Avatar j1 à partir de l'identifiant récupéré
         switch(avatarJ1){
@@ -278,6 +287,29 @@ public class InterfacePartie extends JFrame implements Runnable{
         // Gestion des clicks dans le pleateau
         plateau.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent e){
+                if (plateau.win == 1){
+                    plateau.xWinner = x;
+                    plateau.yWinner = y;
+                    int winner = JOptionPane.showConfirmDialog(frame, "Partie terminée ! Voulez-vous recommencer ?", "Partie terminée", JOptionPane.YES_NO_OPTION);
+                    if (winner == JOptionPane.NO_OPTION){
+                        InterfaceGraphique interfaceGraphique = new InterfaceGraphique();
+                        interfaceGraphique.run();
+                        frame.dispose();
+                    }
+                    else if (winner == JOptionPane.YES_OPTION){
+                        InterfacePartie interfacePartie = new InterfacePartie();
+                        interfacePartie.run();
+                        frame.dispose();
+                    }
+                }
+
+                if (loaded){
+                    loaded = false;
+                    turn = plateau.loadedTurn;
+                    move = plateau.loadedMove;
+                    nbPasse = plateau.loadedPasse;
+                    nbDepl = move-nbPasse;
+                }
 
                 Point point = e.getPoint();
                 
@@ -356,6 +388,8 @@ public class InterfacePartie extends JFrame implements Runnable{
                                         nbDepl++;
                                         move+=1;
                                         undo = 0;
+                                        plateau.last = 1;
+                                        plateau.turn = turn;
                                     }
                                     else
                                         pionSel = 0;
@@ -388,6 +422,8 @@ public class InterfacePartie extends JFrame implements Runnable{
                                         move+=1;
                                         nbDepl++;
                                         undo = 0;
+                                        plateau.last = 1;
+                                        plateau.turn = turn;
                                     }
                                     else
                                         pionSel = 0;
@@ -397,7 +433,6 @@ public class InterfacePartie extends JFrame implements Runnable{
                             }                    
                         }
                     }
-
                     plateau.repaint();
                     System.out.println(" NOMBRE DE MOUVEMENTS = "+move);
                 }
@@ -427,7 +462,7 @@ public class InterfacePartie extends JFrame implements Runnable{
 
         endT1.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent e){
-                if (move > 0){
+                if (move > 0 && turn == 1){
                     turn = 2;
                     move = 0;
                     nbPasse = 0;
@@ -442,7 +477,7 @@ public class InterfacePartie extends JFrame implements Runnable{
 
         endT2.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent e){
-                if (move > 0){
+                if (move > 0 && turn == 2){
                     turn = 1;
                     move = 0;
                     nbPasse = 0;
@@ -464,9 +499,12 @@ public class InterfacePartie extends JFrame implements Runnable{
                 home.setIcon(new ImageIcon("ressources/ButtonImage/homeBSR.png"));
             }
             public void mouseClicked(MouseEvent e){
-                InterfaceGraphique mainMenu = new InterfaceGraphique();
-                mainMenu.run();
-                frame.dispose();
+                int quitClicked = JOptionPane.showConfirmDialog(frame, "Voulez-vous vraiment quitter la partie ?", "Quitter", JOptionPane.YES_NO_OPTION);
+                if (quitClicked == JOptionPane.YES_OPTION){
+                    InterfaceGraphique mainMenu = new InterfaceGraphique();
+                    mainMenu.run();
+                    frame.dispose();
+                }
             }
         });
 
@@ -479,10 +517,8 @@ public class InterfacePartie extends JFrame implements Runnable{
                 save.setIcon(new ImageIcon("ressources/ButtonImage/SavePartie.png"));
             }
             public void mouseClicked(MouseEvent e){
-                ImageIcon saveIcon = new ImageIcon("ressources/ButtonImage/SavePartie.png");
-                String save = (String)JOptionPane.showInputDialog(frame, "Entrer un nom de partie", "PARTIE SAUVEGARDEE!", JOptionPane.INFORMATION_MESSAGE, saveIcon , null, "");
-                if(save.length() > 0)
-                    JOptionPane.showMessageDialog(frame, save); 
+                JOptionPane.showMessageDialog(frame, "Partie sauvegardée !", "Sauvegarder", JOptionPane.INFORMATION_MESSAGE);
+                plateau.save(turn, move, nbPasse);
             }
         });
 
