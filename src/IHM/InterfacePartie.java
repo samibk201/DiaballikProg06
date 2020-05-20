@@ -60,8 +60,11 @@ public class InterfacePartie extends JFrame implements Runnable{
     Button restart;
     JButton endT1;
     JButton endT2;
-    JButton ia1;
-    JButton ia2;
+    Button IA1;
+    Button IA2;
+
+    int IAon = 1;
+    int IAon2 = 1;
 
     Joueur j1 = new Joueur(1,"test");
 	Joueur j2 = new Joueur(2, "toto");
@@ -98,8 +101,8 @@ public class InterfacePartie extends JFrame implements Runnable{
         restart = new Button("ressources/ButtonImage/Restart.png");
         endT1 = new JButton("Fin du tour");
         endT2 = new JButton("Fin du tour");
-        ia1 = new JButton("IA");
-        ia2 = new JButton("IA");
+        IA1 = new Button("ressources/ButtonImage/IAon.png");
+        IA2 = new Button("ressources/ButtonImage/IAon.png");
 
         // Remplissage panel nord
         navig.add(home, BorderLayout.WEST);
@@ -148,19 +151,37 @@ public class InterfacePartie extends JFrame implements Runnable{
                 break;
         }
 
-        // Affichage nom j1
-        JLabel labJ1 = new JLabel(nameJ1);
-        labJ1.setIcon(new ImageIcon("ressources/Avatars/"+nameImg));
-        labJ1.setFont(new Font("Tahoma", Font.BOLD, 16));
-        Border border = BorderFactory.createLineBorder(Color.black, 2);
+        // Affichage nom de j1
+        JLabel nameLabJ1 = new JLabel();
+        nameLabJ1.setIcon(new ImageIcon("ressources/ButtonImage/nameField.png"));
+        nameLabJ1.setText(nameJ1);
+        nameLabJ1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        // Affichage avatar de j1
+        JLabel avatarLabJ1 = new JLabel();
+        avatarLabJ1.setIcon(new ImageIcon("ressources/Avatars/"+nameImg));
+
 
         // Panel nom + avatar j1
         JPanel panelJ1 = new JPanel();
         panelJ1.setLayout(new FlowLayout());
-        panelJ1.setBackground(Color.WHITE);
-        panelJ1.add(labJ1);
-        panelJ1.add(ia1);
-        panelJ1.add(endT1);
+        panelJ1.setBackground(Color.YELLOW);
+        panelJ1.add(avatarLabJ1);
+        panelJ1.add(nameLabJ1);
+
+        // Panel boutons IA et fin tour de J1
+        JPanel panelButJ1 = new JPanel();
+        panelButJ1.setLayout(new FlowLayout());
+        panelButJ1.setOpaque(false);
+        panelButJ1.add(endT1);
+        panelButJ1.add(IA1);
+
+        // Box nom + avatar + boutons IA et fin tour J1
+        JPanel boxJ1 = new JPanel();
+        boxJ1.setLayout(new BoxLayout(boxJ1, BoxLayout.Y_AXIS));
+        boxJ1.setOpaque(false);
+        boxJ1.add(panelJ1);
+        boxJ1.add(panelButJ1);
 
         // Avatar j2 à partir de l'identifiant récupéré
         switch(avatarJ2){
@@ -176,27 +197,36 @@ public class InterfacePartie extends JFrame implements Runnable{
         }
 
         // Affichage nom de j2
-        JLabel labJ2 = new JLabel(nameJ2);
-        labJ2.setIcon(new ImageIcon("ressources/Avatars/"+nameImg));
-        labJ2.setFont(new Font("Tahoma", Font.BOLD, 16));
-        labJ2.setBackground(Color.gray);
+        JLabel nameLabJ2 = new JLabel();
+        nameLabJ2.setIcon(new ImageIcon("ressources/ButtonImage/nameField.png"));
+        nameLabJ2.setText(nameJ2);
+        nameLabJ2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        // Affichage avatar de j2
+        JLabel avatarLabJ2 = new JLabel();
+        avatarLabJ2.setIcon(new ImageIcon("ressources/Avatars/"+nameImg));
 
 
-        // Panel nom + avatar de j2
+        // Panel nom + avatar j2
         JPanel panelJ2 = new JPanel();
         panelJ2.setLayout(new FlowLayout());
-        panelJ2.setBackground(Color.WHITE);
-        panelJ2.add(labJ2);
-        panelJ2.add(ia2);
-        panelJ2.add(endT2);
+        panelJ2.setBackground(Color.LIGHT_GRAY);
+        panelJ2.add(avatarLabJ2);
+        panelJ2.add(nameLabJ2);
 
+        // Panel boutons IA et fin tour de J2
+        JPanel panelButJ2 = new JPanel();
+        panelButJ2.setLayout(new FlowLayout());
+        panelButJ2.setOpaque(false);
+        panelButJ2.add(endT2);
+        panelButJ2.add(IA2);
 
-        // Panel des données des deux joueurs
-        JPanel panelJ = new JPanel();
-        panelJ.setLayout(new BorderLayout());
-        panelJ.setOpaque(false);
-        panelJ.add(panelJ1, BorderLayout.NORTH);
-        panelJ.add(panelJ2, BorderLayout.SOUTH);
+        // Box nom + avatar + boutons IA et fin tour J2
+        JPanel boxJ2 = new JPanel();
+        boxJ2.setLayout(new BoxLayout(boxJ2, BoxLayout.Y_AXIS));
+        boxJ2.setOpaque(false);
+        boxJ2.add(panelJ2);
+        boxJ2.add(panelButJ2);
 
 
         // Panels bouttons
@@ -223,9 +253,9 @@ public class InterfacePartie extends JFrame implements Runnable{
         JPanel panelBut = new JPanel();
         panelBut.setLayout(new BorderLayout());
         panelBut.setOpaque(false);
-        panelBut.add(panelJ1, BorderLayout.NORTH);
+        panelBut.add(boxJ1, BorderLayout.NORTH);
         panelBut.add(bordBut, BorderLayout.WEST);
-        panelBut.add(panelJ2, BorderLayout.SOUTH);
+        panelBut.add(boxJ2, BorderLayout.SOUTH);
 
 
 
@@ -296,6 +326,8 @@ public class InterfacePartie extends JFrame implements Runnable{
                         pionSel =0;
                     else{
                         if (turn == 1){
+                            panelJ1.setBackground(Color.YELLOW);
+                            panelJ2.setBackground(Color.LIGHT_GRAY);
                             if (passe == 1){
                                 if (nbPasse == 0){
                                     pionSel = plateau.passe(j1, x, y, newX, newY);
@@ -321,6 +353,8 @@ public class InterfacePartie extends JFrame implements Runnable{
                         }
                         //Tour J2
                         else if (turn == 2){
+                            panelJ2.setBackground(Color.YELLOW);
+                            panelJ1.setBackground(Color.LIGHT_GRAY);
                             if (passe == 1){
                                 if (nbPasse == 0){
                                     pionSel = plateau.passe(j2, x, y, newX, newY);
@@ -354,12 +388,34 @@ public class InterfacePartie extends JFrame implements Runnable{
             
         });
 
+        IA1.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e){
+                if (IAon == 1)
+                    IA1.setIcon(new ImageIcon("ressources/ButtonImage/IAon.png"));
+                else
+                    IA1.setIcon(new ImageIcon("ressources/ButtonImage/IAoff.png"));
+                IAon = IAon%2+1;
+            }
+        });
+        
+        IA2.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e){
+                if (IAon2 == 1)
+                    IA2.setIcon(new ImageIcon("ressources/ButtonImage/IAon.png"));
+                else
+                    IA2.setIcon(new ImageIcon("ressources/ButtonImage/IAoff.png"));
+                IAon2 = IAon2%2+1;
+            }
+        });
+
         endT1.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent e){
                 if (move > 0){
                     turn = 2;
                     move = 0;
                     nbPasse = 0;
+                    panelJ2.setBackground(Color.YELLOW);
+                    panelJ1.setBackground(Color.LIGHT_GRAY);
                 }
                 else
                     turn = 1;
@@ -372,6 +428,8 @@ public class InterfacePartie extends JFrame implements Runnable{
                     turn = 1;
                     move = 0;
                     nbPasse = 0;
+                    panelJ1.setBackground(Color.YELLOW);
+                    panelJ2.setBackground(Color.LIGHT_GRAY);
                 }
                 else
                     turn = 2;
@@ -439,7 +497,7 @@ public class InterfacePartie extends JFrame implements Runnable{
                 restart.setIcon(new ImageIcon("ressources/ButtonImage/Restart.png"));
             }
             public void mouseClicked(MouseEvent e){
-                int restartClicked = JOptionPane.showConfirmDialog(frame, "Voulez-vous vraiment restaurer la partie ?", "RESTART", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, restartIcon);
+                int restartClicked = JOptionPane.showConfirmDialog(frame, "Voulez-vous vraiment recommencer la partie ?", "RESTART", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, restartIcon);
                 
                 if (restartClicked == JOptionPane.YES_OPTION){
                     InterfacePartie i = new InterfacePartie();
