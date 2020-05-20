@@ -71,7 +71,7 @@ public class InterfacePartie extends JFrame implements Runnable{
 
     int pionSel = 0;
     int turn = 1;
-    int x=0, y=0, newX=0, newY=0, move=0, passe = 0, check, nbPasse = 0;
+    int x=0, y=0, newX=0, newY=0, move=0, passe = 0, check, nbPasse = 0, nbDepl = 0;
 
     @Override
     public void run() {
@@ -315,6 +315,7 @@ public class InterfacePartie extends JFrame implements Runnable{
                         turn = turn%2+1;
                         move = 0;
                         nbPasse = 0;
+                        nbDepl = 0;
                     }
                         
                     // Coordonnées nouvelle position
@@ -343,12 +344,17 @@ public class InterfacePartie extends JFrame implements Runnable{
                                     pionSel = 0;
                             }
                             else{
-                                pionSel = plateau.newPos(j1, x, y, newX, newY);
-                                if (pionSel == 0){
-                                    move+=1;
+                                if (nbDepl<2){
+                                    pionSel = plateau.newPos(j1, x, y, newX, newY);
+                                    if (pionSel == 0){
+                                        nbDepl++;
+                                        move+=1;
+                                    }
+                                    else
+                                        pionSel = 0;
                                 }
                                 else
-                                    pionSel = 0;
+                                        pionSel = 0;
                             }
                         }
                         //Tour J2
@@ -370,19 +376,25 @@ public class InterfacePartie extends JFrame implements Runnable{
                                     pionSel = 0;
                             }
                             else{
-                                pionSel = plateau.newPos(j2, x, y, newX, newY);
-                                if (pionSel == 0){
-                                    move+=1;
+                                if (nbDepl<2){
+                                    pionSel = plateau.newPos(j2, x, y, newX, newY);
+                                    if (pionSel == 0){
+                                        move+=1;
+                                        nbDepl++;
+                                    }
+                                    else
+                                        pionSel = 0;
                                 }
                                 else
-                                    pionSel = 0;
+                                        pionSel = 0;
                             }                    
                         }
                     }
 
                     plateau.repaint();
-                    System.out.println(" NOMBRE DE MOUVEMENTS = "+move);
-                    System.out.println(" NOMBRE DE PASSE = "+nbPasse);
+                    System.out.println(" NOMBRE DE MOUVEMENTS = "+((newX-newY)%2));
+                    System.out.println(" NEW X = "+newX);
+                    System.out.println("NEW Y = "+newY);
                 }
             }
             
@@ -414,6 +426,7 @@ public class InterfacePartie extends JFrame implements Runnable{
                     turn = 2;
                     move = 0;
                     nbPasse = 0;
+                    nbDepl = 0;
                     panelJ2.setBackground(Color.YELLOW);
                     panelJ1.setBackground(Color.LIGHT_GRAY);
                 }
@@ -428,6 +441,7 @@ public class InterfacePartie extends JFrame implements Runnable{
                     turn = 1;
                     move = 0;
                     nbPasse = 0;
+                    nbDepl = 0;
                     panelJ1.setBackground(Color.YELLOW);
                     panelJ2.setBackground(Color.LIGHT_GRAY);
                 }
@@ -461,7 +475,7 @@ public class InterfacePartie extends JFrame implements Runnable{
             }
             public void mouseClicked(MouseEvent e){
                 ImageIcon saveIcon = new ImageIcon("ressources/ButtonImage/SavePartie.png");
-                String save = (String)JOptionPane.showInputDialog(frame, "Entrer un nom de partie", "SAUVEGARDE!", JOptionPane.INFORMATION_MESSAGE, saveIcon , null, "");
+                String save = (String)JOptionPane.showInputDialog(frame, "Entrer un nom de partie", "PARTIE SAUVEGARDEE!", JOptionPane.INFORMATION_MESSAGE, saveIcon , null, "");
                 if(save.length() > 0)
                     JOptionPane.showMessageDialog(frame, save); 
             }
@@ -485,6 +499,8 @@ public class InterfacePartie extends JFrame implements Runnable{
             public void mouseExited(MouseEvent e){
                 cancel.setIcon(new ImageIcon("ressources/ButtonImage/cancelCoup.png"));
             }
+            public void mouseClicked(MouseEvent e){
+            }
         });
 
         ImageIcon restartIcon = new ImageIcon("ressources/ButtonImage/Restart.png");
@@ -497,7 +513,7 @@ public class InterfacePartie extends JFrame implements Runnable{
                 restart.setIcon(new ImageIcon("ressources/ButtonImage/Restart.png"));
             }
             public void mouseClicked(MouseEvent e){
-                int restartClicked = JOptionPane.showConfirmDialog(frame, "Voulez-vous vraiment recommencer la partie ?", "RESTART", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, restartIcon);
+                int restartClicked = JOptionPane.showConfirmDialog(frame, "Voulez-vous vraiment recommencer la partie ?", "RECOMMENCER", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, restartIcon);
                 
                 if (restartClicked == JOptionPane.YES_OPTION){
                     InterfacePartie i = new InterfacePartie();
