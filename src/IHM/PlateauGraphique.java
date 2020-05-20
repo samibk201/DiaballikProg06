@@ -19,7 +19,7 @@ import Pattern.Observable;
 import Pattern.Observateur;;
 
 @SuppressWarnings("serial")
-public class PlateauGraphique extends JComponent {
+public class PlateauGraphique extends JComponent implements Observable {
 	private int nbColonnes;
 	private int nbLignes = nbColonnes = 7;
 	private int caseLargeur;
@@ -29,33 +29,44 @@ public class PlateauGraphique extends JComponent {
 
 	Partie partie;
 	
-	JeuPlateau jeu;
+	public JeuPlateau jeu;
 
 	GameSetIA gameIA = GameSetIA.getInstance();
 	GameSetJ gameJ = GameSetJ.getInstance();
 
 	public int pionSelected = 0;
+	public int last = 0;
 	public int turn = 0;
 	public int xSelected;
 	public int ySelected;
+	public int win;
+	public int xWinner;
+	public int yWinner;
 
-	/*
-	 * private String[][] pions = { {"B","B","B","L","B", "B", "B"}, {null, null,
-	 * null, null, null, null, null}, {null, null, null, null, null, null, null},
-	 * {null, null, null, null, null, null, null}, {null, null, null, null, null,
-	 * null, null}, {null, null, null, null, null, null, null}, {"N", "N", "N", "O",
-	 * "N", "N", "N"}, };
-	 */
+	Joueur j1;
+	Joueur j2;
+
 
 	public PlateauGraphique() {
-		Joueur j1 = new Joueur(1, "Dan");
-		Joueur j2 = new Joueur(2, "CissÃ©");
+		
 		int disposition = 1;
 		
-		if (gameIA.IA == 1)
+		if (gameIA.IA == 1){
 			disposition = gameIA.configPlateau;
-		else
+			//j1 = new Joueur(1, gameIA.nameJ.getText());
+			//j2 = new Joueur(2, "ordinateur");
+			j1 = new Joueur(1, "toto");
+			j2 = new Joueur(2, "lolo");
+
+		}
+		else{
 			disposition = gameJ.configPlateau;
+			//j1 = new Joueur(1, gameJ.nameJ1.getText());
+			//j2 = new Joueur(2, gameJ.nameJ2.getText());
+			j1 = new Joueur(1, "toto");
+			j2 = new Joueur(2, "lolo");
+
+		}
 
 		jeu = new JeuPlateau(j1, j2, disposition);
 		jeu.init(nbColonnes, nbLignes, disposition);
@@ -86,6 +97,20 @@ public class PlateauGraphique extends JComponent {
 		return getWidth();
 	}
 
+	public void save(int p, int c, int passe) {
+        jeu.SaveGame(p, c, passe);
+        System.out.println("Game saved!");    
+	}
+	
+	int loadedTurn=0, loadedMove=0, loadedPasse = 0;
+    public void load() {
+        int t[] = new int[2];
+        t=jeu.LoadGame();
+        loadedTurn=t[0];
+		loadedMove=t[2];
+		loadedPasse = t[1];
+    }
+
 	private Image lisImage(String nom) {
 		Image img = null;
 		try {
@@ -104,6 +129,38 @@ public class PlateauGraphique extends JComponent {
 		
 	}
 
+	public void colorAccessibles(int i, int j, Graphics2D g2D) {
+    	Image img=lisImage("accessible.png");
+		if(i!=6) {
+			if(!jeu.estOccupe(j,i+1) && !jeu.estOccupeAvecBalle(j,i+1)) {
+				tracer(g2D, img, (i + 2) * caseLargeur,
+						(j + 1) * caseLargeur,
+						caseLargeur - marge, caseLargeur - marge);
+			}
+		}
+		if(i!=0) {
+			if(!jeu.estOccupe(j,i-1) && !jeu.estOccupeAvecBalle(j,i-1)) {
+				tracer(g2D, img, (i) * caseLargeur,
+						(j + 1) * caseLargeur,
+						caseLargeur - marge, caseLargeur - marge);
+			}
+		}
+		if(j!=6) {
+			if(!jeu.estOccupe(j+1,i) && !jeu.estOccupeAvecBalle(j+1,i)) {
+				tracer(g2D, img, (i + 1) * caseLargeur,
+						(j + 2) * caseLargeur,
+						caseLargeur - marge, caseLargeur - marge);
+			}
+		}
+		if(j!=0) {
+			if(!jeu.estOccupe(j-1,i) && !jeu.estOccupeAvecBalle(j-1,i)) {
+				tracer(g2D, img, (i + 1) * caseLargeur,
+						(j) * caseLargeur,
+						caseLargeur - marge, caseLargeur - marge);
+			}
+		}
+	}
+	
 	public String choixImage(int typeImg, int numJ){
 		String nameImg = "";
 
@@ -161,6 +218,118 @@ public class PlateauGraphique extends JComponent {
 						case 3:
 							nameImg = "vikCoffreGrey.png";
 							break;
+					}
+				}
+			}
+			else if (typeImg == 3){
+				if (numJ == 1){
+					switch(gameIA.colorJ1){
+						case 1 :
+							nameImg = "vikHachGreenHandsUp.png";
+							break;
+						case 2:
+							nameImg = "vikHachYelloHandsUp.png";
+							break;
+						/*case 3:
+							nameImg = "vikCoffreGrey.png";
+							break;*/
+					}
+				}
+				else if (numJ == 2){
+					switch(gameIA.colorJ2){
+						case 1 :
+							nameImg = "vikHachGreenHandsUp.png";
+							break;
+						case 2:
+							nameImg = "vikHachYelloHandsUp.png";
+							break;
+						/*case 3:
+							nameImg = "vikCoffreGrey.png";
+							break;*/
+					}
+				}
+			}
+			else if (typeImg == 4){
+				if (numJ == 1){
+					switch(gameIA.colorJ1){
+						case 1 :
+							nameImg = "LastStep.png";
+							break;
+						case 2:
+							nameImg = "LastStepYellow.png";
+							break;
+						/*case 3:
+							nameImg = "vikCoffreGrey.png";
+							break;*/
+					}
+				}
+				else if (numJ == 2){
+					switch(gameIA.colorJ2){
+						case 1 :
+							nameImg = "LastStep.png";
+							break;
+						case 2:
+							nameImg = "LastStepYellow.png";
+							break;
+						/*case 3:
+							nameImg = "vikCoffreGrey.png";
+							break;*/
+					}
+				}
+			}
+			else if (typeImg == 5){
+				if (numJ == 1){
+					switch(gameIA.colorJ1){
+						case 1 :
+							nameImg = "vikVictGreen.png";
+							break;
+						case 2:
+							nameImg = "vikVictYello.png";
+							break;
+						/*case 3:
+							nameImg = "vikCoffreGrey.png";
+							break;*/
+					}
+				}
+				else if (numJ == 2){
+					switch(gameIA.colorJ2){
+						case 1 :
+							nameImg = "vikVictGreen.png";
+							break;
+						case 2:
+							nameImg = "vikVictYello.png";
+							break;
+						/*case 3:
+							nameImg = "vikCoffreGrey.png";
+							break;*/
+					}
+				}
+			}
+			else if (typeImg == 6){
+				if (numJ == 1){
+					switch(gameIA.colorJ1){
+						case 1 :
+							nameImg = "vikHachGreenHandsUpCoffre.png";
+							break;
+						case 2:
+							nameImg = "vikHachYelloHandsUpCoffre.png";
+							break;
+						/*case 3:
+							nameImg = "vikCoffreGrey.png";
+							break;*/
+					}
+				}
+				else if (numJ == 2){
+					switch(gameIA.colorJ2){
+						case 1 :
+							nameImg = "vikHachGreenHandsUpCoffre.png";
+							break;
+						case 2:
+							nameImg = "vikHachYelloHandsUpCoffre.png";
+							break;
+						/*case 3:
+							nameImg = "vikCoffreGrey.png";
+							break;*/
 					}
 				}
 			}
@@ -222,6 +391,118 @@ public class PlateauGraphique extends JComponent {
 					}
 				}
 			}
+			else if (typeImg == 3){
+				if (numJ == 1){
+					switch(gameJ.colorJ1){
+						case 1 :
+							nameImg = "vikHachGreenHandsUp.png";
+							break;
+						case 2:
+							nameImg = "vikHachYelloHandsUp.png";
+							break;
+						/*case 3:
+							nameImg = "vikCoffreGrey.png";
+							break;*/
+					}
+				}
+				else if (numJ == 2){
+					switch(gameJ.colorJ2){
+						case 1 :
+							nameImg = "vikHachGreenHandsUp.png";
+							break;
+						case 2:
+							nameImg = "vikHachYelloHandsUp.png";
+							break;
+						/*case 3:
+							nameImg = "vikCoffreGrey.png";
+							break;*/
+					}
+				}
+			}
+			else if (typeImg == 4){
+				if (numJ == 1){
+					switch(gameJ.colorJ1){
+						case 1 :
+							nameImg = "LastStep.png";
+							break;
+						case 2:
+							nameImg = "LastStepYellow.png";
+							break;
+						/*case 3:
+							nameImg = "vikCoffreGrey.png";
+							break;*/
+					}
+				}
+				else if (numJ == 2){
+					switch(gameJ.colorJ2){
+						case 1 :
+							nameImg = "LastStep.png";
+							break;
+						case 2:
+							nameImg = "LastStepYellow.png";
+							break;
+						/*case 3:
+							nameImg = "vikCoffreGrey.png";
+							break;*/
+					}
+				}
+			}
+			else if (typeImg == 5){
+				if (numJ == 1){
+					switch(gameJ.colorJ1){
+						case 1 :
+							nameImg = "vikVictGreen.png";
+							break;
+						case 2:
+							nameImg = "vikVictYello.png";
+							break;
+						/*case 3:
+							nameImg = "vikCoffreGrey.png";
+							break;*/
+					}
+				}
+				else if (numJ == 2){
+					switch(gameJ.colorJ2){
+						case 1 :
+							nameImg = "vikVictGreen.png";
+							break;
+						case 2:
+							nameImg = "vikVictYello.png";
+							break;
+						/*case 3:
+							nameImg = "vikCoffreGrey.png";
+							break;*/
+					}
+				}
+			}
+			else if (typeImg == 6){
+				if (numJ == 1){
+					switch(gameJ.colorJ1){
+						case 1 :
+							nameImg = "vikHachGreenHandsUpcoffre.png";
+							break;
+						case 2:
+							nameImg = "vikHachYelloHandsUpCoffre.png";
+							break;
+						/*case 3:
+							nameImg = "vikCoffreGrey.png";
+							break;*/
+					}
+				}
+				else if (numJ == 2){
+					switch(gameJ.colorJ2){
+						case 1 :
+							nameImg = "vikHachGreenHandsUpcoffre.png";
+							break;
+						case 2:
+							nameImg = "vikHachYelloHandsUpCoffre.png";
+							break;
+						/*case 3:
+							nameImg = "vikCoffreGrey.png";
+							break;*/
+					}
+				}
+			}
 		}
 
 		
@@ -262,16 +543,23 @@ public class PlateauGraphique extends JComponent {
 		g2D.setPaint(Color.BLACK);
 		g2D.setStroke(new BasicStroke(2)); // largeur 2 pixels
 
-		/*g2D.draw(new RoundRectangle2D.Double(caseLargeur - marge, caseLargeur - marge,
-				(caseLargeur * this.nbColonnes) + marge, (caseLargeur * this.nbLignes) + marge, caseLargeur,
-				caseLargeur));*/
-
 	}
 
 	public void remplirPlateau(Graphics2D g2D) {
 		// chargement image
 		String nameImg;
 		Image image = null;
+		if(last==1) {
+			if (turn == 1){
+				nameImg = choixImage(4, 1);
+				image = lisImage(nameImg);
+			}
+			else{
+				nameImg = choixImage(4, 2);
+				image = lisImage(nameImg);
+			}
+            tracer(g2D, image, (xSelected + 1) * caseLargeur, (ySelected + 1) * caseLargeur, caseLargeur - marge, caseLargeur - marge);
+        }
 		for (int i = 0; i < this.nbLignes; i++) {
 			for (int j = 0; j < this.nbColonnes; j++) {
 				if (jeu.estOccupe(i, j)) {
@@ -298,15 +586,57 @@ public class PlateauGraphique extends JComponent {
 				}
 			}
 		}
-		//&& jeu.estOccupe(ySelected, xSelected)
-		if (pionSelected == 1){
-			image = lisImage("ship.png");
+		if (pionSelected == 1 && jeu.estOccupe(ySelected, xSelected)){
+			if (jeu.getCase(ySelected, xSelected).getJoueur().getNum() == 1){
+				nameImg = choixImage(3, 1);
+				image = lisImage(nameImg);
+				if(turn==1)
+					colorAccessibles(xSelected, ySelected, g2D);
+			}
+			else if(jeu.getCase(ySelected, xSelected).getJoueur().getNum() == 2){
+				nameImg = choixImage(3, 2);
+				image = lisImage(nameImg);
+				if(turn==2)
+					colorAccessibles(xSelected, ySelected, g2D);
+			}
+			
 			tracer(g2D, image, (xSelected + 1) * caseLargeur, (ySelected + 1) * caseLargeur, caseLargeur - marge,
 							caseLargeur - marge);
 			pionSelected = 0;
 		}
+		if (pionSelected == 1 && jeu.estOccupeAvecBalle(ySelected, xSelected)){
+			if(jeu.getCase(ySelected, xSelected).getJoueur().getNum()==1){
+				nameImg = choixImage(6, 1);
+				image = lisImage(nameImg);
+			}
+			else{
+				nameImg = choixImage(6, 2);
+				image = lisImage(nameImg);
+			}
+			tracer(g2D, image, (xSelected + 1) * caseLargeur, (ySelected + 1) * caseLargeur, caseLargeur - marge,
+					caseLargeur - marge);
+			pionSelected = 0;
+		}
+		
+		// Coup gagnant
+		if (jeu.joueurXGagne()){
+			win = 1;
+		}
+		if (win == 1){
+			if (jeu.getCase(ySelected, xSelected).getJoueur().getNum() == 1){
+				nameImg = choixImage(5, 1);
+				image = lisImage(nameImg);
+			}
+			else if(jeu.getCase(ySelected, xSelected).getJoueur().getNum() == 2){
+				nameImg = choixImage(5, 2);
+				image = lisImage(nameImg);
+			}
+			tracer(g2D, image, 5, 5, caseLargeur*8, caseHauteur*8);
+		}
 	}
 
+
+	// 1 si la case est occupée, 2 si il y a un joueur avec une balle, 0 si elle est vide
 	public int check(Joueur j, int x, int y){
 		if (jeu.estOccupe(x, y))
 			return 1;
@@ -372,7 +702,18 @@ public class PlateauGraphique extends JComponent {
 	}
 
 	public int passe(Joueur j, int x, int y, int newX, int newY){
-		boolean passeOK = jeu.lancerBalleVers(x, y, newX, newY, j);
+		boolean passeOK = false;
+		//if (((newY == newX) && newX<x) || ((newX-newY)%2==0 || (newY-newX)%2==0) || (x == newY) || (y == newX) || (newX>x && newY<y))
+		int diffX = x-newX;
+		int diffY = y-newY;
+		if (diffX < 0)
+			diffX = -diffX;
+		if (diffY < 0)
+			diffY = -diffY;
+		if ((x == newX || y == newY) || (diffX == diffY))	
+			passeOK = jeu.lancerBalleVers(x, y, newX, newY, j);
+		else
+			return 1;
 		if (passeOK == false)
 			return 1;
 		return 0;
@@ -393,6 +734,13 @@ public class PlateauGraphique extends JComponent {
 		g2D.dispose();
 	}
 
+	@Override
+	public void ajouteObservateur(Observateur o) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
 	public void metAJour() {
 		// TODO Auto-generated method stub
 		Graphics g = null;
