@@ -21,13 +21,13 @@ public class RedacteurPlateau
         {
             for(int j=0; j<p.getHauteur(); j++)
             {
-                if(p.estLibre(i, j))
+                if(!p.estOccupe(i, j) && !p.estOccupeAvecBalle(i, j))
                     sortie.print("..");
                 else
                 {
-                    if(p.getCase(i, j).getJoueur().getNum() == 0 && p.estBallon(i, j))
+                    if(p.getCase(i, j).getJoueur().getNum() == 0 && p.estOccupeAvecBalle(i, j))
                         sortie.print("YB");
-                    else if(p.getCase(i, j).getJoueur().getNum() == 1 && p.estBallon(i, j))
+                    else if(p.getCase(i, j).getJoueur().getNum() == 1 && p.estOccupeAvecBalle(i, j))
                         sortie.print("XB");
                     else if(p.getCase(i, j).getJoueur().getNum() == 1)
                         sortie.print("XX");
