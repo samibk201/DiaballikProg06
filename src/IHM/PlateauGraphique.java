@@ -53,18 +53,18 @@ public class PlateauGraphique extends JComponent{
 		
 		if (gameIA.IA == 1){
 			disposition = gameIA.configPlateau;
-			//j1 = new Joueur(1, gameIA.nameJ.getText());
-			//j2 = new Joueur(2, "ordinateur");
-			j1 = new Joueur(1, "toto");
-			j2 = new Joueur(2, "lolo");
+			j1 = new Joueur(1, gameIA.nameJ.getText());
+			j2 = new Joueur(2, "ordinateur");
+			//j1 = new Joueur(1, "toto");
+			//j2 = new Joueur(2, "lolo");
 
 		}
 		else{
 			disposition = gameJ.configPlateau;
-			//j1 = new Joueur(1, gameJ.nameJ1.getText());
-			//j2 = new Joueur(2, gameJ.nameJ2.getText());
-			j1 = new Joueur(1, "toto");
-			j2 = new Joueur(2, "lolo");
+			j1 = new Joueur(1, gameJ.nameJ1.getText());
+			j2 = new Joueur(2, gameJ.nameJ2.getText());
+			//j1 = new Joueur(1, "toto");
+			//j2 = new Joueur(2, "lolo");
 
 		}
 
@@ -230,9 +230,9 @@ public class PlateauGraphique extends JComponent{
 						case 2:
 							nameImg = "vikHachYelloHandsUp.png";
 							break;
-						/*case 3:
-							nameImg = "vikCoffreGrey.png";
-							break;*/
+						case 3:
+							nameImg = "vikHachGrey.png";
+							break;
 					}
 				}
 				else if (numJ == 2){
@@ -243,9 +243,9 @@ public class PlateauGraphique extends JComponent{
 						case 2:
 							nameImg = "vikHachYelloHandsUp.png";
 							break;
-						/*case 3:
-							nameImg = "vikCoffreGrey.png";
-							break;*/
+							case 3:
+							nameImg = "vikHachGrey.png";
+							break;
 					}
 				}
 			}
@@ -258,9 +258,9 @@ public class PlateauGraphique extends JComponent{
 						case 2:
 							nameImg = "LastStepYellow.png";
 							break;
-						/*case 3:
-							nameImg = "vikCoffreGrey.png";
-							break;*/
+							case 3:
+							nameImg = "LastStep.png";
+							break;
 					}
 				}
 				else if (numJ == 2){
@@ -271,9 +271,9 @@ public class PlateauGraphique extends JComponent{
 						case 2:
 							nameImg = "LastStepYellow.png";
 							break;
-						/*case 3:
-							nameImg = "vikCoffreGrey.png";
-							break;*/
+							case 3:
+							nameImg = "LastStep.png";
+							break;
 					}
 				}
 			}
@@ -286,9 +286,9 @@ public class PlateauGraphique extends JComponent{
 						case 2:
 							nameImg = "vikVictYello.png";
 							break;
-						/*case 3:
-							nameImg = "vikCoffreGrey.png";
-							break;*/
+							case 3:
+							nameImg = "vikHachGrey.png";
+							break;
 					}
 				}
 				else if (numJ == 2){
@@ -299,9 +299,9 @@ public class PlateauGraphique extends JComponent{
 						case 2:
 							nameImg = "vikVictYello.png";
 							break;
-						/*case 3:
-							nameImg = "vikCoffreGrey.png";
-							break;*/
+						case 3:
+							nameImg = "vikHachGrey.png";
+							break;
 					}
 				}
 			}
@@ -314,9 +314,9 @@ public class PlateauGraphique extends JComponent{
 						case 2:
 							nameImg = "vikHachYelloHandsUpCoffre.png";
 							break;
-						/*case 3:
+							case 3:
 							nameImg = "vikCoffreGrey.png";
-							break;*/
+							break;
 					}
 				}
 				else if (numJ == 2){
@@ -327,9 +327,9 @@ public class PlateauGraphique extends JComponent{
 						case 2:
 							nameImg = "vikHachYelloHandsUpCoffre.png";
 							break;
-						/*case 3:
+						case 3:
 							nameImg = "vikCoffreGrey.png";
-							break;*/
+							break;
 					}
 				}
 			}
@@ -400,9 +400,9 @@ public class PlateauGraphique extends JComponent{
 						case 2:
 							nameImg = "vikHachYelloHandsUp.png";
 							break;
-						/*case 3:
-							nameImg = "vikCoffreGrey.png";
-							break;*/
+						case 3:
+							nameImg = "vikHachGrey.png";
+							break;
 					}
 				}
 				else if (numJ == 2){
@@ -413,9 +413,9 @@ public class PlateauGraphique extends JComponent{
 						case 2:
 							nameImg = "vikHachYelloHandsUp.png";
 							break;
-						/*case 3:
-							nameImg = "vikCoffreGrey.png";
-							break;*/
+						case 3:
+							nameImg = "vikHachGrey.png";
+							break;
 					}
 				}
 			}
@@ -428,9 +428,9 @@ public class PlateauGraphique extends JComponent{
 						case 2:
 							nameImg = "LastStepYellow.png";
 							break;
-						/*case 3:
-							nameImg = "vikCoffreGrey.png";
-							break;*/
+						case 3:
+							nameImg = "LastStep.png";
+							break;
 					}
 				}
 				else if (numJ == 2){
@@ -441,9 +441,9 @@ public class PlateauGraphique extends JComponent{
 						case 2:
 							nameImg = "LastStepYellow.png";
 							break;
-						/*case 3:
-							nameImg = "vikCoffreGrey.png";
-							break;*/
+						case 3:
+							nameImg = "LastStep.png";
+							break;
 					}
 				}
 			}
@@ -456,9 +456,9 @@ public class PlateauGraphique extends JComponent{
 						case 2:
 							nameImg = "vikVictYello.png";
 							break;
-						/*case 3:
-							nameImg = "vikCoffreGrey.png";
-							break;*/
+						case 3:
+							nameImg = "vikHachGrey.png";
+							break;
 					}
 				}
 				else if (numJ == 2){
@@ -469,9 +469,9 @@ public class PlateauGraphique extends JComponent{
 						case 2:
 							nameImg = "vikVictYello.png";
 							break;
-						/*case 3:
+						case 3:
 							nameImg = "vikCoffreGrey.png";
-							break;*/
+							break;
 					}
 				}
 			}
@@ -484,9 +484,9 @@ public class PlateauGraphique extends JComponent{
 						case 2:
 							nameImg = "vikHachYelloHandsUpCoffre.png";
 							break;
-						/*case 3:
+						case 3:
 							nameImg = "vikCoffreGrey.png";
-							break;*/
+							break;
 					}
 				}
 				else if (numJ == 2){
@@ -497,9 +497,9 @@ public class PlateauGraphique extends JComponent{
 						case 2:
 							nameImg = "vikHachYelloHandsUpCoffre.png";
 							break;
-						/*case 3:
+						case 3:
 							nameImg = "vikCoffreGrey.png";
-							break;*/
+							break;
 					}
 				}
 			}
