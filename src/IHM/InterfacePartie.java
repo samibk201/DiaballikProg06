@@ -23,6 +23,7 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 import javax.swing.SwingUtilities;
@@ -377,6 +378,7 @@ public class InterfacePartie extends JFrame implements Runnable{
             }
         });
 
+        home.setToolTipText("Menu Principal");
         home.addMouseListener(new MouseAdapter(){
             public void mouseEntered(MouseEvent e){
                 home.setIcon(new ImageIcon("ressources/ButtonImage/homeClik.png"));
@@ -391,6 +393,7 @@ public class InterfacePartie extends JFrame implements Runnable{
             }
         });
 
+        save.setToolTipText("Enregistrer");
         save.addMouseListener(new MouseAdapter(){
             public void mouseEntered(MouseEvent e){
                 save.setIcon(new ImageIcon("ressources/ButtonImage/saveClik.png"));
@@ -398,8 +401,15 @@ public class InterfacePartie extends JFrame implements Runnable{
             public void mouseExited(MouseEvent e){
                 save.setIcon(new ImageIcon("ressources/ButtonImage/SavePartie.png"));
             }
+            public void mouseClicked(MouseEvent e){
+                ImageIcon saveIcon = new ImageIcon("ressources/ButtonImage/SavePartie.png");
+                String save = (String)JOptionPane.showInputDialog(frame, "Entrer un nom de partie", "SAUVEGARDE!", JOptionPane.INFORMATION_MESSAGE, saveIcon , null, "");
+                if(save.length() > 0)
+                    JOptionPane.showMessageDialog(frame, save); 
+            }
         });
 
+        redo.setToolTipText("Restaurer");
         redo.addMouseListener(new MouseAdapter(){
             public void mouseEntered(MouseEvent e){
                 redo.setIcon(new ImageIcon("ressources/ButtonImage/redoClik.png"));
@@ -409,6 +419,7 @@ public class InterfacePartie extends JFrame implements Runnable{
             }
         });
 
+        cancel.setToolTipText("Annuler");
         cancel.addMouseListener(new MouseAdapter(){
             public void mouseEntered(MouseEvent e){
                 cancel.setIcon(new ImageIcon("ressources/ButtonImage/cancelClik.png"));
@@ -418,12 +429,24 @@ public class InterfacePartie extends JFrame implements Runnable{
             }
         });
 
+        ImageIcon restartIcon = new ImageIcon("ressources/ButtonImage/Restart.png");
+        restart.setToolTipText("Restart");
         restart.addMouseListener(new MouseAdapter(){
             public void mouseEntered(MouseEvent e){
                 restart.setIcon(new ImageIcon("ressources/ButtonImage/restartClik.png"));
             }
             public void mouseExited(MouseEvent e){
                 restart.setIcon(new ImageIcon("ressources/ButtonImage/Restart.png"));
+            }
+            public void mouseClicked(MouseEvent e){
+                int restartClicked = JOptionPane.showConfirmDialog(frame, "Voulez-vous vraiment restaurer la partie ?", "RESTART", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, restartIcon);
+                
+                if (restartClicked == JOptionPane.YES_OPTION){
+                    InterfacePartie i = new InterfacePartie();
+                    i.run();
+                    frame.dispose();
+                }
+               
             }
         });
 
