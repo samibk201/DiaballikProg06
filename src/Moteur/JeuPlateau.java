@@ -47,6 +47,18 @@ public class JeuPlateau {
 	//renvoie la hauteur du plateau
 	private int getHauteur () {return this.hauteur;}
 	
+	//test si une case est libre
+	public boolean estLibre(int i, int j)
+	{
+		return (getCase(i, j).getEtat() == LIBRE);
+	}
+
+	//test si une case contient ballon
+	public boolean estBallon(int i, int j)
+	{
+		return (getCase(i, j).getEtat() == OC_BALLE);
+	}
+	
 	
 	int place (int va) {
 		Random r = new Random ();
