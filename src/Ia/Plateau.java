@@ -1,6 +1,7 @@
 package Ia;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Plateau {
@@ -111,6 +112,7 @@ public class Plateau {
             uneAction.add(coupNouv);
             result.add(coupNouv);
         }
+
         // une seule passe
         for (Action action : getPassePossibles(joueur)) {
             coupNouv = new Coup();
@@ -118,7 +120,6 @@ public class Plateau {
             uneAction.add(coupNouv);
             result.add(coupNouv);
         }
-
         
         // Coups de deux actions
         for (Coup coup : uneAction) {
@@ -145,7 +146,6 @@ public class Plateau {
         }
 
         // Coups de 3 actions
-        // Coups de deux actions
         for (Coup coup : deuxActions) {
 
             passe = jouer(coup);
@@ -192,7 +192,69 @@ public class Plateau {
             temp.inverser();
         }
     }
+
+    public boolean aBilleAuBut(int joueur) {
+        int position = 6;
+        Support[] supports;
+
+        if(joueur == Plateau.JOUEUR_A)
+            supports = supportsA;
+        else if(joueur == Plateau.JOUEUR_B) {
+            supports = supportsB;
+            position = 0;
+        }
+        else
+            throw new IllegalArgumentException("Wrong player parameter passeed");
+        
+        for (Support support : supports) {
+            if(support.position/7 == position && aBille(support))
+                return true;
+        }
+
+        return false;   
+    }
     
+
+    public boolean aGangeContreJeu(int joueur) {
+        Support[] supports;
+        boolean ligne = false;
+        int i = 0;
+
+        if(joueur == Plateau.JOUEUR_A)
+            supports = supportsB;
+        else if(joueur == Plateau.JOUEUR_B)
+            supports = supportsA;
+        else
+            throw new IllegalArgumentException("Wrong player parameter passeed");
+
+        Arrays.sort(supports);
+
+        // test ligne supports du joueur_B
+        while(i<7 && supports[i].position%7 == i)
+            i++;
+        if(i == 7)
+            ligne = true;
+
+        i = 0;
+        if(ligne) {
+            for (Support support : supports) {
+                if(joueur == Plateau.JOUEUR_A){
+                    if(estJoueur(support.position/7-1,support.position%7, joueur))
+                        i++;
+                }
+                else {
+                    if(estJoueur(support.position/7+1,support.position%7, joueur))
+                        i++;
+                }
+            }
+        }
+
+        if(i >= 3)
+            return true;
+
+        return false;
+    }
+
     // private methodes, used in public methodes
 
     private boolean jouerAction(Action action) {
@@ -248,7 +310,7 @@ public class Plateau {
                 result.add(new Action(sup.position, sup.position-1));
 
             //RIGHT
-            if(estVide(i-1, j+1))
+            if(estVide(i, j+1))
                 result.add(new Action(sup.position, sup.position+1));
         }
 
@@ -382,7 +444,7 @@ public class Plateau {
         if(estVide(i, j))
             return false;
         
-        return (plateau[i][j].val & joueur) == 0;
+        return ((plateau[i][j].val & joueur) & ~1) == 0;
     }
 
     private boolean estJoueur(int i, int j, int joueur) {
@@ -391,32 +453,6 @@ public class Plateau {
         
         return (plateau[i][j].val & joueur) != 0;
     }
-
-    // private boolean contienPasse(Coup coup) {
-    //     Action action;
-    //     boolean result = false;
-
-    //     int i;
-    //     for (i = 0; i < coup.actions.size(); i++) {
-    //         action = coup.actions.get(i);
-    //         if(aBille(getSupport(action.pos))) {
-    //             result = true;
-    //             break;
-    //         }
-    //         // jouerAction(action);
-    //     }
-
-    //     // while(--i > 0) {
-    //     //     action = coup.actions.get(i);
-    //     //     action.inverser();
-    //     //     jouerAction(action);
-    //     //     action.inverser();
-    //     // }
-            
-
-    //     return result;
-    // }
-
 
 
 }
