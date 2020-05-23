@@ -240,7 +240,7 @@ public class Plateau {
             for (Support support : supports) {
                 if(joueur == Plateau.JOUEUR_A){
                     if(estJoueur(support.position/7-1,support.position%7, joueur))
-                        i++;
+                        i++;                    
                 }
                 else {
                     if(estJoueur(support.position/7+1,support.position%7, joueur))
@@ -437,10 +437,13 @@ public class Plateau {
     private boolean estVide(int i, int j) {
         if(i > 6 || i < 0 || j > 6 || j < 0)
             return false;
+        
         return plateau[i][j] == null;
     }
 
     private boolean estAdversaire(int i, int j, int joueur) {
+        if(i > 6 || i < 0 || j > 6 || j < 0)
+            return false;
         if(estVide(i, j))
             return false;
         
@@ -448,6 +451,8 @@ public class Plateau {
     }
 
     private boolean estJoueur(int i, int j, int joueur) {
+        if(i > 6 || i < 0 || j > 6 || j < 0)
+            return false;
         if(estVide(i, j))
             return false;
         
