@@ -27,6 +27,19 @@ public class JoueurOffensif extends JoueurIA {
         return meilleurCoup;
     }
 
+    public int evaluation(int joueur) {
+        if(plateau.aBilleAuBut(joueur))
+            return Integer.MAX_VALUE;
+        if(plateau.aBilleAuBut(joueur%4+2))
+            return Integer.MIN_VALUE;
+        if(plateau.aGangeContreJeu(joueur))
+            return Integer.MAX_VALUE;
+        if(plateau.aGangeContreJeu(joueur%4+2))
+            return Integer.MAX_VALUE;
+
+        return evalPosition(joueur);
+    }
+
     public int evalPosition(int joueur) {
         Support[] sups;
         int score, evaluation = 0;

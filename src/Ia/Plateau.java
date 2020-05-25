@@ -218,7 +218,7 @@ public class Plateau {
     public boolean aGangeContreJeu(int joueur) {
         Support[] supports;
         boolean ligne = false;
-        int i = 0;
+        int i = 0, posSuc;
 
         if(joueur == Plateau.JOUEUR_A)
             supports = supportsB;
@@ -230,9 +230,14 @@ public class Plateau {
         Arrays.sort(supports);
 
         // test ligne supports du joueur_B
-        while(i<7 && supports[i].position%7 == i)
-            i++;
-        if(i == 7)
+        while(i<6 && supports[i].position%7 == i) {
+            posSuc = supports[i].position/7 - supports[i+1].position/7;
+            if(posSuc > -2 && posSuc < 2)
+                i++;
+            else
+                break;
+        }
+        if(i == 6)
             ligne = true;
 
         i = 0;
@@ -249,7 +254,7 @@ public class Plateau {
             }
         }
 
-        if(i >= 3)
+        if(i >= 3 && ligne)
             return true;
 
         return false;

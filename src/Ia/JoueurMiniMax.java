@@ -100,8 +100,6 @@ public class JoueurMiniMax extends JoueurOffensif {
         if(plateau.aGangeContreJeu(joueur%4+2))
             return Integer.MAX_VALUE;
 
-        
-
         // return evalPosition(joueur) - evalPosition(joueur%4+2);
         return evalPosition(joueur) - evalPosition(joueur%4+2) + evalAttaque(joueur) - evalAttaque(joueur%4+2);
     }
