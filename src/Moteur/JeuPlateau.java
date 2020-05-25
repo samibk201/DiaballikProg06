@@ -42,10 +42,10 @@ public class JeuPlateau {
 	}
 
 	//renvoie lar largeur du plateau
-	private int getLargeur () {return this.largeur;}
+	public int getLargeur () {return this.largeur;}
 	
 	//renvoie la hauteur du plateau
-	private int getHauteur () {return this.hauteur;}
+	public int getHauteur () {return this.hauteur;}
 	
 	//test si une case est libre
 	public boolean estLibre(int i, int j)
