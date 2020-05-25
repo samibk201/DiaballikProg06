@@ -9,6 +9,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import Moteur.JeuPlateau;
+import Moteur.Joueur;
+
 import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
@@ -38,6 +41,18 @@ public class InterfaceGraphique implements Runnable{
         SwingUtilities.invokeLater(new InterfaceGraphique());
     }
   
+    /*public JeuPlateau LoadGame(){
+        PlateauGraphique plateauGraphique = new PlateauGraphique();
+        Joueur j1,j2;
+        j1 = new Joueur(1,"TOTO");
+        j2 = new Joueur(2,"TATA");
+        JeuPlateau jeu = new JeuPlateau(j1, j2, 1);
+        jeu.LoadGame();
+        plateauGraphique.jeu.LoadGame();
+        return jeu;
+    }*/
+
+
     @Override
     public void run() {
 
@@ -67,7 +82,7 @@ public class InterfaceGraphique implements Runnable{
         JPanel panelVo = new JPanel();
         panelVo.setLayout(new FlowLayout(FlowLayout.LEFT));
         panelVo.setOpaque(false);
-        volum = new Button("ressources/ButtonImage/volume.png");
+        volum = new Button("ressources/ButtonImage/sound.png");
         panelVo.add(volum);
 
 
@@ -161,6 +176,16 @@ public class InterfaceGraphique implements Runnable{
             public void mouseExited(MouseEvent e){
                 enCours.setIcon(new ImageIcon("ressources/ButtonImage/encoursSR.png"));
             }
+            public void mouseClicked(MouseEvent e){
+                InterfacePartie interfacePartie = new InterfacePartie();
+                interfacePartie.plateau = new PlateauGraphique();
+                interfacePartie.run();
+                interfacePartie.plateau.load();
+                interfacePartie.turn = interfacePartie.plateau.loadedTurn;
+                interfacePartie.move = interfacePartie.plateau.loadedMove;
+                interfacePartie.loaded = true;
+                frame.dispose();
+            }
         });
 
         // Click bouton 'tutoriel'
@@ -201,6 +226,6 @@ public class InterfaceGraphique implements Runnable{
         frame.setLocationRelativeTo(null);
         frame.setUndecorated(true);
         frame.setVisible(true);
-	}
+    }
 }
 
