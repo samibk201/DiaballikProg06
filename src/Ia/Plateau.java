@@ -434,14 +434,14 @@ public class Plateau {
         return result;
     }
 
-    private boolean estVide(int i, int j) {
+    public boolean estVide(int i, int j) {
         if(i > 6 || i < 0 || j > 6 || j < 0)
             return false;
         
         return plateau[i][j] == null;
     }
 
-    private boolean estAdversaire(int i, int j, int joueur) {
+    public boolean estAdversaire(int i, int j, int joueur) {
         if(i > 6 || i < 0 || j > 6 || j < 0)
             return false;
         if(estVide(i, j))
@@ -450,7 +450,7 @@ public class Plateau {
         return ((plateau[i][j].val & joueur) & ~1) == 0;
     }
 
-    private boolean estJoueur(int i, int j, int joueur) {
+    public boolean estJoueur(int i, int j, int joueur) {
         if(i > 6 || i < 0 || j > 6 || j < 0)
             return false;
         if(estVide(i, j))
